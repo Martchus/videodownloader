@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QtGui::TargetPage</class>
+ <widget class="QWidget" name="QtGui::TargetPage">
+  <property name="windowTitle">
+   <string>Select target directory</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="defaultTargetDirLabel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font-weight: bold;</string>
+     </property>
+     <property name="text">
+      <string>Default target directory for downloads</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLineEdit" name="defaultTargetLineEdit">
+       <property name="placeholderText">
+        <string>no directory selected</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="selectDefaultDirPushButton">
+       <property name="text">
+        <string>Select</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <property name="topMargin">
+      <number>5</number>
+     </property>
+     <item>
+      <widget class="QGraphicsView" name="infoIconGraphicsView">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background: transparent;</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="backgroundBrush">
+        <brush brushstyle="NoBrush">
+         <color alpha="0">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </property>
+       <property name="sceneRect">
+        <rectf>
+         <x>0.000000000000000</x>
+         <y>0.000000000000000</y>
+         <width>32.000000000000000</width>
+         <height>32.000000000000000</height>
+        </rectf>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="infoNoTargetDirLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-style:italic;</string>
+       </property>
+       <property name="text">
+        <string>If there is no target directory selected, the files will be stored in the working directory of the downloader.</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="optionsLabel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font-weight: bold;</string>
+     </property>
+     <property name="text">
+      <string>Options</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="overwriteCheckBox">
+     <property name="text">
+      <string>don't ask before overwriting existing files</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="askOnlyWhenThereIsNoAppropriateFilenameCheckBox">
+     <property name="text">
+      <string>ask only where to save files if there is no appropriate filename</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>infoIconGraphicsView</tabstop>
+  <tabstop>defaultTargetLineEdit</tabstop>
+  <tabstop>selectDefaultDirPushButton</tabstop>
+  <tabstop>overwriteCheckBox</tabstop>
+  <tabstop>askOnlyWhenThereIsNoAppropriateFilenameCheckBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

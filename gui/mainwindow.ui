@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QtGui::MainWindow</class>
+ <widget class="QMainWindow" name="QtGui::MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>966</width>
+    <height>430</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Video downloader</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../resources/icons.qrc">
+    <normaloff>:/icons/hicolor/16x16/misc/trayicon.ico</normaloff>:/icons/hicolor/16x16/misc/trayicon.ico</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTreeView" name="downloadsTreeView">
+      <property name="editTriggers">
+       <set>QAbstractItemView::CurrentChanged</set>
+      </property>
+      <property name="verticalScrollMode">
+       <enum>QAbstractItemView::ScrollPerPixel</enum>
+      </property>
+      <property name="indentation">
+       <number>0</number>
+      </property>
+      <property name="rootIsDecorated">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>966</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="nativeMenuBar">
+    <bool>true</bool>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>?</string>
+    </property>
+    <addaction name="actionAbout"/>
+    <addaction name="actionYoutube_itags"/>
+   </widget>
+   <widget class="QMenu" name="menuAdd">
+    <property name="title">
+     <string>Add</string>
+    </property>
+    <addaction name="actionAdd_Download"/>
+    <addaction name="actionAdd_multiple_downloads"/>
+   </widget>
+   <widget class="QMenu" name="menuDownloads">
+    <property name="title">
+     <string>Dow&amp;nloads</string>
+    </property>
+    <addaction name="actionStart_selected"/>
+    <addaction name="actionResume_selected_downloads"/>
+    <addaction name="actionRemove_selected_downloads_from_list"/>
+    <addaction name="actionCopy_download_url"/>
+    <addaction name="actionSet_range"/>
+    <addaction name="actionSet_target"/>
+    <addaction name="actionClear_target"/>
+    <addaction name="actionReset_grooveshark_session"/>
+   </widget>
+   <widget class="QMenu" name="menuApplication">
+    <property name="title">
+     <string>A&amp;pplication</string>
+    </property>
+    <addaction name="actionSettings"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <addaction name="menuApplication"/>
+   <addaction name="menuAdd"/>
+   <addaction name="menuDownloads"/>
+   <addaction name="menu"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>Main toolbar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionStart_selected"/>
+   <addaction name="actionResume_selected_downloads"/>
+  </widget>
+  <widget class="QToolBar" name="directoryToolBar">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="windowTitle">
+    <string>Target directory toolbar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionExplore_target_directory"/>
+  </widget>
+  <widget class="QToolBar" name="autoToolBar">
+   <property name="windowTitle">
+    <string>Autostart toolbar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset theme="help-about">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="actionStart_selected">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="media-playback-start">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Start selected downloads</string>
+   </property>
+  </action>
+  <action name="actionCopy_download_url">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="edit-copy">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Copy download url</string>
+   </property>
+  </action>
+  <action name="actionYoutube_itags">
+   <property name="icon">
+    <iconset resource="../resources/icons.qrc">
+     <normaloff>:/icons/hicolor/16x16/misc/trayicon.ico</normaloff>:/icons/hicolor/16x16/misc/trayicon.ico</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Youtube itags</string>
+   </property>
+  </action>
+  <action name="actionAdd_multiple_downloads">
+   <property name="icon">
+    <iconset theme="list-add">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Multiple downloads</string>
+   </property>
+   <property name="toolTip">
+    <string>Add multiple downloads (e. g. from a Youtube playlist)</string>
+   </property>
+  </action>
+  <action name="actionRemove_selected_downloads_from_list">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="list-remove">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Remove selected downloads from list</string>
+   </property>
+  </action>
+  <action name="actionExplore_target_directory">
+   <property name="icon">
+    <iconset theme="system-file-manager">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Explore target directory</string>
+   </property>
+  </action>
+  <action name="actionResume_selected_downloads">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="media-playback-pause">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Interrupt selected downloads</string>
+   </property>
+  </action>
+  <action name="actionReset_grooveshark_session">
+   <property name="icon">
+    <iconset theme="document-revert">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>R&amp;eset Grooveshark session</string>
+   </property>
+  </action>
+  <action name="actionSet_range">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="edit-cut"/>
+   </property>
+   <property name="text">
+    <string>Set range &amp;of selected download</string>
+   </property>
+  </action>
+  <action name="actionAdd_Download">
+   <property name="icon">
+    <iconset theme="list-add">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Single download</string>
+   </property>
+   <property name="iconText">
+    <string>Single download</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a single download</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset theme="preferences-other">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Settings</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="icon">
+    <iconset theme="application-exit">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="actionSet_target">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="document-save-as"/>
+   </property>
+   <property name="text">
+    <string>Set target of selected download</string>
+   </property>
+  </action>
+  <action name="actionClear_target">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="edit-undo"/>
+   </property>
+   <property name="text">
+    <string>Clear target of selected downloads</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="../resources/icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>

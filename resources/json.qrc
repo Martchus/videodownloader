@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/jsonobjects">
+        <file alias="itaginfo">json/itaginfo.json</file>
+    </qresource>
+</RCC>

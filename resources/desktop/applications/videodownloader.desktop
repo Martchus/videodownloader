@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Video downloader
+GenericName=Video downloader
+Comment=A simple YouTube and Grooveshark downloader.
+Exec=videodownloader
+Icon=videodownloader
+Terminal=false
+Type=Application
+Categories=Utility;Network;

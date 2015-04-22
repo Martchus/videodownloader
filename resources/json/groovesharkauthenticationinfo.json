@@ -1,0 +1,17 @@
+{
+	"htmlClient":
+	{
+		"name":"htmlshark",
+		"revision":"20130520",
+		"randomizer":":nuggetsOfBaller:"
+	},
+	
+	"jsClient":
+	{
+		"name":"jsqueue",
+		"revision":"20130520",
+		"randomizer":":chickenFingers:"
+	},
+	
+	"referer":"http://grooveshark.com/JSQueue.swf?20120124.01"
+}

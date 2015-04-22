@@ -1,0 +1,23 @@
+pkgname=videodownloader
+pkgver=1.0.6
+pkgrel=1
+arch=('i686' 'x86_64')
+pkgdesc="A simple YouTube and Grooveshark downloader."
+license=('GPL')
+depends=('qt5-base' 'qtutilities' 'openssl')
+makedepends=('qt5-tools')
+install=${pkgname}.install
+url="http://martchus.netai.net/"
+source=("$pkgname.tar.gz")
+md5sums=('9e3802e4ed47a4efb2d4f8a6ed5daf3e')
+# head end
+build() {
+    cd $srcdir/$pkgname
+    INSTALL_ROOT=$pkgdir/usr/ qmake-qt5 "$pkgname.pro" -r -spec linux-g++
+    make
+}
+
+package() {
+    cd $srcdir/$pkgname
+    make install
+}

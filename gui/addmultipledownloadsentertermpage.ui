@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AddMultipleDownloadsEnterTermPage</class>
+ <widget class="QWidget" name="AddMultipleDownloadsEnterTermPage">
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="Widgets::ClearLineEdit" name="termLineEdit"/>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="byIdCheckBox">
+     <property name="text">
+      <string>search by id</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="verifiedCheckBox">
+     <property name="text">
+      <string>retrieve only verified songs if possible</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Widgets::ClearLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header location="global">martchusqtutilities/widgets/clearlineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

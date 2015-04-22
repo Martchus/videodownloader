@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AddMultipleDownloadsSelectSourcePage</class>
+ <widget class="QWidget" name="AddMultipleDownloadsSelectSourcePage">
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QCommandLinkButton" name="youtubePlaylistCommandLinkButton">
+     <property name="text">
+      <string>Youtube playlist</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCommandLinkButton" name="groovesharkAlbumCommandLinkButton">
+     <property name="text">
+      <string>Grooveshark album</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCommandLinkButton" name="groovesharkPlaylistCommandLinkButton">
+     <property name="text">
+      <string>Grooveshark playlist</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
