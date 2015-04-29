@@ -9,6 +9,7 @@ depends=('mingw-w64-crt' 'mingw-w64-qt5-base' 'mingw-w64-qtutilities' 'mingw-w64
 makedepends=('mingw-w64-gcc')
 url="https://github.com/Martchus/videodownloader"
 source=("videodownloader-${pkgver}.tar.gz::https://github.com/Martchus/videodownloader/archive/v${pkgver}.tar.gz")
+_reponame=videodownloader
 md5sums=('4e94aff9225d8873f752995c1bcc5f15')
 _architectures="i686-w64-mingw32 x86_64-w64-mingw32"
 
