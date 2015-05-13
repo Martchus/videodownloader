@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>icons/hicolor/16x16/misc/trayicon.ico</file>
         <file>icons/hicolor/128x128/apps/videodownloader.png</file>
         <file>icons/hicolor/32x32/categories/preferences-general.png</file>
         <file>icons/hicolor/32x32/categories/preferences-network.png</file>

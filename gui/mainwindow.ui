@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../resources/icons.qrc">
-    <normaloff>:/icons/hicolor/16x16/misc/trayicon.ico</normaloff>:/icons/hicolor/16x16/misc/trayicon.ico</iconset>
+    <normaloff>:/icons/hicolor/32x32/categories/preferences-specific.png</normaloff>:/icons/hicolor/32x32/categories/preferences-specific.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -189,7 +189,7 @@
   <action name="actionYoutube_itags">
    <property name="icon">
     <iconset resource="../resources/icons.qrc">
-     <normaloff>:/icons/hicolor/16x16/misc/trayicon.ico</normaloff>:/icons/hicolor/16x16/misc/trayicon.ico</iconset>
+     <normaloff>:/icons/hicolor/32x32/categories/preferences-specific.png</normaloff>:/icons/hicolor/32x32/categories/preferences-specific.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Youtube itags</string>
@@ -259,7 +259,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="edit-cut"/>
+    <iconset theme="edit-cut">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Set range &amp;of selected download</string>
@@ -306,10 +308,12 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="document-save-as"/>
+    <iconset theme="document-save-as">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
-    <string>Set target of selected download</string>
+    <string>Set target of selected &amp;download</string>
    </property>
   </action>
   <action name="actionClear_target">
@@ -317,10 +321,12 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="edit-undo"/>
+    <iconset theme="edit-undo">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
-    <string>Clear target of selected downloads</string>
+    <string>C&amp;lear target of selected downloads</string>
    </property>
   </action>
  </widget>
