@@ -1,6 +1,6 @@
 _name=videodownloader
 pkgname=mingw-w64-videodownloader
-pkgver=1.0.6
+pkgver=1.0.7
 pkgrel=1
 arch=('any')
 pkgdesc="A video downloader with Qt GUI (currently only YouTube is maintained, mingw-w64)."

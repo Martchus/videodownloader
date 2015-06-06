@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
         QGuiApplication::setOrganizationName(QStringLiteral("Martchus"));
         QGuiApplication::setOrganizationDomain(QStringLiteral("http://martchus.netai.net/"));
         QGuiApplication::setApplicationName(QStringLiteral("Video Downloader"));
-        QGuiApplication::setApplicationVersion(QStringLiteral("1.0.6"));
+        QGuiApplication::setApplicationVersion(QStringLiteral("1.0.7"));
         QApplication a(argc, argv);
         QtUtilitiesResources::init();
         Theme::setup();
