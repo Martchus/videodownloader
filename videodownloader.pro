@@ -102,6 +102,8 @@ RESOURCES += resources/icons.qrc \
     resources/json.qrc
 
 OTHER_FILES += \
+    README.md \
+    LICENSE \
     pkgbuild/default/PKGBUILD \
     pkgbuild/mingw-w64/PKGBUILD
 
