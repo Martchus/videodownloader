@@ -137,7 +137,7 @@ void HttpDownload::checkStatusAndClear(size_t optionIndex)
                     reportDownloadInterrupted(optionIndex);
                     reply->deleteLater();
                     m_replies.removeAll(reply);
-                } else if((error == QNetworkReply::AuthenticationRequiredError)) {
+                } else if(error == QNetworkReply::AuthenticationRequiredError) {
                     // authentication is required
                     reportAuthenticationRequired(optionIndex, m_realm);
                     reply->deleteLater();

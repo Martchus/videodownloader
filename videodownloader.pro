@@ -1,4 +1,5 @@
 projectname = videodownloader
+VERSION = 1.0.7
 
 # include ../../common.pri when building as part of a subdirs project; otherwise include general.pri
 !include(../../common.pri) {
@@ -51,7 +52,10 @@ SOURCES += application/main.cpp \
     itemdelegates/progressbaritemdelegate.cpp \
     gui/downloadinteraction.cpp \
     gui/settings.cpp \
-    network/optiondata.cpp
+    network/optiondata.cpp \
+    gui/initiate.cpp \
+    cli/mainfeatures.cpp \
+    cli/clidownloadinteraction.cpp
 
 HEADERS += application/main.h \
     network/bitsharedownload.h \
@@ -83,7 +87,11 @@ HEADERS += application/main.h \
     gui/settings.h \
     network/authenticationcredentials.h \
     network/permissionstatus.h \
-    network/optiondata.h
+    network/optiondata.h \
+    application/main.h \
+    gui/initiate.h \
+    cli/mainfeatures.h \
+    cli/clidownloadinteraction.h
 
 testdownload {
     SOURCES += network/testdownload.cpp
@@ -127,14 +135,14 @@ INCLUDEPATH += ../
 target.path = $$(INSTALL_ROOT)/bin
 INSTALLS += target
 icon.path = $$(INSTALL_ROOT)/share/icons/hicolor/scalable/apps/
-icon.files = ./resources/icons/hicolor/scalable/apps/$${projectname}.svg
+icon.files = $${PWD}/resources/icons/hicolor/scalable/apps/$${projectname}.svg
 INSTALLS += icon
 menu.path = $$(INSTALL_ROOT)/share/applications/
-menu.files = ./resources/desktop/applications/$${projectname}.desktop
+menu.files = $${PWD}/resources/desktop/applications/$${projectname}.desktop
 INSTALLS += menu
 translations.path = $$(INSTALL_ROOT)/share/$${projectname}/translations/
-translations.files = ./translations/*.qm
+translations.files = $${PWD}/translations/*.qm
 INSTALLS += translations
 json.path = $$(INSTALL_ROOT)/share/$${projectname}/json/
-json.files = ./resources/json/groovesharkauthenticationinfo.json
+json.files = $${PWD}/resources/json/groovesharkauthenticationinfo.json
 INSTALLS += json
