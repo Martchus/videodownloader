@@ -109,11 +109,11 @@ FORMS += gui/adddownloaddialog.ui \
 RESOURCES += resources/icons.qrc \
     resources/json.qrc
 
+win32:include(windowsicon.pri)
+
 OTHER_FILES += \
     README.md \
     LICENSE
-
-#win32:RC_FILE += windowsicon.rc
 
 CONFIG(debug, debug|release) {
     LIBS += -L../../ -lc++utilitiesd
@@ -132,15 +132,14 @@ INCLUDEPATH += ../
 # installs
 target.path = $$(INSTALL_ROOT)/bin
 INSTALLS += target
-icon.path = $$(INSTALL_ROOT)/share/icons/hicolor/scalable/apps/
-icon.files = $${PWD}/resources/icons/hicolor/scalable/apps/$${projectname}.svg
-INSTALLS += icon
-menu.path = $$(INSTALL_ROOT)/share/applications/
-menu.files = $${PWD}/resources/desktop/applications/$${projectname}.desktop
-INSTALLS += menu
-translations.path = $$(INSTALL_ROOT)/share/$${projectname}/translations/
-translations.files = $${PWD}/translations/*.qm
-INSTALLS += translations
+!mingw-w64-install {
+    icon.path = $$(INSTALL_ROOT)/share/icons/hicolor/scalable/apps/
+    icon.files = $${PWD}/resources/icons/hicolor/scalable/apps/$${projectname}.svg
+    INSTALLS += icon
+    menu.path = $$(INSTALL_ROOT)/share/applications/
+    menu.files = $${PWD}/resources/desktop/applications/$${projectname}.desktop
+    INSTALLS += menu
+}
 json.path = $$(INSTALL_ROOT)/share/$${projectname}/json/
 json.files = $${PWD}/resources/json/groovesharkauthenticationinfo.json
 INSTALLS += json
