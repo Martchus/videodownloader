@@ -8,6 +8,7 @@
 #endif
 
 #include <c++utilities/application/failure.h>
+#include <qtutilities/resources/resources.h>
 
 #include <QCoreApplication>
 
@@ -41,10 +42,7 @@ int main(int argc, char *argv[])
         cout << "Unable to parse arguments. " << ex.what() << "\nSee --help for available commands." << endl;
     }
     // set meta info for application
-    QCoreApplication::setOrganizationName(QStringLiteral("Martchus"));
-    QCoreApplication::setOrganizationDomain(QStringLiteral("http://martchus.netai.net/"));
-    QCoreApplication::setApplicationName(QStringLiteral("Video Downloader"));
-    QCoreApplication::setApplicationVersion(QStringLiteral("1.0.7"));
+    SET_APPLICATION_INFO;
     if(qtConfigArgs.areQtGuiArgsPresent()) {
         return QtGui::runWidgetsGui(argc, argv);
     }
