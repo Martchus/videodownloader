@@ -23,6 +23,7 @@ using namespace ApplicationUtilities;
 int main(int argc, char *argv[])
 {
     // setup argument parser
+    SET_APPLICATION_INFO;
     ArgumentParser parser;
     QT_CONFIG_ARGUMENTS qtConfigArgs;
     HelpArgument helpArg(parser);
@@ -42,7 +43,7 @@ int main(int argc, char *argv[])
         cout << "Unable to parse arguments. " << ex.what() << "\nSee --help for available commands." << endl;
     }
     // set meta info for application
-    SET_APPLICATION_INFO;
+    SET_QT_APPLICATION_INFO;
     if(qtConfigArgs.areQtGuiArgsPresent()) {
         return QtGui::runWidgetsGui(argc, argv);
     }
