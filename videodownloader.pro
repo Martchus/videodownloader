@@ -119,18 +119,16 @@ OTHER_FILES += \
     LICENSE
 
 CONFIG(debug, debug|release) {
-    LIBS += -L../../ -lc++utilitiesd
+    LIBS += -lc++utilitiesd
     !no-gui {
         LIBS += -lqtutilitiesd
     }
 } else {
-    LIBS += -L../../ -lc++utilities
+    LIBS += -lc++utilities
     !no-gui {
         LIBS += -lqtutilities
     }
 }
-
-INCLUDEPATH += ../
 
 # installs
 target.path = $$(INSTALL_ROOT)/bin
