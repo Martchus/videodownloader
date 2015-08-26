@@ -300,7 +300,7 @@ border: none;
   <customwidget>
    <class>Widgets::ClearLineEdit</class>
    <extends>QLineEdit</extends>
-   <header location="global">martchusqtutilities/widgets/clearlineedit.h</header>
+   <header location="global">qtutilities/widgets/clearlineedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
