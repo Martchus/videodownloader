@@ -20,6 +20,10 @@ testdownload {
     DEFINES += CONFIG_TESTDOWNLOAD
 }
 
+underconstruction {
+    DEFINES += UNDER_CONSTRUCTION
+}
+
 !notrayicon {
     DEFINES += CONFIG_USE_TRAY_ICON
     usetrayiconalways {
@@ -43,7 +47,6 @@ SOURCES += application/main.cpp \
     network/httpdownloadwithinforequst.cpp \
     network/misc/contentdispositionparser.cpp \
     network/socksharedownload.cpp \
-    network/spotifydownload.cpp \
     network/youtubedownload.cpp \
     gui/adddownloaddialog.cpp \
     gui/addmultipledownloadswizard.cpp \
@@ -76,7 +79,6 @@ HEADERS += application/main.h \
     network/httpdownloadwithinforequst.h \
     network/misc/contentdispositionparser.h \
     network/socksharedownload.h \
-    network/spotifydownload.h \
     network/youtubedownload.h \
     gui/adddownloaddialog.h \
     gui/addmultipledownloadswizard.h \
@@ -99,6 +101,14 @@ HEADERS += application/main.h \
 testdownload {
     SOURCES += network/testdownload.cpp
     HEADERS += network/testdownload.h
+}
+
+underconstruction {
+SOURCES += \
+    network/spotifydownload.cpp
+
+HEADERS += \
+    network/spotifydownload.h
 }
 
 FORMS += gui/adddownloaddialog.ui \

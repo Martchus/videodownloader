@@ -6,7 +6,9 @@
 #include "network/bitsharedownload.h"
 #include "network/groovesharkdownload.h"
 #include "network/filenukedownload.h"
+#ifdef UNDER_CONSTRUCTION
 #include "network/spotifydownload.h"
+#endif
 
 #include <QInputDialog>
 #include <QSettings>
@@ -21,10 +23,13 @@ QStringList AddDownloadDialog::m_knownDownloadTypeNames = QStringList()
         << QStringLiteral("standard http(s)/ftp")
         << QStringLiteral("Youtube")
         << QStringLiteral("Grooveshark")
-        << QStringLiteral("Spotify")
         << QStringLiteral("Sockshare/Putlocker")
         << QStringLiteral("Bitshare")
-        << QStringLiteral("FileNuke");
+        << QStringLiteral("FileNuke")
+#ifdef UNDER_CONSTRUCTION
+        << QStringLiteral("Spotify")
+#endif
+           ;
 
 AddDownloadDialog::AddDownloadDialog(QWidget *parent) :
     QDialog(parent),
@@ -63,12 +68,13 @@ AddDownloadDialog::AddDownloadDialog(QWidget *parent) :
 }
 
 AddDownloadDialog::~AddDownloadDialog()
-{ }
+{}
 
 Download *AddDownloadDialog::result() const
 {
-    if(!hasValidInput())
+    if(!hasValidInput()) {
         return nullptr;
+    }
 
     QString res(m_ui->urlLineEdit->text());
     switch(m_downloadTypeIndex) {
@@ -79,13 +85,15 @@ Download *AddDownloadDialog::result() const
     case 2:
         return new GroovesharkDownload(res);
     case 3:
-        return new SpotifyDownload(res);
-    case 4:
         return new SockshareDownload(QUrl(res));
-    case 5:
+    case 4:
         return new BitshareDownload(QUrl(res));
-    case 6:
+    case 5:
         return new FileNukeDownload(QUrl(res));
+#ifdef UNDER_CONSTRUCTION
+    case 6:
+        return new SpotifyDownload(res);
+#endif
     default:
         return nullptr;
     }
