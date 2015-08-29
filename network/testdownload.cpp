@@ -57,13 +57,13 @@ void TestDownload::doInit()
 
 void TestDownload::checkStatusAndClear(size_t optionIndex)
 {
-    reportDownloadComplete(optionIndex);
+    reportFinalDownloadStatus(optionIndex, true, QStringLiteral("test completed"));
 }
 
 void TestDownload::tick()
 {
     if(bytesReceived() < 5000) {
-        reportDownloadProgressUpdate(chosenOption(), bytesReceived() + 10, 5000);
+        reportDownloadProgressUpdate(chosenOption(), bytesReceived() + 300, 5000);
     } else {
         reportDownloadComplete(0);
     }
