@@ -2,6 +2,7 @@
 #include "settings.h"
 #include "mainwindow.h"
 
+#include <qtutilities/resources/qtconfigarguments.h>
 #include <qtutilities/resources/resources.h>
 
 #if defined(GUI_QTWIDGETS)
@@ -11,24 +12,28 @@
 #endif
 
 using namespace std;
+using namespace ApplicationUtilities;
 
 namespace QtGui {
 
-int runWidgetsGui(int argc, char *argv[])
+int runWidgetsGui(int argc, char *argv[], const QtConfigArguments &qtConfigArgs)
 {
 #ifdef GUI_QTWIDGETS
-        QApplication a(argc, argv);
-        QtUtilitiesResources::init();
-        Theme::setup();
-        QtGui::restoreSettings();
-        QtGui::MainWindow w;
-        w.show();
-        int r = a.exec();
-        QtGui::saveSettings();
-        return r;
+    SET_QT_APPLICATION_INFO;
+    QApplication a(argc, argv);
+    // load resources needed by classes of qtutilities
+    QtUtilitiesResources::init();
+    // apply settings specified via command line args
+    qtConfigArgs.applySettings();
+    QtGui::restoreSettings();
+    QtGui::MainWindow w;
+    w.show();
+    int r = a.exec();
+    QtGui::saveSettings();
+    return r;
 #else
-        cout << "Application has not been build with Qt widgets GUI support." << endl;
-        return 0;
+    cout << "Application has not been build with Qt widgets GUI support." << endl;
+    return 0;
 #endif
 }
 

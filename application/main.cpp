@@ -43,9 +43,8 @@ int main(int argc, char *argv[])
         cout << "Unable to parse arguments. " << ex.what() << "\nSee --help for available commands." << endl;
     }
     // set meta info for application
-    SET_QT_APPLICATION_INFO;
     if(qtConfigArgs.areQtGuiArgsPresent()) {
-        return QtGui::runWidgetsGui(argc, argv);
+        return QtGui::runWidgetsGui(argc, argv, qtConfigArgs);
     }
     return 0;
 }

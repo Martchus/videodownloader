@@ -10,9 +10,7 @@
 #include <sstream>
 #include <limits>
 
-QT_BEGIN_NAMESPACE
-class QIODevice;
-QT_END_NAMESPACE
+QT_FORWARD_DECLARE_CLASS(QIODevice)
 
 namespace Network {
 
@@ -42,6 +40,8 @@ public:
     PermissionStatus ignoreSslErrorsPermission() const;
 
 private:
+    void chuckOutputDevice();
+
     QString m_name;
     QUrl m_url;
     size_t m_redirectsTo;
@@ -60,7 +60,6 @@ private:
     PermissionStatus m_appendPermission;
     PermissionStatus m_redirectPermission;
     PermissionStatus m_ignoreSslErrorsPermission;
-    void chuckOutputDevice();
 };
 
 /*!
