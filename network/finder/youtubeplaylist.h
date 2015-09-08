@@ -1,7 +1,7 @@
 #ifndef YOUTUBEPLAYLIST_H
 #define YOUTUBEPLAYLIST_H
 
-#include "downloadfinder.h"
+#include "./downloadfinder.h"
 
 namespace Network {
 

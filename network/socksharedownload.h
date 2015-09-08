@@ -1,7 +1,7 @@
 #ifndef SOCKSHAREDOWNLOAD_H
 #define SOCKSHAREDOWNLOAD_H
 
-#include "httpdownloadwithinforequst.h"
+#include "./httpdownloadwithinforequst.h"
 
 namespace Network {
 

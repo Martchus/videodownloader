@@ -1,5 +1,6 @@
-#include "downloadmodel.h"
-#include "network/download.h"
+#include "./downloadmodel.h"
+
+#include "../network/download.h"
 
 #include <c++utilities/conversion/stringconversion.h>
 

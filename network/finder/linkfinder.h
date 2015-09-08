@@ -1,7 +1,7 @@
 #ifndef LINKFINDER_H
 #define LINKFINDER_H
 
-#include "downloadfinder.h"
+#include "./downloadfinder.h"
 
 #include <QUrl>
 

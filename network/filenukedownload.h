@@ -1,7 +1,7 @@
 #ifndef FILENUKE_DOWNLOAD_H
 #define FILENUKE_DOWNLOAD_H
 
-#include "httpdownloadwithinforequst.h"
+#include "./httpdownloadwithinforequst.h"
 
 namespace Network {
 

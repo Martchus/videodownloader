@@ -1,5 +1,5 @@
-#include "optiondata.h"
-#include "permissionstatus.h"
+#include "./optiondata.h"
+#include "./permissionstatus.h"
 
 #include <QIODevice>
 

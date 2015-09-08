@@ -1,4 +1,5 @@
-#include "groovesharkdownload.h"
+#include "./groovesharkdownload.h"
+
 #include "../application/utils.h"
 
 #include <QUrlQuery>

@@ -1,5 +1,6 @@
-#include "downloadwidget.h"
-#include "ui_downloadwidget.h"
+#include "./downloadwidget.h"
+
+#include "gui/ui_downloadwidget.h"
 
 #include <QPaintEvent>
 #include <QMouseEvent>

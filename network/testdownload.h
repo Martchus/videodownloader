@@ -1,7 +1,7 @@
 #ifndef TESTDOWNLOAD_H
 #define TESTDOWNLOAD_H
 
-#include "download.h"
+#include "./download.h"
 
 #include <QTimer>
 

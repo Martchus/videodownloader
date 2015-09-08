@@ -1,7 +1,7 @@
 #ifndef NETWORK_OPTIONDATA_H
 #define NETWORK_OPTIONDATA_H
 
-#include "authenticationcredentials.h"
+#include "./authenticationcredentials.h"
 
 #include <QString>
 #include <QUrl>

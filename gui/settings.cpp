@@ -1,7 +1,7 @@
-#include "settings.h"
+#include "./settings.h"
 
-#include "network/download.h"
-#include "network/groovesharkdownload.h"
+#include "../network/download.h"
+#include "../network/groovesharkdownload.h"
 
 #include <qtutilities/settingsdialog/optioncategory.h>
 #include <qtutilities/settingsdialog/optioncategorymodel.h>

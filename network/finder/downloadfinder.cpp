@@ -1,4 +1,4 @@
-#include "downloadfinder.h"
+#include "./downloadfinder.h"
 
 #include "../download.h"
 

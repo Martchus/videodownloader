@@ -1,10 +1,10 @@
-#include "download.h"
-#include "permissionstatus.h"
+#include "./download.h"
+#include "./permissionstatus.h"
 // these includes are only needed to provide the Download::fromUrl method
-#include "httpdownload.h"
-#include "youtubedownload.h"
-#include "socksharedownload.h"
-#include "bitsharedownload.h"
+#include "./httpdownload.h"
+#include "./youtubedownload.h"
+#include "./socksharedownload.h"
+#include "./bitsharedownload.h"
 
 #include <c++utilities/io/path.h>
 #include <c++utilities/misc/random.h>

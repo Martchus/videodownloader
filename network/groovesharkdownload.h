@@ -1,7 +1,7 @@
 #ifndef GROOVESHARKDOWNLOAD_H
 #define GROOVESHARKDOWNLOAD_H
 
-#include "httpdownloadwithinforequst.h"
+#include "./httpdownloadwithinforequst.h"
 
 namespace Network {
 

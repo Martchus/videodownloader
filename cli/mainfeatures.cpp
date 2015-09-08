@@ -1,9 +1,9 @@
-#include "mainfeatures.h"
+#include "./mainfeatures.h"
 
-#include "network/download.h"
-#include "network/httpdownload.h"
-#include "network/youtubedownload.h"
-#include "network/groovesharkdownload.h"
+#include "../network/download.h"
+#include "../network/httpdownload.h"
+#include "../network/youtubedownload.h"
+#include "../network/groovesharkdownload.h"
 
 #include <c++utilities/conversion/stringconversion.h>
 #include <c++utilities/application/argumentparser.h>
@@ -23,6 +23,7 @@ namespace Cli {
 
 void download(int argc, char *argv[], const StringVector &parameterValues, const Argument &noConfirmArg)
 {
+    CMD_UTILS_START_CONSOLE;
     // init Qt
     QCoreApplication app(argc, argv);
     QObject rootObj;

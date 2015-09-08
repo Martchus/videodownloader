@@ -1,24 +1,25 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "downloadinteraction.h"
-#include "setrangedialog.h"
-#include "adddownloaddialog.h"
-#include "addmultipledownloadswizard.h"
-#include "settings.h"
+#include "./mainwindow.h"
+#include "./downloadinteraction.h"
+#include "./setrangedialog.h"
+#include "./adddownloaddialog.h"
+#include "./addmultipledownloadswizard.h"
+#include "./settings.h"
 
-#include "network/download.h"
-#include "network/youtubedownload.h"
-#include "network/socksharedownload.h"
-#include "network/groovesharkdownload.h"
-#include "network/bitsharedownload.h"
+#include "../network/download.h"
+#include "../network/youtubedownload.h"
+#include "../network/socksharedownload.h"
+#include "../network/groovesharkdownload.h"
+#include "../network/bitsharedownload.h"
 #ifdef CONFIG_TESTDOWNLOAD
-#include "network/testdownload.h"
+#include "../network/testdownload.h"
 #endif
 
-#include "model/downloadmodel.h"
+#include "../model/downloadmodel.h"
 
-#include "itemdelegates/progressbaritemdelegate.h"
-#include "itemdelegates/comboboxitemdelegate.h"
+#include "../itemdelegates/progressbaritemdelegate.h"
+#include "../itemdelegates/comboboxitemdelegate.h"
+
+#include "gui/ui_mainwindow.h"
 
 #include <qtutilities/aboutdialog/aboutdialog.h>
 #include <qtutilities/enterpassworddialog/enterpassworddialog.h>

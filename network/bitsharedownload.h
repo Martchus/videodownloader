@@ -1,7 +1,7 @@
 #ifndef BITSHAREDOWNLOAD_H
 #define BITSHAREDOWNLOAD_H
 
-#include "httpdownloadwithinforequst.h"
+#include "./httpdownloadwithinforequst.h"
 
 namespace Network {
 

@@ -1,4 +1,4 @@
-#include "testdownload.h"
+#include "./testdownload.h"
 
 namespace Network {
 

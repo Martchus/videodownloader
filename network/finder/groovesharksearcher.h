@@ -1,7 +1,7 @@
 #ifndef GROOVESHARKALBUM_H
 #define GROOVESHARKALBUM_H
 
-#include "downloadfinder.h"
+#include "./downloadfinder.h"
 
 #include <QStringList>
 

@@ -1,8 +1,8 @@
-#include "downloadinteraction.h"
-#include "settings.h"
+#include "./downloadinteraction.h"
+#include "./settings.h"
 
-#include "network/download.h"
-#include "network/permissionstatus.h"
+#include "../network/download.h"
+#include "../network/permissionstatus.h"
 
 #include <qtutilities/enterpassworddialog/enterpassworddialog.h>
 

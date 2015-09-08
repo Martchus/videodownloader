@@ -1,6 +1,6 @@
-#include "initiate.h"
-#include "settings.h"
-#include "mainwindow.h"
+#include "./initiate.h"
+#include "./settings.h"
+#include "./mainwindow.h"
 
 #include <qtutilities/resources/qtconfigarguments.h>
 #include <qtutilities/resources/resources.h>
@@ -32,6 +32,7 @@ int runWidgetsGui(int argc, char *argv[], const QtConfigArguments &qtConfigArgs)
     QtGui::saveSettings();
     return r;
 #else
+    CMD_UTILS_START_CONSOLE;
     cout << "Application has not been build with Qt widgets GUI support." << endl;
     return 0;
 #endif

@@ -1,4 +1,4 @@
-#include "comboboxitemdelegate.h"
+#include "./comboboxitemdelegate.h"
 
 #include "../model/downloadmodel.h"
 

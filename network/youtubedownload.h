@@ -1,7 +1,7 @@
 #ifndef YOUTUBEDOWNLOAD_H
 #define YOUTUBEDOWNLOAD_H
 
-#include "httpdownloadwithinforequst.h"
+#include "./httpdownloadwithinforequst.h"
 
 #include <QStringList>
 #include <QHash>

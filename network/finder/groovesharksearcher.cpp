@@ -1,4 +1,4 @@
-#include "groovesharksearcher.h"
+#include "./groovesharksearcher.h"
 
 #include "../groovesharkdownload.h"
 

@@ -1,8 +1,8 @@
 #ifndef DOWNLOAD_H
 #define DOWNLOAD_H
 
-#include "downloadrange.h"
-#include "optiondata.h"
+#include "./downloadrange.h"
+#include "./optiondata.h"
 
 #include <c++utilities/chrono/timespan.h>
 

@@ -1,7 +1,8 @@
-#include "setrangedialog.h"
-#include "ui_setrangedialog.h"
+#include "./setrangedialog.h"
 
-#include "network/downloadrange.h"
+#include "../network/downloadrange.h"
+
+#include "gui/ui_setrangedialog.h"
 
 #include <QMessageBox>
 

@@ -1,4 +1,4 @@
-#include "youtubeplaylist.h"
+#include "./youtubeplaylist.h"
 
 #include "../httpdownload.h"
 #include "../youtubedownload.h"

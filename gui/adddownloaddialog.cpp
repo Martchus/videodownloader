@@ -1,14 +1,15 @@
-#include "adddownloaddialog.h"
-#include "ui_adddownloaddialog.h"
+#include "./adddownloaddialog.h"
 
-#include "network/youtubedownload.h"
-#include "network/socksharedownload.h"
-#include "network/bitsharedownload.h"
-#include "network/groovesharkdownload.h"
-#include "network/filenukedownload.h"
+#include "../network/youtubedownload.h"
+#include "../network/socksharedownload.h"
+#include "../network/bitsharedownload.h"
+#include "../network/groovesharkdownload.h"
+#include "../network/filenukedownload.h"
 #ifdef UNDER_CONSTRUCTION
-#include "network/spotifydownload.h"
+#include "../network/spotifydownload.h"
 #endif
+
+#include "gui/ui_adddownloaddialog.h"
 
 #include <QInputDialog>
 #include <QSettings>

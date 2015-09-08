@@ -1,4 +1,5 @@
-#include "bitsharedownload.h"
+#include "./bitsharedownload.h"
+
 #include "../application/utils.h"
 
 #include <QUrlQuery>

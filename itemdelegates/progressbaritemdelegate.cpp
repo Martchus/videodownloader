@@ -1,6 +1,7 @@
-#include "progressbaritemdelegate.h"
+#include "./progressbaritemdelegate.h"
 
 #include "../network/download.h"
+
 #include "../model/downloadmodel.h"
 
 #include <QApplication>

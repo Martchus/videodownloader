@@ -1,4 +1,5 @@
-#include "filenukedownload.h"
+#include "./filenukedownload.h"
+
 #include "../application/utils.h"
 
 #include <QUrlQuery>

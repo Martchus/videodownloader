@@ -1,14 +1,14 @@
-#include "addmultipledownloadswizard.h"
-#include "downloadinteraction.h"
-#include "settings.h"
+#include "./addmultipledownloadswizard.h"
+#include "./downloadinteraction.h"
+#include "./settings.h"
 
-#include "network/download.h"
-#include "network/finder/downloadfinder.h"
-#include "network/finder/linkfinder.h"
-#include "network/finder/youtubeplaylist.h"
-#include "network/finder/groovesharksearcher.h"
+#include "../network/download.h"
+#include "../network/finder/downloadfinder.h"
+#include "../network/finder/linkfinder.h"
+#include "../network/finder/youtubeplaylist.h"
+#include "../network/finder/groovesharksearcher.h"
 
-#include "model/downloadfinderresultsmodel.h"
+#include "../model/downloadfinderresultsmodel.h"
 
 #include <qtutilities/widgets/clearlineedit.h>
 

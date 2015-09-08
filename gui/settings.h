@@ -2,9 +2,9 @@
 #define SETTINGSDIALOG_H
 
 // is not required here when building with GCC 4.9.1 or Clan 3.5 - MinGW 4.9.1 fails without including UI headers here
-#include "ui_targetpage.h"
-#include "ui_proxypage.h"
-#include "ui_useragentpage.h"
+#include "gui/ui_targetpage.h"
+#include "gui/ui_proxypage.h"
+#include "gui/ui_useragentpage.h"
 
 #include <qtutilities/settingsdialog/settingsdialog.h>
 #include <qtutilities/settingsdialog/optionpage.h>

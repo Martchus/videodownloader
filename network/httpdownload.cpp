@@ -1,5 +1,6 @@
-#include "httpdownload.h"
-#include "misc/contentdispositionparser.h"
+#include "./httpdownload.h"
+
+#include "./misc/contentdispositionparser.h"
 
 #include <QFileInfo>
 

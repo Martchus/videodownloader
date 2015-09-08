@@ -1,4 +1,5 @@
-#include "socksharedownload.h"
+#include "./socksharedownload.h"
+
 #include "../application/utils.h"
 
 #include <QUrlQuery>

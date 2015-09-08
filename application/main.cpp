@@ -1,5 +1,5 @@
-#include "cli/mainfeatures.h"
-#include "gui/initiate.h"
+#include "../cli/mainfeatures.h"
+#include "../gui/initiate.h"
 
 #if defined(GUI_QTWIDGETS) || defined(GUI_QTQUICK)
 # include <qtutilities/resources/qtconfigarguments.h>
@@ -8,6 +8,7 @@
 #endif
 
 #include <c++utilities/application/failure.h>
+#include <c++utilities/application/commandlineutils.h>
 #include <qtutilities/resources/resources.h>
 
 #include <QCoreApplication>
@@ -40,6 +41,7 @@ int main(int argc, char *argv[])
     try {
         parser.parseArgs(argc, argv);
     } catch (Failure &ex) {
+        CMD_UTILS_START_CONSOLE;
         cout << "Unable to parse arguments. " << ex.what() << "\nSee --help for available commands." << endl;
     }
     // set meta info for application

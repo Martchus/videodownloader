@@ -1,6 +1,7 @@
-#include "linkfinder.h"
+#include "./linkfinder.h"
 
 #include "../httpdownload.h"
+
 #include "../../application/utils.h"
 
 #include <QRegExp>

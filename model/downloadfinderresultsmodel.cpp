@@ -1,7 +1,7 @@
-#include "downloadfinderresultsmodel.h"
+#include "./downloadfinderresultsmodel.h"
 
-#include "network/finder/downloadfinder.h"
-#include "network/download.h"
+#include "../network/finder/downloadfinder.h"
+#include "../network/download.h"
 
 #include <functional>
 

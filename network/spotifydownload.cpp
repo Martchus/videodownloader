@@ -1,4 +1,5 @@
-#include "spotifydownload.h"
+#include "./spotifydownload.h"
+
 #include "../application/utils.h"
 
 #include <QUrlQuery>

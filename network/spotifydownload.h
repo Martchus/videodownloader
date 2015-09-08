@@ -1,7 +1,7 @@
 #ifndef SPOTIFYDOWNLOAD_H
 #define SPOTIFYDOWNLOAD_H
 
-#include "httpdownloadwithinforequst.h"
+#include "./httpdownloadwithinforequst.h"
 
 namespace Network {
 

@@ -1,7 +1,7 @@
-#include "clidownloadinteraction.h"
+#include "./clidownloadinteraction.h"
 
-#include "network/download.h"
-#include "network/permissionstatus.h"
+#include "../network/download.h"
+#include "../network/permissionstatus.h"
 
 #include <c++utilities/application/commandlineutils.h>
 

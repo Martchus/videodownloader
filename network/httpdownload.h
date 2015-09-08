@@ -1,7 +1,7 @@
 #ifndef HTTPDOWNLOAD_H
 #define HTTPDOWNLOAD_H
 
-#include "download.h"
+#include "./download.h"
 
 #include <QNetworkAccessManager>
 #include <QEventLoop>

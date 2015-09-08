@@ -1,7 +1,7 @@
 #ifndef HTTPDOWNLOADWITHINFOREQUST_H
 #define HTTPDOWNLOADWITHINFOREQUST_H
 
-#include "httpdownload.h"
+#include "./httpdownload.h"
 
 #include <QBuffer>
 #include <QList>
