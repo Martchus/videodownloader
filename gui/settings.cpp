@@ -371,7 +371,7 @@ bool NetworkStatsOptionPage::apply()
 void NetworkStatsOptionPage::reset()
 {
     if(hasBeenShown()) {
-        m_receivedLabel->setText(QStringLiteral("%1 (%2 bytes)").arg(QString::fromStdString(ConversionUtilities::dataSizeToString(bytesReceived())), QString::number(bytesReceived())));
+        m_receivedLabel->setText(QString::fromStdString(ConversionUtilities::dataSizeToString(bytesReceived(), true)));
     }
 }
 

@@ -5,6 +5,7 @@
 #include <QUrlQuery>
 
 using namespace Application;
+using namespace ChronoUtilities;
 
 namespace Network {
 
@@ -112,7 +113,7 @@ void SockshareDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffe
                     if(substring(videoInfo, str, pos, QStringLiteral("duration=\""), QStringLiteral("\""))) {
                         bool ok;
                         int duration = str.toInt(&ok);
-                        if(ok) setDuration(duration);
+                        if(ok) setDuration(TimeSpan(duration));
                     }
                     reportInitiated(true);
                 }
