@@ -54,7 +54,7 @@ QJsonObject loadJsonObjectFromResource(const QString &resource, QString *error)
                 return doc.object();
             else {
                 if(error) {
-                    *error = QStringLiteral("Json doesn't contain a main object.");
+                    *error = QStringLiteral("JSON doesn't contain a main object.");
                 }
             }
         } else {
