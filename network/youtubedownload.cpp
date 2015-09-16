@@ -2,6 +2,8 @@
 
 #include "../application/utils.h"
 
+#include <qtutilities/resources/resources.h>
+
 #include <QUrlQuery>
 #include <QJsonDocument>
 
@@ -55,7 +57,12 @@ Download *YoutubeDownload::infoRequestDownload(bool &sucess, QString &reasonForF
 void YoutubeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
 {
     if(m_itagInfo.isEmpty()) {
-        m_itagInfo = loadJsonObjectFromResource(QStringLiteral(":/jsonobjects/itaginfo"));
+        // allow an external config file to be used instead of built-in values
+        QString path = ConfigFile::locateConfigFile(QStringLiteral("videodownloader"), QStringLiteral("itaginfo.json"));
+        if(path.isEmpty()) {
+            path = QStringLiteral(":/jsonobjects/itaginfo");
+        }
+        m_itagInfo = loadJsonObjectFromResource(path);
     }
     videoInfoBuffer->seek(0);
     QString videoInfo(videoInfoBuffer->readAll());
@@ -166,17 +173,21 @@ QString YoutubeDownload::videoInfo(QString field, const QString &defaultValue)
 
 QString YoutubeDownload::suitableFilename() const
 {
-    QString filename = Download::suitableFilename();
+    auto filename = Download::suitableFilename();
     // get chosen option, the original option (not the redirection!) is required
-    size_t originalOption = chosenOption();
+    auto originalOption = chosenOption();
     while(originalOption != options().at(originalOption).redirectionOf()) {
         originalOption = options().at(originalOption).redirectionOf();
     }
     QString extension;
     if(originalOption < static_cast<size_t>(m_itags.size())) {
-        QString itag = m_itags.at(originalOption);
+        const auto itag = m_itags.at(originalOption);
         if(m_itagInfo.contains(itag)) {
-            extension = m_itagInfo.value(itag).toObject().value(QStringLiteral("container")).toString().toLower();
+            const auto itagObj = m_itagInfo.value(itag).toObject();
+            extension = itagObj.value(QStringLiteral("ext")).toString();
+            if(extension.isEmpty()) {
+                extension = itagObj.value(QStringLiteral("container")).toString().toLower();
+            }
         }
     }
     if(extension.isEmpty()) {

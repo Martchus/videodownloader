@@ -41,8 +41,10 @@ public:
     static QString &targetDirectory();
     static bool &overwriteWithoutAsking();
     static bool &determineTargetFileWithoutAsking();
+
 protected:
     QWidget *setupWidget();
+
 private:
     void selectTargetDirectory();
 };
@@ -59,8 +61,10 @@ public:
     static QByteArray &mainWindowGeometry();
     static QByteArray &mainWindowState();
     static bool &multiSelection();
+
 protected:
     QWidget *setupWidget();
+
 private:
     QCheckBox *m_multiSelectionCheckBox;
 };
@@ -75,8 +79,10 @@ public:
     bool apply();
     void reset();
     static QNetworkProxy &proxy();
+
 protected:
     QWidget *setupWidget();
+
 private:
     void updateProxy();
 };
@@ -104,8 +110,10 @@ public:
     bool apply();
     void reset();
     static bool &redirectWithoutAsking();
+
 protected:
     QWidget *setupWidget();
+
 private:
     QCheckBox *m_redirectCheckBox;
 };
@@ -120,8 +128,10 @@ public:
     bool apply();
     void reset();
     static quint64 &bytesReceived();
+
 protected:
     QWidget *setupWidget();
+
 private:
     QLabel *m_receivedLabel;
 };

@@ -3,6 +3,7 @@
 #include "../network/download.h"
 #include "../network/groovesharkdownload.h"
 
+#include <qtutilities/resources/resources.h>
 #include <qtutilities/settingsdialog/optioncategory.h>
 #include <qtutilities/settingsdialog/optioncategorymodel.h>
 #include <qtutilities/widgets/clearlineedit.h>
@@ -464,32 +465,15 @@ void restoreSettings()
     GeneralUiOptionPage::multiSelection() = settings.value("multiselection").toBool();
 
     // load grooveshark authentication file
-    QString groovesharkAuthenticationFile = QStringLiteral("groovesharkauthenticationinfo.json");
-    QString errorMsg = QApplication::translate("QtGui::Settings", "Unable to read Grooveshark authentication information file.\n\nReason: %1\n\nThe values stored in this file are required when connection to Grooveshark. Built-in will values be used instead, but these might be deprecated.");
+    const auto errorMsg = QApplication::translate("QtGui::Settings", "Unable to read Grooveshark authentication information file.\n\nReason: %1\n\nThe values stored in this file are required when connection to Grooveshark. Built-in will values be used instead, but these might be deprecated.");
+    const auto groovesharkAuthenticationFile = ConfigFile::locateConfigFile(QStringLiteral("videodownloader"), QStringLiteral("json/groovesharkauthenticationinfo.json"), &settings);
     QString reason;
-    if(!QFile::exists(groovesharkAuthenticationFile)) {
-        groovesharkAuthenticationFile = QStringLiteral("./res/groovesharkauthenticationinfo.json");
-        if(!QFile::exists(groovesharkAuthenticationFile)) {
-            groovesharkAuthenticationFile = QStringLiteral("/etc/videodownloader/json/groovesharkauthenticationinfo.json");
-            if(!QFile::exists(groovesharkAuthenticationFile)) {
-                groovesharkAuthenticationFile = QStringLiteral("/usr/share/videodownloader/json/groovesharkauthenticationinfo.json");
-            }
-        }
-    }
-    if(QFile::exists(groovesharkAuthenticationFile)) {
+    if(!groovesharkAuthenticationFile.isEmpty()) {
         if(!GroovesharkDownload::loadAuthenticationInformationFromFile(groovesharkAuthenticationFile, &reason)) {
-            QMessageBox::warning(nullptr, QApplication::applicationName(), errorMsg.arg(errorMsg));
+            QMessageBox::warning(nullptr, QApplication::applicationName(), errorMsg.arg(reason));
         }
     } else {
-        QDir settingsDir = QFileInfo(settings.fileName()).absoluteDir();
-        QString groovesharkAuthenticationFilePath = settingsDir.absoluteFilePath(groovesharkAuthenticationFile);
-        if(QFile::exists(groovesharkAuthenticationFilePath)) {
-            if(!GroovesharkDownload::loadAuthenticationInformationFromFile(groovesharkAuthenticationFilePath, &reason)) {
-                QMessageBox::warning(nullptr, QApplication::applicationName(), errorMsg.arg(reason));
-            }
-        } else {
-            QMessageBox::warning(nullptr, QApplication::applicationName(), errorMsg.arg(QApplication::translate("QtGui::Settings", "Unable to find \"groovesharkauthenticationinfo.json\".")));
-        }
+        QMessageBox::warning(nullptr, QApplication::applicationName(), errorMsg.arg(QApplication::translate("QtGui::Settings", "Unable to find \"groovesharkauthenticationinfo.json\".")));
     }
 }
 

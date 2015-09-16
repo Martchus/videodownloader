@@ -460,7 +460,7 @@ void GroovesharkDownload::setupFinalRequest()
         setHeader("Refer", m_referer);
         setHeader("Accept", m_accept);
         //setHeader("Connection", "keep-alive");
-        addDownloadUrl(tr("Grooveshark json request"), QUrl(QStringLiteral("http://grooveshark.com/more.php?%1").arg(method)));
+        addDownloadUrl(tr("Grooveshark json request"), QUrl(QStringLiteral("http://grooveshark.com/more.php?") + method));
         break;
     }
     }
