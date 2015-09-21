@@ -58,7 +58,7 @@ void YoutubeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
 {
     if(m_itagInfo.isEmpty()) {
         // allow an external config file to be used instead of built-in values
-        QString path = ConfigFile::locateConfigFile(QStringLiteral("videodownloader"), QStringLiteral("itaginfo.json"));
+        QString path = ConfigFile::locateConfigFile(QStringLiteral("videodownloader"), QStringLiteral("json/itaginfo.json"));
         if(path.isEmpty()) {
             path = QStringLiteral(":/jsonobjects/itaginfo");
         }
