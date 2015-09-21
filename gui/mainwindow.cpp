@@ -194,7 +194,7 @@ MainWindow::~MainWindow()
 void MainWindow::showAboutDialog()
 {
     if(!m_aboutDlg) {
-        m_aboutDlg = new Dialogs::AboutDialog(this, tr("A simple YouTube and Grooveshark downloader."), QImage(QStringLiteral(":/icons/hicolor/128x128/apps/videodownloader.png")));
+        m_aboutDlg = new Dialogs::AboutDialog(this, tr("A video downloader with Qt GUI (currently only YouTube is maintained)."), QImage(QStringLiteral(":/icons/hicolor/128x128/apps/videodownloader.png")));
     }
     if(m_aboutDlg->isHidden()) {
         m_aboutDlg->showNormal();
