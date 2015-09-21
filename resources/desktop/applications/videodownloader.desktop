@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Video Downloader
-GenericName=Video Downloader
+GenericName=Video downloader
 Comment=A simple YouTube and Grooveshark downloader.
 Exec=videodownloader
 Icon=videodownloader
