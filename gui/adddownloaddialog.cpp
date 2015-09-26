@@ -11,11 +11,14 @@
 
 #include "gui/ui_adddownloaddialog.h"
 
+#include <qtutilities/misc/dialogutils.h>
+
 #include <QInputDialog>
 #include <QSettings>
 #include <QClipboard>
 #include <QMessageBox>
 
+using namespace Dialogs;
 using namespace Network;
 
 namespace QtGui {
@@ -41,13 +44,8 @@ AddDownloadDialog::AddDownloadDialog(QWidget *parent) :
     m_selectDownloadTypeInputDialog(nullptr)
 {
     m_ui->setupUi(this);
-
-#ifdef Q_OS_WIN32
-    setStyleSheet(QStringLiteral("#mainWidget { color: black; background-color: white; border: none; } #bottomWidget { background-color: #F0F0F0; border-top: 1px solid #DFDFDF; } QMessageBox QLabel, QInputDialog QLabel, #mainInstructionLabel { font-size: 12pt; color: #003399; }"));
-#else
-    setStyleSheet(QStringLiteral("#mainInstructionLabel { font-weight: bold; }"));
-#endif
-
+    makeHeading(m_ui->mainInstructionLabel);
+    setStyleSheet(dialogStyle());
     connect(m_ui->backPushButton, &QPushButton::clicked, this, &AddDownloadDialog::back);
     connect(m_ui->addPushButton, &QPushButton::clicked, this, &AddDownloadDialog::setLastUrl);
     connect(m_ui->addPushButton, &QPushButton::clicked, this, &AddDownloadDialog::addDownloadClicked);

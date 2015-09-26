@@ -4,8 +4,11 @@
 
 #include "gui/ui_setrangedialog.h"
 
+#include <qtutilities/misc/dialogutils.h>
+
 #include <QMessageBox>
 
+using namespace Dialogs;
 using namespace Network;
 
 namespace QtGui {
@@ -17,7 +20,7 @@ SetRangeDialog::SetRangeDialog(DownloadRange &range, QWidget *parent) :
 {
     m_ui->setupUi(this);
 #ifdef Q_OS_WIN32
-    setStyleSheet(QStringLiteral("#mainWidget { color: black; background-color: white; border: none; } #bottomWidget { background-color: #F0F0F0; border-top: 1px solid #DFDFDF; } QMessageBox QLabel, QInputDialog QLabel { font-size: 12pt; color: #003399; }"));
+    setStyleSheet(dialogStyle());
 #endif
     m_ui->fromSpinBox->setValue(range.startOffset());
     m_ui->toSpinBox->setValue(range.endOffset());
