@@ -89,14 +89,14 @@ GroovesharkDownload::GroovesharkDownload(GroovesharkRequestType requestType, con
     }
 }
 
-Download *GroovesharkDownload::infoRequestDownload(bool &sucess, QString &reasonForFail)
+Download *GroovesharkDownload::infoRequestDownload(bool &success, QString &reasonForFail)
 {
     Download *download = nullptr;
     QJsonObject headerObj;
     QJsonObject paramObj;
     switch(m_currentStep) {
     case -1:
-        sucess = true;
+        success = true;
         break;
     case 0:
         if(m_sessionId.isNull()) {
@@ -108,7 +108,7 @@ Download *GroovesharkDownload::infoRequestDownload(bool &sucess, QString &reason
             headerObj.insert(QStringLiteral("country"), m_country);
             download = createJsonPostRequest(QStringLiteral("initiateSession"), headerObj, paramObj);
         }
-        sucess = true;
+        success = true;
         break;
     case 1:
         if(m_token.isEmpty()) {
@@ -122,7 +122,7 @@ Download *GroovesharkDownload::infoRequestDownload(bool &sucess, QString &reason
             paramObj.insert(QStringLiteral("secretKey"), generateSecretKey());
             download = createJsonPostRequest(QStringLiteral("getCommunicationToken"), headerObj, paramObj, true);
         }
-        sucess = true;
+        success = true;
         break;
     case 2:
         // getStreamKeyFromSongIDEx
@@ -138,11 +138,11 @@ Download *GroovesharkDownload::infoRequestDownload(bool &sucess, QString &reason
         paramObj.insert(QStringLiteral("songID"), QJsonValue(id()));
         paramObj.insert(QStringLiteral("prefetch"), QJsonValue(false));
         download = createJsonPostRequest("getStreamKeyFromSongIDEx", headerObj, paramObj);
-        sucess = true;
+        success = true;
         break;
     default:
         reasonForFail = QStringLiteral("Internal error.");
-        sucess = false;
+        success = false;
     }
     return download;
 }
@@ -476,7 +476,7 @@ GroovesharkRequestType GroovesharkDownload::requestType() const
 
 QString GroovesharkDownload::suitableFilename() const
 {
-    QString filename = Download::suitableFilename();
+    auto filename = Download::suitableFilename();
     if(!filename.endsWith(QLatin1String(".mp3"))) {
         filename.append(QStringLiteral(".mp3"));
     }

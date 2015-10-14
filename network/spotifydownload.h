@@ -19,7 +19,7 @@ class SpotifyDownload : public HttpDownloadWithInfoRequst
 public:
     explicit SpotifyDownload(const QString &songid, QObject *parent = nullptr);
 
-    Download *infoRequestDownload(bool &sucess, QString &reasonForFail);
+    Download *infoRequestDownload(bool &success, QString &reasonForFail);
     QString typeName() const;
 
     static void resetSession();

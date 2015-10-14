@@ -67,7 +67,7 @@ private slots:
 
 private:
     void emitNewResultsSignal();
-    void emitFinishedSignal(bool sucess, const QString &reason = QString());
+    void emitFinishedSignal(bool success, const QString &reason = QString());
 
     std::unique_ptr<Download> m_download;
     std::unique_ptr<QBuffer> m_buffer;
@@ -177,10 +177,10 @@ inline void DownloadFinder::reportCollectionTitle(const QString &title)
 /*!
  * \brief Emits the finished signal.
  */
-inline void DownloadFinder::emitFinishedSignal(bool sucess, const QString &reason)
+inline void DownloadFinder::emitFinishedSignal(bool success, const QString &reason)
 {
     m_finished = true;
-    emit finished(sucess, reason);
+    emit finished(success, reason);
 }
 
 }

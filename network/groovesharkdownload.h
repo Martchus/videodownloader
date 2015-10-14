@@ -36,7 +36,7 @@ public:
     explicit GroovesharkDownload(const QString &songId, QObject *parent = nullptr);
     explicit GroovesharkDownload(GroovesharkRequestType requestType, const QVariant &requestData, QObject *parent = nullptr);
 
-    Download *infoRequestDownload(bool &sucess, QString &reasonForFail);
+    Download *infoRequestDownload(bool &success, QString &reasonForFail);
     bool isInitiatingInstantlyRecommendable() const;
 
     static QJsonValue sessionId();

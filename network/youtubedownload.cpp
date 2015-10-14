@@ -33,7 +33,7 @@ YoutubeDownload::YoutubeDownload(const QString &id, QObject *parent) :
     HttpDownloadWithInfoRequst(QUrl(QStringLiteral("http://www.youtube.com/watch?v=%1").arg(id)), parent)
 {}
 
-Download *YoutubeDownload::infoRequestDownload(bool &sucess, QString &reasonForFail)
+Download *YoutubeDownload::infoRequestDownload(bool &success, QString &reasonForFail)
 {
     const QUrl &url = initialUrl();
     QString videoId;
@@ -44,12 +44,12 @@ Download *YoutubeDownload::infoRequestDownload(bool &sucess, QString &reasonForF
         videoId.remove(0, 1);
     }
     if(videoId.isEmpty()) {
-        sucess = false;
+        success = false;
         reasonForFail = tr("The video ID couldn't be identified.");
         return nullptr;
     } else {
         setId(videoId);
-        sucess = true;
+        success = true;
         return new HttpDownload(QUrl(QStringLiteral("http://www.youtube.com/get_video_info?video_id=%1&asv=3&el=detailpage&hl=en_US").arg(videoId)));
     }
 }

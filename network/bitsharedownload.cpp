@@ -20,9 +20,9 @@ BitshareDownload::BitshareDownload(const QUrl &url, QObject *parent) :
     HttpDownloadWithInfoRequst(url, parent)
 {}
 
-Download *BitshareDownload::infoRequestDownload(bool &sucess, QString &)
+Download *BitshareDownload::infoRequestDownload(bool &success, QString &)
 {
-    sucess = true;
+    success = true;
     HttpDownload *download = new HttpDownload(initialUrl());
     download->setCookieJar(usedCookieJar());
     return download;

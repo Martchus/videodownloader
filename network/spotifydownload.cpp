@@ -54,26 +54,26 @@ void SpotifyDownload::resetSession()
     m_creationFlow.clear();
 }
 
-Download *SpotifyDownload::infoRequestDownload(bool &sucess, QString &reasonForFail)
+Download *SpotifyDownload::infoRequestDownload(bool &success, QString &reasonForFail)
 {
     HttpDownload *download = nullptr;
     if(m_csrftoken.isEmpty() || m_trackingId.isEmpty()/* || creationFlow.isEmpty()*/) {
         if(m_triesToGetAuthenticationData < 2) {
             download = new HttpDownload(m_spotifyUrl);
             download->setCustomUserAgent(m_supportedUseragents.at(0));
-            sucess = true;
+            success = true;
             ++m_triesToGetAuthenticationData;
             m_currentRequest = SpotifyRequestType::GetAuthenticationData;
         } else {
             reasonForFail = tr("Unable to find data required for autentication.");
-            sucess = false;
+            success = false;
         }
     } else if(!m_authenticationCredentialsValidated) {
         if(initialAuthenticationCredentials().isIncomplete()) {
             reportAuthenticationRequired(-1, tr("To download songs from Spotify authentication is required so you have to enter the credentials of your Spotify account."));
             reasonForFail = tr("Authentication credentials not given.");
             //networkError = QNetworkReply::AuthenticationRequiredError;
-            sucess = false;
+            success = false;
         } else {
             QUrl url(m_spotifyUrl);
             url.setPath(QStringLiteral("/xhr/json/auth.php"));
@@ -92,7 +92,7 @@ Download *SpotifyDownload::infoRequestDownload(bool &sucess, QString &reasonForF
             download->setPostData(postData);
             download->setCustomUserAgent(m_supportedUseragents.at(0));
 
-            sucess = true;
+            success = true;
             m_currentRequest = SpotifyRequestType::Authenticate;
         }
     }

@@ -23,29 +23,29 @@ SockshareDownload::SockshareDownload(const QUrl &url, QObject *parent) :
     m_currentStep(0)
 {}
 
-Download *SockshareDownload::infoRequestDownload(bool &sucess, QString &reasonForFail)
+Download *SockshareDownload::infoRequestDownload(bool &success, QString &reasonForFail)
 {
     HttpDownload *download;
     switch(m_currentStep)
     {
     case 0:
         download = new HttpDownload(initialUrl());
-        sucess = true;
+        success = true;
         return download;
     case 1:
         download = new HttpDownload(initialUrl());
         download->setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
         download->setMethod(HttpDownloadMethod::Post);
         download->setPostData(m_postData);
-        sucess = true;
+        success = true;
         return download;
     case 2:
         download = new HttpDownload(m_playlistUrl);
-        sucess = true;
+        success = true;
         return download;
     default:
         reasonForFail = tr("Internal error.");
-        sucess = false;
+        success = false;
         return nullptr;
     }
 }

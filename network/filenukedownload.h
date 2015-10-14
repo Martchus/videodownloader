@@ -12,7 +12,7 @@ class FileNukeDownload : public HttpDownloadWithInfoRequst
 public:
     explicit FileNukeDownload(const QUrl &url, QObject *parent = nullptr);
 
-    Download *infoRequestDownload(bool &sucess, QString &reasonForFail);
+    Download *infoRequestDownload(bool &success, QString &reasonForFail);
     QString typeName() const;
 
 protected:

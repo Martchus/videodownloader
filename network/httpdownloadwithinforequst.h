@@ -19,7 +19,7 @@ public:
     explicit HttpDownloadWithInfoRequst(const QUrl &url, QObject *parent = nullptr);
     ~HttpDownloadWithInfoRequst();
 
-    virtual Download *infoRequestDownload(bool &sucess, QString &reasonForFail) = 0;
+    virtual Download *infoRequestDownload(bool &success, QString &reasonForFail) = 0;
     void doInit();
     void abortDownload();
 

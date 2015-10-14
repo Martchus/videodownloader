@@ -12,7 +12,7 @@ class BitshareDownload : public HttpDownloadWithInfoRequst
 public:
     explicit BitshareDownload(const QUrl &url, QObject *parent = nullptr);
 
-    virtual Download *infoRequestDownload(bool &sucess, QString &reasonForFail);
+    virtual Download *infoRequestDownload(bool &success, QString &reasonForFail);
     virtual QString typeName() const;
 
 protected:
