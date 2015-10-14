@@ -64,7 +64,6 @@ void YoutubeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
         }
         m_itagInfo = loadJsonObjectFromResource(path);
     }
-    videoInfoBuffer->seek(0);
     QString videoInfo(videoInfoBuffer->readAll());
     QStringList completeFields = videoInfo.split(QChar('&'), QString::SkipEmptyParts, Qt::CaseSensitive);
     foreach(QString completeField, completeFields) {
@@ -100,10 +99,7 @@ void YoutubeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
                 QStringList sections = fmtField.split(QChar(','), QString::SkipEmptyParts, Qt::CaseSensitive);
                 foreach(QString section, sections) {
                     QStringList fmtParts = section.split(QChar('&'), QString::SkipEmptyParts, Qt::CaseSensitive);
-                    QString itag;
-                    QString urlPart1;
-                    QString urlPart2;
-                    QString name;
+                    QString itag, urlPart1, urlPart2, name;
                     QJsonObject itagObj;
                     foreach(QString fmtPart, fmtParts) {
                         QStringList fmtSubParts = fmtPart.split(QChar('='), QString::SkipEmptyParts, Qt::CaseSensitive);
@@ -150,7 +146,7 @@ void YoutubeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
                 }
             }
         }
-        if(availableOptionCount() > 0) {
+        if(availableOptionCount()) {
             reportInitiated(true);
         } else {
             reportInitiated(false, tr("Couldn't pharse the video info. The status of the video info is ok, but it seems like YouTube changed something in their API."));

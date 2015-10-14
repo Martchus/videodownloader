@@ -35,7 +35,6 @@ QString BitshareDownload::typeName() const
 
 void BitshareDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
 {
-    videoInfoBuffer->seek(0);
     QString videoInfo(videoInfoBuffer->readAll());
     QString title;
     if(substring(videoInfo, title, 0, QStringLiteral("<title>Streaming "), QStringLiteral(" ")) > 0 && !title.isEmpty()) {

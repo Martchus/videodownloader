@@ -181,7 +181,6 @@ void GroovesharkDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuf
 {
     QString code;
     if(videoInfoBuffer) { // the buffer might be zero!
-        videoInfoBuffer->seek(0);
         code.append(videoInfoBuffer->readAll());
     }
     switch(m_currentStep) {

@@ -104,7 +104,6 @@ void SpotifyDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
     if(m_currentRequest == SpotifyRequestType::Invalid)
         reportInitiated(false, tr("Interal error (current request type not set)."));
     else {
-        videoInfoBuffer->seek(0);
         switch(m_currentRequest) {
         case SpotifyRequestType::GetAuthenticationData: {
             QString responseData(videoInfoBuffer->readAll());

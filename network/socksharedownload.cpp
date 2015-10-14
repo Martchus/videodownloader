@@ -57,7 +57,6 @@ QString SockshareDownload::typeName() const
 
 void SockshareDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
 {
-    videoInfoBuffer->seek(0);
     QString videoInfo(videoInfoBuffer->readAll());
     int pos;
     QString str;

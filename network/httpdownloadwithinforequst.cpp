@@ -82,6 +82,7 @@ void HttpDownloadWithInfoRequst::infoRequestChangedStatus(Download *download)
         if(!m_infoBuffer) {
             reportInitiated(false, tr("The initialization data buffer hasn't been initialized."));
         } else {
+            m_infoBuffer->seek(0);
             evalVideoInformation(download, m_infoBuffer.get());
             m_infoDownload.reset();
         }
