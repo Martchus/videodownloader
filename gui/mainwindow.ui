@@ -43,7 +43,7 @@
      <x>0</x>
      <y>0</y>
      <width>966</width>
-     <height>29</height>
+     <height>27</height>
     </rect>
    </property>
    <property name="nativeMenuBar">
@@ -207,6 +207,9 @@
    <property name="toolTip">
     <string>Add multiple downloads (e. g. from a Youtube playlist)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
+   </property>
   </action>
   <action name="actionRemove_selected_downloads_from_list">
    <property name="enabled">
@@ -282,6 +285,9 @@
    <property name="toolTip">
     <string>Add a single download</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
   </action>
   <action name="actionSettings">
    <property name="icon">
@@ -291,6 +297,9 @@
    </property>
    <property name="text">
     <string>&amp;Settings</string>
+   </property>
+   <property name="shortcut">
+    <string>F8</string>
    </property>
   </action>
   <action name="actionQuit">
