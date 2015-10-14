@@ -62,7 +62,8 @@ SOURCES += application/main.cpp \
     network/optiondata.cpp \
     gui/initiate.cpp \
     cli/mainfeatures.cpp \
-    cli/clidownloadinteraction.cpp
+    cli/clidownloadinteraction.cpp \
+    network/vimeodownload.cpp
 
 HEADERS += application/main.h \
     network/bitsharedownload.h \
@@ -97,7 +98,8 @@ HEADERS += application/main.h \
     application/main.h \
     gui/initiate.h \
     cli/mainfeatures.h \
-    cli/clidownloadinteraction.h
+    cli/clidownloadinteraction.h \
+    network/vimeodownload.h
 
 testdownload {
     SOURCES += network/testdownload.cpp

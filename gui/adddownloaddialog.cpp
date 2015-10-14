@@ -1,6 +1,7 @@
 #include "./adddownloaddialog.h"
 
 #include "../network/youtubedownload.h"
+#include "../network/vimeodownload.h"
 #include "../network/socksharedownload.h"
 #include "../network/bitsharedownload.h"
 #include "../network/groovesharkdownload.h"
@@ -26,6 +27,7 @@ namespace QtGui {
 QStringList AddDownloadDialog::m_knownDownloadTypeNames = QStringList()
         << QStringLiteral("standard http(s)/ftp")
         << QStringLiteral("Youtube")
+        << QStringLiteral("Vimeo")
         << QStringLiteral("Grooveshark")
         << QStringLiteral("Sockshare/Putlocker")
         << QStringLiteral("Bitshare")
@@ -82,15 +84,17 @@ Download *AddDownloadDialog::result() const
     case 1:
         return new YoutubeDownload(QUrl(res));
     case 2:
-        return new GroovesharkDownload(res);
+        return new VimeoDownload(QUrl(res));
     case 3:
-        return new SockshareDownload(QUrl(res));
+        return new GroovesharkDownload(res);
     case 4:
-        return new BitshareDownload(QUrl(res));
+        return new SockshareDownload(QUrl(res));
     case 5:
+        return new BitshareDownload(QUrl(res));
+    case 6:
         return new FileNukeDownload(QUrl(res));
 #ifdef UNDER_CONSTRUCTION
-    case 6:
+    case 7:
         return new SpotifyDownload(res);
 #endif
     default:
@@ -143,17 +147,18 @@ void AddDownloadDialog::textChanged(const QString &text)
     if(!text.isEmpty()) {
         // entered value might be a grooveshark song id
         bool isValidGroovesharkId = true;
-        foreach(QChar c, text)
+        for(const auto c : text) {
             if(!c.isDigit()) {
                 isValidGroovesharkId = false;
                 break;
             }
+        }
         if(isValidGroovesharkId) {
             m_ui->downloadTypeInfoWidget->setHidden(false);
             m_ui->addPushButton->setEnabled(true);
             m_validInput = true;
 
-            m_downloadTypeIndex = 2;
+            m_downloadTypeIndex = 3;
             m_ui->downloadTypeLabel->setText(tr("The entered number will be treated as Grooveshark song id."));
             return;
         }
@@ -175,12 +180,14 @@ void AddDownloadDialog::textChanged(const QString &text)
                     m_downloadTypeIndex = 0;
                     if(host.contains(QLatin1String("youtube"), Qt::CaseInsensitive) || host.startsWith(QLatin1String("youtu.be"))) {
                         m_downloadTypeIndex = 1;
+                    } else if(host.contains(QLatin1String("vimeo"))) {
+                        m_downloadTypeIndex = 2;
                     } else if(host.contains(QLatin1String("sockshare")) || host.contains(QLatin1String("putlocker"))) {
-                        m_downloadTypeIndex = 4;
-                    } else if(host.contains(QLatin1String("bitshare"))) {
                         m_downloadTypeIndex = 5;
-                    } else if(host.contains(QLatin1String("filenuke"))) {
+                    } else if(host.contains(QLatin1String("bitshare"))) {
                         m_downloadTypeIndex = 6;
+                    } else if(host.contains(QLatin1String("filenuke"))) {
+                        m_downloadTypeIndex = 7;
                     }
                     if(m_downloadTypeIndex) {
                         m_ui->downloadTypeLabel->setText(tr("The entered url seems to be from %1 so it will be added as %1 download.").arg(m_knownDownloadTypeNames.at(m_downloadTypeIndex)));
