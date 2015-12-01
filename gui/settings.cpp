@@ -407,12 +407,12 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     category = new Dialogs::OptionCategory(this);
     category->setDisplayName(tr("General"));
     category->assignPages(QList<Dialogs::OptionPage *>() << new GeneralTargetOptionPage(this) << new GeneralUiOptionPage());
-    category->setIcon(QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-general.png")));
+    category->setIcon(QIcon::fromTheme(QStringLiteral("preferences-other"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-general.png"))));
     categories << category;
 
     category = new Dialogs::OptionCategory(this);
     category->setDisplayName(tr("Network"));
-    category->setIcon(QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-network.png")));
+    category->setIcon(QIcon::fromTheme(QStringLiteral("preferences-system-network"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-network.png"))));
     category->assignPages(QList<Dialogs::OptionPage *>() << new NetworkProxyOptionPage() << new NetworkUserAgentOptionPage() << new NetworkMiscOptionPage() << new NetworkStatsOptionPage());
     categories << category;
 
