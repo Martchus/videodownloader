@@ -3,7 +3,7 @@ appname = "Video Downloader"
 appauthor = Martchus
 appurl = "https://github.com/$${appauthor}/$${projectname}"
 QMAKE_TARGET_DESCRIPTION = "A video downloader with Qt GUI (currently only YouTube is maintained)."
-VERSION = 1.2.0
+VERSION = 1.2.1
 
 # include ../../common.pri when building as part of a subdirs project; otherwise include general.pri
 !include(../../common.pri) {
