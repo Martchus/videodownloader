@@ -2,7 +2,7 @@
 
 #include "../network/downloadrange.h"
 
-#include "gui/ui_setrangedialog.h"
+#include "ui_setrangedialog.h"
 
 #include <qtutilities/misc/dialogutils.h>
 

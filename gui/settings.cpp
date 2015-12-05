@@ -3,6 +3,11 @@
 #include "../network/download.h"
 #include "../network/groovesharkdownload.h"
 
+// include configuration from separate header file when building with CMake
+#ifndef APP_METADATA_AVAIL
+#include "config.h"
+#endif
+
 #include <qtutilities/resources/resources.h>
 #include <qtutilities/settingsdialog/optioncategory.h>
 #include <qtutilities/settingsdialog/optioncategorymodel.h>
@@ -466,7 +471,7 @@ void restoreSettings()
 
     // load grooveshark authentication file
     const auto errorMsg = QApplication::translate("QtGui::Settings", "Unable to read Grooveshark authentication information file.\n\nReason: %1\n\nThe values stored in this file are required when connection to Grooveshark. Built-in will values be used instead, but these might be deprecated.");
-    const auto groovesharkAuthenticationFile = ConfigFile::locateConfigFile(QStringLiteral("videodownloader"), QStringLiteral("json/groovesharkauthenticationinfo.json"), &settings);
+    const auto groovesharkAuthenticationFile = ConfigFile::locateConfigFile(QStringLiteral(PROJECT_NAME), QStringLiteral("json/groovesharkauthenticationinfo.json"), &settings);
     QString reason;
     if(!groovesharkAuthenticationFile.isEmpty()) {
         if(!GroovesharkDownload::loadAuthenticationInformationFromFile(groovesharkAuthenticationFile, &reason)) {

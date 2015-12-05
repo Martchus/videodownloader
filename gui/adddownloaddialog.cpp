@@ -10,7 +10,7 @@
 #include "../network/spotifydownload.h"
 #endif
 
-#include "gui/ui_adddownloaddialog.h"
+#include "ui_adddownloaddialog.h"
 
 #include <qtutilities/misc/dialogutils.h>
 
@@ -237,7 +237,6 @@ void AddDownloadDialog::setLastUrl()
     m_lastUrl = m_ui->urlLineEdit->text();
     settings.setValue("lasturl", m_lastUrl);
     settings.endGroup();
-
 }
 
 }

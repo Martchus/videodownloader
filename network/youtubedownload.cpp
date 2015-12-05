@@ -2,6 +2,11 @@
 
 #include "../application/utils.h"
 
+// include configuration from separate header file when building with CMake
+#ifndef APP_METADATA_AVAIL
+#include "config.h"
+#endif
+
 #include <qtutilities/resources/resources.h>
 
 #include <QUrlQuery>
@@ -58,7 +63,7 @@ void YoutubeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
 {
     if(m_itagInfo.isEmpty()) {
         // allow an external config file to be used instead of built-in values
-        QString path = ConfigFile::locateConfigFile(QStringLiteral("videodownloader"), QStringLiteral("json/itaginfo.json"));
+        QString path = ConfigFile::locateConfigFile(QStringLiteral(PROJECT_NAME), QStringLiteral("json/itaginfo.json"));
         if(path.isEmpty()) {
             path = QStringLiteral(":/jsonobjects/itaginfo");
         }

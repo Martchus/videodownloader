@@ -19,7 +19,7 @@
 #include "../itemdelegates/progressbaritemdelegate.h"
 #include "../itemdelegates/comboboxitemdelegate.h"
 
-#include "gui/ui_mainwindow.h"
+#include "ui_mainwindow.h"
 
 #include <qtutilities/aboutdialog/aboutdialog.h>
 #include <qtutilities/enterpassworddialog/enterpassworddialog.h>
