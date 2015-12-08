@@ -1,3 +1,4 @@
+# meta data
 projectname = videodownloader
 appname = "Video Downloader"
 appauthor = Martchus
@@ -12,19 +13,17 @@ VERSION = 1.2.1
     }
 }
 
+# basic configuration: application
 TEMPLATE = app
+QT += core gui widgets network
 
-QT += core gui network
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
+# add defines for configuration
 testdownload {
     DEFINES += CONFIG_TESTDOWNLOAD
 }
-
 underconstruction {
     DEFINES += UNDER_CONSTRUCTION
 }
-
 !notrayicon {
     DEFINES += CONFIG_USE_TRAY_ICON
     usetrayiconalways {
@@ -32,39 +31,7 @@ underconstruction {
     }
 }
 
-SOURCES += application/main.cpp \
-    network/bitsharedownload.cpp \
-    network/download.cpp \
-    model/downloadmodel.cpp \
-    network/downloadrange.cpp \
-    network/filenukedownload.cpp \
-    network/finder/downloadfinder.cpp \
-    network/finder/groovesharksearcher.cpp \
-    network/finder/youtubeplaylist.cpp \
-    model/downloadfinderresultsmodel.cpp \
-    network/finder/linkfinder.cpp \
-    network/groovesharkdownload.cpp \
-    network/httpdownload.cpp \
-    network/httpdownloadwithinforequst.cpp \
-    network/misc/contentdispositionparser.cpp \
-    network/socksharedownload.cpp \
-    network/youtubedownload.cpp \
-    gui/adddownloaddialog.cpp \
-    gui/addmultipledownloadswizard.cpp \
-    gui/downloadwidget.cpp \
-    gui/mainwindow.cpp \
-    gui/setrangedialog.cpp \
-    application/utils.cpp \
-    itemdelegates/comboboxitemdelegate.cpp \
-    itemdelegates/progressbaritemdelegate.cpp \
-    gui/downloadinteraction.cpp \
-    gui/settings.cpp \
-    network/optiondata.cpp \
-    gui/initiate.cpp \
-    cli/mainfeatures.cpp \
-    cli/clidownloadinteraction.cpp \
-    network/vimeodownload.cpp
-
+# add project files
 HEADERS += application/main.h \
     network/bitsharedownload.h \
     network/download.h \
@@ -101,20 +68,57 @@ HEADERS += application/main.h \
     cli/clidownloadinteraction.h \
     network/vimeodownload.h
 
+SOURCES += application/main.cpp \
+    network/bitsharedownload.cpp \
+    network/download.cpp \
+    model/downloadmodel.cpp \
+    network/downloadrange.cpp \
+    network/filenukedownload.cpp \
+    network/finder/downloadfinder.cpp \
+    network/finder/groovesharksearcher.cpp \
+    network/finder/youtubeplaylist.cpp \
+    model/downloadfinderresultsmodel.cpp \
+    network/finder/linkfinder.cpp \
+    network/groovesharkdownload.cpp \
+    network/httpdownload.cpp \
+    network/httpdownloadwithinforequst.cpp \
+    network/misc/contentdispositionparser.cpp \
+    network/socksharedownload.cpp \
+    network/youtubedownload.cpp \
+    gui/adddownloaddialog.cpp \
+    gui/addmultipledownloadswizard.cpp \
+    gui/downloadwidget.cpp \
+    gui/mainwindow.cpp \
+    gui/setrangedialog.cpp \
+    application/utils.cpp \
+    itemdelegates/comboboxitemdelegate.cpp \
+    itemdelegates/progressbaritemdelegate.cpp \
+    gui/downloadinteraction.cpp \
+    gui/settings.cpp \
+    network/optiondata.cpp \
+    gui/initiate.cpp \
+    cli/mainfeatures.cpp \
+    cli/clidownloadinteraction.cpp \
+    network/vimeodownload.cpp
+
 testdownload {
-    SOURCES += network/testdownload.cpp
-    HEADERS += network/testdownload.h
+    HEADERS += \
+        network/testdownload.h
+
+    SOURCES += \
+        network/testdownload.cpp
 }
 
 underconstruction {
-SOURCES += \
-    network/spotifydownload.cpp
+    SOURCES += \
+        network/spotifydownload.cpp
 
-HEADERS += \
-    network/spotifydownload.h
+    HEADERS += \
+        network/spotifydownload.h
 }
 
-FORMS += gui/adddownloaddialog.ui \
+FORMS += \
+    gui/adddownloaddialog.ui \
     gui/downloadwidget.ui \
     gui/setrangedialog.ui \
     gui/mainwindow.ui \
@@ -125,12 +129,17 @@ FORMS += gui/adddownloaddialog.ui \
 RESOURCES += resources/icons.qrc \
     resources/json.qrc
 
-win32:include(windowsicon.pri)
-
 OTHER_FILES += \
     README.md \
-    LICENSE
+    LICENSE \
+    CMakeLists.txt \
+    resources/config.h.in \
+    resources/windows.rc.in
 
+# make windows icon
+win32:include(windowsicon.pri)
+
+# add libs
 CONFIG(debug, debug|release) {
     LIBS += -lc++utilitiesd
     !no-gui {
