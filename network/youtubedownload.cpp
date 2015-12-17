@@ -123,14 +123,28 @@ void YoutubeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
                         if(m_itagInfo.contains(itag)) {
                             itagObj = m_itagInfo.value(itag).toObject();
                             name.append(itagObj.value(QStringLiteral("container")).toString());
-                            if(!itagObj.value(QStringLiteral("videoCodec")).isNull()) {
-                                name.append(", ");
+                            const QString videoCodec = itagObj.value(QStringLiteral("videoCodec")).toString();
+                            const QString audioCodec = itagObj.value(QStringLiteral("audioCodec")).toString();
+                            if(!videoCodec.isEmpty()) {
+                                name.append(QChar('/'));
+                                name.append(videoCodec);
+                            }
+                            if(!audioCodec.isEmpty()) {
+                                name.append(QChar('/'));
+                                name.append(audioCodec);
+                            }
+                            if(!videoCodec.isEmpty()) {
+                                name.append(QStringLiteral(", "));
                                 name.append(itagObj.value(QStringLiteral("videoResolution")).toString());
                             }
-                            if(itagObj.value(QStringLiteral("videoCodec")).isNull()) {
+                            if(videoCodec.isEmpty()) {
                                 name.append(tr(", no video"));
+                                const QString audioBitrate = itagObj.value(QStringLiteral("audioBitrate")).toString();
+                                if(!audioBitrate.isEmpty()) {
+                                    name.append(tr(", %1 kbit/s").arg(audioBitrate));
+                                }
                             }
-                            if(itagObj.value(QStringLiteral("audioCodec")).isNull()) {
+                            if(audioCodec.isEmpty()) {
                                 name.append(tr(", no audio"));
                             }
                             name.append(QStringLiteral(" ("));
