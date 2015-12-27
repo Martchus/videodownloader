@@ -97,8 +97,8 @@ set(META_APP_AUTHOR "Martchus")
 set(META_APP_URL "https://github.com/${META_APP_AUTHOR}/${META_PROJECT_NAME}")
 set(META_APP_DESCRIPTION "A video downloader with Qt GUI (currently only YouTube and Vimeo are maintained).")
 set(META_VERSION_MAJOR 1)
-set(META_VERSION_MINOR 2)
-set(META_VERSION_PATCH 1)
+set(META_VERSION_MINOR 3)
+set(META_VERSION_PATCH 0)
 
 # stringification of meta data
 set(META_PROJECT_NAME_STR "\"${META_PROJECT_NAME}\"")
