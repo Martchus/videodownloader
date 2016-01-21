@@ -98,7 +98,7 @@ set(META_APP_URL "https://github.com/${META_APP_AUTHOR}/${META_PROJECT_NAME}")
 set(META_APP_DESCRIPTION "A video downloader with Qt GUI (currently only YouTube and Vimeo are maintained).")
 set(META_VERSION_MAJOR 1)
 set(META_VERSION_MINOR 3)
-set(META_VERSION_PATCH 0)
+set(META_VERSION_PATCH 1)
 
 # stringification of meta data
 set(META_PROJECT_NAME_STR "\"${META_PROJECT_NAME}\"")
@@ -209,29 +209,43 @@ install(FILES resources/json/itaginfo.json
     DESTINATION share/${META_PROJECT_NAME}/json
     COMPONENT config
 )
-add_custom_target(install-binary
-    DEPENDS ${META_PROJECT_NAME}
-    COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=binary -P "${CMAKE_BINARY_DIR}/cmake_install.cmake"
-)
-add_custom_target(install-desktop
-    DEPENDS ${META_PROJECT_NAME}
-    COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=desktop -P "${CMAKE_BINARY_DIR}/cmake_install.cmake"
-)
-add_custom_target(install-localization
-    DEPENDS ${META_PROJECT_NAME}
-    COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=localization -P "${CMAKE_BINARY_DIR}/cmake_install.cmake"
-)
-add_custom_target(install-config
-    DEPENDS ${META_PROJECT_NAME}
-    COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=config -P "${CMAKE_BINARY_DIR}/cmake_install.cmake"
-)
-add_custom_target(install-mingw-w64
-    DEPENDS install-binary install-localization install-config
-)
-add_custom_target(install-binary-strip
-    DEPENDS ${META_PROJECT_NAME}
-    COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_DO_STRIP=1 -DCMAKE_INSTALL_COMPONENT=binary -P "${CMAKE_BINARY_DIR}/cmake_install.cmake"
-)
-add_custom_target(install-mingw-w64-strip
-    DEPENDS install-binary-strip install-localization install-config
-)
+if(NOT TARGET install-binary)
+    add_custom_target(install-binary
+        DEPENDS ${META_PROJECT_NAME}
+        COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=binary -P "${CMAKE_BINARY_DIR}/cmake_install.cmake"
+    )
+endif()
+if(NOT TARGET install-desktop)
+    add_custom_target(install-desktop
+        DEPENDS ${META_PROJECT_NAME}
+        COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=desktop -P "${CMAKE_BINARY_DIR}/cmake_install.cmake"
+    )
+endif()
+if(NOT TARGET install-localization)
+    add_custom_target(install-localization
+        DEPENDS ${META_PROJECT_NAME}
+        COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=localization -P "${CMAKE_BINARY_DIR}/cmake_install.cmake"
+    )
+endif()
+if(NOT TARGET install-config)
+    add_custom_target(install-config
+        DEPENDS ${META_PROJECT_NAME}
+        COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=config -P "${CMAKE_BINARY_DIR}/cmake_install.cmake"
+    )
+endif()
+if(NOT TARGET install-mingw-w64)
+    add_custom_target(install-mingw-w64
+        DEPENDS install-binary install-localization install-config
+    )
+endif()
+if(NOT TARGET install-binary-strip)
+    add_custom_target(install-binary-strip
+        DEPENDS ${META_PROJECT_NAME}
+        COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_DO_STRIP=1 -DCMAKE_INSTALL_COMPONENT=binary -P "${CMAKE_BINARY_DIR}/cmake_install.cmake"
+    )
+endif()
+if(NOT TARGET install-mingw-w64-strip)
+    add_custom_target(install-mingw-w64-strip
+        DEPENDS install-binary-strip install-localization install-config
+    )
+endif()
