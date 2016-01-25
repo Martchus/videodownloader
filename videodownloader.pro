@@ -32,7 +32,8 @@ underconstruction {
 }
 
 # add project files
-HEADERS += application/main.h \
+HEADERS += \
+    application/main.h \
     network/bitsharedownload.h \
     network/download.h \
     model/downloadmodel.h \
@@ -68,7 +69,8 @@ HEADERS += application/main.h \
     cli/clidownloadinteraction.h \
     network/vimeodownload.h
 
-SOURCES += application/main.cpp \
+SOURCES += \
+    application/main.cpp \
     network/bitsharedownload.cpp \
     network/download.cpp \
     model/downloadmodel.cpp \
@@ -126,7 +128,8 @@ FORMS += \
     gui/proxypage.ui \
     gui/useragentpage.ui
 
-RESOURCES += resources/icons.qrc \
+RESOURCES += \
+    resources/icons.qrc \
     resources/json.qrc
 
 OTHER_FILES += \
