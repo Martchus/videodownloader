@@ -31,15 +31,25 @@ VimeoDownload::VimeoDownload(const QString &id, QObject *parent) :
 
 Download *VimeoDownload::infoRequestDownload(bool &success, QString &reasonForFail)
 {
-    const auto pathParts = initialUrl().path(QUrl::FullyDecoded).splitRef(QChar('/'), QString::SkipEmptyParts);
+    const auto pathParts = initialUrl().path(QUrl::FullyDecoded).
+#if QT_VERSION >= 0x050400
+            splitRef
+#else
+            split
+#endif
+            (QChar('/'), QString::SkipEmptyParts);
     if(pathParts.size() < 2) {
         const auto &id = pathParts.back();
         bool isInt;
         id.toULongLong(&isInt);
         if(isInt) {
-            setId(id.toString());
+            setId(id
+#if QT_VERSION >= 0x050400
+                  .toString()
+#endif
+                  );
             success = true;
-            return new HttpDownload(QUrl(QStringLiteral("https://player.vimeo.com/video/%1/config").arg(id.toString())));
+            return new HttpDownload(QUrl(QStringLiteral("https://player.vimeo.com/video/%1/config").arg(this->id())));
         }
     }
     success = false;

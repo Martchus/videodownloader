@@ -23,6 +23,7 @@
 
 #include <qtutilities/aboutdialog/aboutdialog.h>
 #include <qtutilities/enterpassworddialog/enterpassworddialog.h>
+#include <qtutilities/misc/desktoputils.h>
 
 #include <c++utilities/conversion/stringconversion.h>
 #include <c++utilities/chrono/timespan.h>
@@ -753,7 +754,7 @@ void MainWindow::exploreDownloadsDir()
         QMessageBox::warning(this, windowTitle(), tr("There is no download target selected."));
     } else {
         if(QDir(GeneralTargetOptionPage::targetDirectory()).exists()) {
-            QDesktopServices::openUrl(QUrl(QStringLiteral("file://%1").arg(GeneralTargetOptionPage::targetDirectory()), QUrl::TolerantMode));
+            DesktopUtils::openLocalFileOrDir(GeneralTargetOptionPage::targetDirectory());
         } else {
             QMessageBox::warning(this, windowTitle(), tr("The selected download directory doesn't exist anymore."));
         }

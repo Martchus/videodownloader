@@ -4,10 +4,8 @@
 #include <QObject>
 #include <QSslError>
 
-QT_BEGIN_NAMESPACE
-class QWidget;
-class QString;
-QT_END_NAMESPACE
+QT_FORWARD_DECLARE_CLASS(QString)
+QT_FORWARD_DECLARE_CLASS(QWidget)
 
 namespace Network {
 class Download;

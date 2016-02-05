@@ -5,11 +5,9 @@
 #include <QWizardPage>
 #include <QNetworkProxy>
 
-QT_BEGIN_NAMESPACE
-class QCheckBox;
-class QTreeView;
-class QItemSelection;
-QT_END_NAMESPACE
+QT_FORWARD_DECLARE_CLASS(QCheckBox)
+QT_FORWARD_DECLARE_CLASS(QTreeView)
+QT_FORWARD_DECLARE_CLASS(QItemSelection)
 
 namespace Widgets {
 class ClearLineEdit;
