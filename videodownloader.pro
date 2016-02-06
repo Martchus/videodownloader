@@ -139,9 +139,6 @@ OTHER_FILES += \
     resources/config.h.in \
     resources/windows.rc.in
 
-# make windows icon
-win32:include(windowsicon.pri)
-
 # add libs
 CONFIG(debug, debug|release) {
     LIBS += -lc++utilitiesd
