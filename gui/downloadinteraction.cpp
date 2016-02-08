@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QPushButton>
+#include <QStringBuilder>
 
 using namespace Network;
 
@@ -52,10 +53,13 @@ void DownloadInteraction::downloadRequiresOutputDevice(Download *download, size_
             && !forceFileDialog // and the caller don't wants to force the file dialog
             && (GeneralTargetOptionPage::targetDirectory().isEmpty() || QDir(GeneralTargetOptionPage::targetDirectory()).exists()) // and the default directory exists or is empty
             && !fileName.isEmpty()) { // and the file name is not empty
-        download->provideOutputDevice(optionIndex, new QFile(GeneralTargetOptionPage::targetDirectory() + "/" + fileName), true);
+        download->provideOutputDevice(optionIndex, new QFile(GeneralTargetOptionPage::targetDirectory() % QChar('/') % fileName), true);
     } else { // aks the user for the target path otherwise
         QFileDialog *dlg = new QFileDialog(m_parentWidget);
+#ifndef Q_OS_WIN
+        // the native dialog can only be shown modal under Windows
         dlg->setModal(false);
+#endif
         dlg->setFileMode(QFileDialog::AnyFile);
         dlg->setAcceptMode(QFileDialog::AcceptSave);
         dlg->setDirectory(GeneralTargetOptionPage::targetDirectory());
@@ -66,7 +70,7 @@ void DownloadInteraction::downloadRequiresOutputDevice(Download *download, size_
         }
         connect(dlg, &QFileDialog::finished, [download, optionIndex, dlg] (int result) {
             if(result == QFileDialog::Accepted && dlg->selectedFiles().size() == 1) {
-                download->provideOutputDevice(optionIndex, new QFile(dlg->selectedFiles().at(0)), true);
+                download->provideOutputDevice(optionIndex, new QFile(dlg->selectedFiles().front()), true);
             } else {
                 download->provideOutputDevice(optionIndex, nullptr);
             }
