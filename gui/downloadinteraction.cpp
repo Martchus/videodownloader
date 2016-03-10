@@ -152,7 +152,7 @@ void DownloadInteraction::downloadRequiresRedirectionPermission(Download *downlo
     } else {
         const QUrl &originalUrl = download->downloadUrl(download->options().at(optionIndex).redirectionOf());
         const QUrl &newUrl  = download->downloadUrl(optionIndex);
-        QString message = tr("<p>Do you wnat to redirect form <i>%1</i> to <i>%2</i>?</p><p>The redirection URL will be added to the options so you can it select later, too.</p>").arg(
+        QString message = tr("<p>Do you want to redirect form <i>%1</i> to <i>%2</i>?</p><p>The redirection URL will be added to the options so you can it select later, too.</p>").arg(
                     originalUrl.toString(),
                     newUrl.toString());
         QMessageBox *dlg = new QMessageBox(m_parentWidget);
