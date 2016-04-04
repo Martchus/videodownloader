@@ -223,7 +223,7 @@ void AddMultipleDownloadsResultsPage::initializePage()
         connect(m_finder, &DownloadFinder::finished, this, &AddMultipleDownloadsResultsPage::finderFinished);
         connect(m_finder, &DownloadFinder::newResultsAvailable, this, &AddMultipleDownloadsResultsPage::finderHasResults);
         m_finder->setContinueAutomatically(false);
-        m_finder->setProxy(NetworkProxyOptionPage::proxy());
+        m_finder->setProxy(ProxyPage::proxy());
         m_finder->start();
     }
 }

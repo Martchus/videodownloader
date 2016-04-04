@@ -9,13 +9,11 @@
 #include <qtutilities/settingsdialog/settingsdialog.h>
 #include <qtutilities/settingsdialog/optionpage.h>
 
-QT_BEGIN_NAMESPACE
-class QByteArray;
-class QLabel;
-class QLineEdit;
-class QCheckBox;
-class QNetworkProxy;
-QT_END_NAMESPACE
+QT_FORWARD_DECLARE_CLASS(QByteArray)
+QT_FORWARD_DECLARE_CLASS(QLabel)
+QT_FORWARD_DECLARE_CLASS(QLineEdit)
+QT_FORWARD_DECLARE_CLASS(QCheckBox)
+QT_FORWARD_DECLARE_CLASS(QNetworkProxy)
 
 namespace Network {
 class Download;
@@ -23,118 +21,55 @@ class Download;
 
 namespace QtGui {
 
-namespace Ui {
-class TargetPage;
-class ProxyPage;
-class UserAgentPage;
-}
-
-class GeneralTargetOptionPage : public Dialogs::UiFileBasedOptionPage<Ui::TargetPage>
-{
+BEGIN_DECLARE_UI_FILE_BASED_OPTION_PAGE(TargetPage)
+    DECLARE_SETUP_WIDGETS
 public:
-    explicit GeneralTargetOptionPage(QWidget *parentWindow);
-    ~GeneralTargetOptionPage();
-
-    QString displayName() const;
-    bool apply();
-    void reset();
     static QString &targetDirectory();
     static bool &overwriteWithoutAsking();
     static bool &determineTargetFileWithoutAsking();
-
-protected:
-    QWidget *setupWidget();
-
 private:
     void selectTargetDirectory();
-};
+END_DECLARE_OPTION_PAGE
 
-class GeneralUiOptionPage : public Dialogs::OptionPage
-{
+BEGIN_DECLARE_OPTION_PAGE(UiPage)
+    DECLARE_SETUP_WIDGETS
 public:
-    explicit GeneralUiOptionPage();
-    ~GeneralUiOptionPage();
-
-    QString displayName() const;
-    bool apply();
-    void reset();
     static QByteArray &mainWindowGeometry();
     static QByteArray &mainWindowState();
     static bool &multiSelection();
-
-protected:
-    QWidget *setupWidget();
-
 private:
     QCheckBox *m_multiSelectionCheckBox;
-};
+END_DECLARE_OPTION_PAGE
 
-class NetworkProxyOptionPage : public Dialogs::UiFileBasedOptionPage<Ui::ProxyPage>
-{
+BEGIN_DECLARE_UI_FILE_BASED_OPTION_PAGE(ProxyPage)
+    DECLARE_SETUP_WIDGETS
 public:
-    explicit NetworkProxyOptionPage();
-    ~NetworkProxyOptionPage();
-
-    QString displayName() const;
-    bool apply();
-    void reset();
     static QNetworkProxy &proxy();
-
-protected:
-    QWidget *setupWidget();
-
 private:
     void updateProxy();
-};
+END_DECLARE_OPTION_PAGE
 
-class NetworkUserAgentOptionPage : public Dialogs::UiFileBasedOptionPage<Ui::UserAgentPage>
-{
+BEGIN_DECLARE_UI_FILE_BASED_OPTION_PAGE(UserAgentPage)
 public:
-    explicit NetworkUserAgentOptionPage();
-    ~NetworkUserAgentOptionPage();
-
-    QString displayName() const;
-    bool apply();
-    void reset();
     static bool &useCustomUserAgent();
     static QString &customUserAgent();
-};
+END_DECLARE_OPTION_PAGE
 
-class NetworkMiscOptionPage : public Dialogs::OptionPage
-{
+BEGIN_DECLARE_OPTION_PAGE(MiscPage)
+    DECLARE_SETUP_WIDGETS
 public:
-    explicit NetworkMiscOptionPage();
-    ~NetworkMiscOptionPage();
-
-    QString displayName() const;
-    bool apply();
-    void reset();
     static bool &redirectWithoutAsking();
-
-protected:
-    QWidget *setupWidget();
-
 private:
     QCheckBox *m_redirectCheckBox;
-};
+END_DECLARE_OPTION_PAGE
 
-class NetworkStatsOptionPage : public Dialogs::OptionPage
-{
+BEGIN_DECLARE_OPTION_PAGE(StatsPage)
+    DECLARE_SETUP_WIDGETS
 public:
-    explicit NetworkStatsOptionPage();
-    ~NetworkStatsOptionPage();
-
-    QString displayName() const;
-    bool apply();
-    void reset();
     static quint64 &bytesReceived();
-
-protected:
-    QWidget *setupWidget();
-
 private:
     QLabel *m_receivedLabel;
-};
+END_DECLARE_OPTION_PAGE
 
 class SettingsDialog : public Dialogs::SettingsDialog
 {

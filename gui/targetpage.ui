@@ -2,8 +2,16 @@
 <ui version="4.0">
  <class>QtGui::TargetPage</class>
  <widget class="QWidget" name="QtGui::TargetPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>331</width>
+    <height>180</height>
+   </rect>
+  </property>
   <property name="windowTitle">
-   <string>Select target directory</string>
+   <string>Target directory</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

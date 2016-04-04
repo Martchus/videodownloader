@@ -2,8 +2,16 @@
 <ui version="4.0">
  <class>QtGui::UserAgentPage</class>
  <widget class="QWidget" name="QtGui::UserAgentPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>239</width>
+    <height>68</height>
+   </rect>
+  </property>
   <property name="windowTitle">
-   <string>Configure user agent</string>
+   <string>HTTP user agent</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -15,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Use a random default user agent</string>
+      <string>Use a ra&amp;ndom default user agent</string>
      </property>
     </widget>
    </item>
@@ -30,7 +38,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Custom user agent</string>
+        <string>&amp;Custom user agent</string>
        </property>
       </widget>
      </item>

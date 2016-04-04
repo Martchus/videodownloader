@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>245</width>
-    <height>195</height>
+    <height>220</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Configure proxy server</string>
+   <string>Proxy</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

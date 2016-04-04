@@ -79,7 +79,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui->setupUi(this);
 
     // load settings
-    restoreGeometry(GeneralUiOptionPage::mainWindowGeometry());
+    restoreGeometry(UiPage::mainWindowGeometry());
 
     // setup tray icon and its context menu
     setupTrayIcon();
@@ -453,7 +453,7 @@ void MainWindow::removeSelectedDownloads()
 // methods for several gui features
 void MainWindow::updateSelectionMode()
 {
-    m_ui->downloadsTreeView->setSelectionMode(GeneralUiOptionPage::multiSelection() ? QAbstractItemView::MultiSelection : QAbstractItemView::SingleSelection);
+    m_ui->downloadsTreeView->setSelectionMode(UiPage::multiSelection() ? QAbstractItemView::MultiSelection : QAbstractItemView::SingleSelection);
 }
 
 void MainWindow::updateStartStopControls()
@@ -750,11 +750,11 @@ void MainWindow::resetGroovesharkSession()
 
 void MainWindow::exploreDownloadsDir()
 {
-    if(GeneralTargetOptionPage::targetDirectory().isEmpty()) {
+    if(TargetPage::targetDirectory().isEmpty()) {
         QMessageBox::warning(this, windowTitle(), tr("There is no download target selected."));
     } else {
-        if(QDir(GeneralTargetOptionPage::targetDirectory()).exists()) {
-            DesktopUtils::openLocalFileOrDir(GeneralTargetOptionPage::targetDirectory());
+        if(QDir(TargetPage::targetDirectory()).exists()) {
+            DesktopUtils::openLocalFileOrDir(TargetPage::targetDirectory());
         } else {
             QMessageBox::warning(this, windowTitle(), tr("The selected download directory doesn't exist anymore."));
         }
@@ -779,8 +779,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
             }
         }
     }
-    GeneralUiOptionPage::mainWindowGeometry() = saveGeometry();
-    GeneralUiOptionPage::mainWindowState() = saveState();
+    UiPage::mainWindowGeometry() = saveGeometry();
+    UiPage::mainWindowState() = saveState();
 }
 
 void MainWindow::downloadChangedStatus(Download *download)
@@ -830,7 +830,7 @@ void MainWindow::updateOverallStatus(Download *download)
     qint64 newBytesReceived = download->newBytesReceived();
     qint64 newBytesToReceive = download->newBytesToReceive();
     m_totalSpeed += download->shiftSpeed();
-    NetworkStatsOptionPage::bytesReceived() += newBytesReceived;
+    StatsPage::bytesReceived() += newBytesReceived;
     m_stillToReceive += newBytesToReceive - newBytesReceived;
     m_remainingTime = m_totalSpeed > 0
             ? TimeSpan::fromSeconds(static_cast<double>(m_stillToReceive) / (m_totalSpeed * 125.0))

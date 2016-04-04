@@ -49,11 +49,11 @@ void DownloadInteraction::downloadRequiresOutputDevice(Download *download, size_
 {
     QString fileName = download->suitableFilename();
     // use default directory and the "suitable file name" to determine the target path
-    if(GeneralTargetOptionPage::determineTargetFileWithoutAsking() // if correspondent option is set
+    if(TargetPage::determineTargetFileWithoutAsking() // if correspondent option is set
             && !forceFileDialog // and the caller don't wants to force the file dialog
-            && (GeneralTargetOptionPage::targetDirectory().isEmpty() || QDir(GeneralTargetOptionPage::targetDirectory()).exists()) // and the default directory exists or is empty
+            && (TargetPage::targetDirectory().isEmpty() || QDir(TargetPage::targetDirectory()).exists()) // and the default directory exists or is empty
             && !fileName.isEmpty()) { // and the file name is not empty
-        download->provideOutputDevice(optionIndex, new QFile(GeneralTargetOptionPage::targetDirectory() % QChar('/') % fileName), true);
+        download->provideOutputDevice(optionIndex, new QFile(TargetPage::targetDirectory() % QChar('/') % fileName), true);
     } else { // aks the user for the target path otherwise
         QFileDialog *dlg = new QFileDialog(m_parentWidget);
 #ifndef Q_OS_WIN
@@ -62,7 +62,7 @@ void DownloadInteraction::downloadRequiresOutputDevice(Download *download, size_
 #endif
         dlg->setFileMode(QFileDialog::AnyFile);
         dlg->setAcceptMode(QFileDialog::AcceptSave);
-        dlg->setDirectory(GeneralTargetOptionPage::targetDirectory());
+        dlg->setDirectory(TargetPage::targetDirectory());
         dlg->selectFile(fileName);
         dlg->setOption(QFileDialog::DontConfirmOverwrite, true);
         if(!download->title().isEmpty()) {
@@ -82,7 +82,7 @@ void DownloadInteraction::downloadRequiresOutputDevice(Download *download, size_
 
 void DownloadInteraction::downloadRequriesOverwritePermission(Download *download, size_t optionIndex, const QString &file)
 {
-    if(GeneralTargetOptionPage::overwriteWithoutAsking()) {
+    if(TargetPage::overwriteWithoutAsking()) {
         download->setOverwritePermission(optionIndex, PermissionStatus::Allowed);
     } else {
         QString message = tr("<p>The output file <i>%1</i> already exists.</p><p>Do you want to overwrite the existing file?</p>").arg(file);
@@ -100,7 +100,7 @@ void DownloadInteraction::downloadRequriesOverwritePermission(Download *download
         connect(dlg, &QMessageBox::finished, [download, optionIndex, dlg, overwriteButton, overwriteAlwaysButton, selectOtherButton, abortButton, this] (int) {
             if(dlg->clickedButton() == overwriteAlwaysButton) {
                 // set dontAskBeforeOverwriting to true if the user clicked yes to all
-                GeneralTargetOptionPage::overwriteWithoutAsking() = true;
+                TargetPage::overwriteWithoutAsking() = true;
             }
             if(dlg->clickedButton() == overwriteButton || dlg->clickedButton() == overwriteAlwaysButton) {
                 download->setOverwritePermission(optionIndex, PermissionStatus::Allowed);
@@ -117,7 +117,7 @@ void DownloadInteraction::downloadRequriesOverwritePermission(Download *download
 
 void DownloadInteraction::downloadRequriesAppendingPermission(Download *download, size_t optionIndex, const QString &file, quint64 offset, quint64 fileSize)
 {
-    if(GeneralTargetOptionPage::overwriteWithoutAsking()) {
+    if(TargetPage::overwriteWithoutAsking()) {
         download->setAppendPermission(optionIndex, PermissionStatus::Allowed);
     } else {
         QString message = tr("<p>The output file <i>%1</i> already exists. The downloader assumes it contains previously downloaded data.</p><p>Do you want to <b>append</b> the received data to the existing file?</p>").arg(file);
@@ -147,7 +147,7 @@ void DownloadInteraction::downloadRequriesAppendingPermission(Download *download
 
 void DownloadInteraction::downloadRequiresRedirectionPermission(Download *download, size_t optionIndex)
 {
-    if(NetworkMiscOptionPage::redirectWithoutAsking()) {
+    if(MiscPage::redirectWithoutAsking()) {
         download->setRedirectPermission(optionIndex, PermissionStatus::Allowed);
     } else {
         const QUrl &originalUrl = download->downloadUrl(download->options().at(optionIndex).redirectionOf());
@@ -164,7 +164,7 @@ void DownloadInteraction::downloadRequiresRedirectionPermission(Download *downlo
         connect(dlg, &QMessageBox::finished, [download, optionIndex, dlg, this] (int result) {
             switch(result) {
             case QMessageBox::YesToAll:
-                NetworkMiscOptionPage::redirectWithoutAsking() = true;
+                MiscPage::redirectWithoutAsking() = true;
                 download->setRedirectPermission(optionIndex, PermissionStatus::AlwaysAllowed);
                 break;
             case QMessageBox::Yes:

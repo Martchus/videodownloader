@@ -5,7 +5,7 @@
 
 // include configuration from separate header file when building with CMake
 #ifndef APP_METADATA_AVAIL
-#include "resources/config.h"
+# include "resources/config.h"
 #endif
 
 #include <qtutilities/resources/resources.h>
@@ -38,19 +38,14 @@ using namespace Network;
 
 namespace QtGui {
 
-GeneralTargetOptionPage::GeneralTargetOptionPage(QWidget *parentWindow) :
-    Dialogs::UiFileBasedOptionPage<Ui::TargetPage>(parentWindow)
+TargetPage::TargetPage(QWidget *parentWindow) :
+    TargetPageBase(parentWindow)
 {}
 
-GeneralTargetOptionPage::~GeneralTargetOptionPage()
+TargetPage::~TargetPage()
 {}
 
-QString GeneralTargetOptionPage::displayName() const
-{
-    return QApplication::translate("QtGui::GeneralTargetOptionPage", "Target directory");
-}
-
-bool GeneralTargetOptionPage::apply()
+bool TargetPage::apply()
 {
     if(hasBeenShown()) {
         targetDirectory() = ui()->defaultTargetLineEdit->text();
@@ -60,7 +55,7 @@ bool GeneralTargetOptionPage::apply()
     return true;
 }
 
-void GeneralTargetOptionPage::reset()
+void TargetPage::reset()
 {
     if(hasBeenShown()) {
         ui()->defaultTargetLineEdit->setText(targetDirectory());
@@ -69,27 +64,27 @@ void GeneralTargetOptionPage::reset()
     }
 }
 
-QString &GeneralTargetOptionPage::targetDirectory()
+QString &TargetPage::targetDirectory()
 {
     static QString dir;
     return dir;
 }
 
-bool &GeneralTargetOptionPage::overwriteWithoutAsking()
+bool &TargetPage::overwriteWithoutAsking()
 {
     static bool val = false;
     return val;
 }
 
-bool &GeneralTargetOptionPage::determineTargetFileWithoutAsking()
+bool &TargetPage::determineTargetFileWithoutAsking()
 {
     static bool val = true;
     return val;
 }
 
-QWidget *GeneralTargetOptionPage::setupWidget()
+QWidget *TargetPage::setupWidget()
 {
-    QWidget *widget = UiFileBasedOptionPage<Ui::TargetPage>::setupWidget();
+    QWidget *widget = TargetPageBase::setupWidget();
     // draw icon to info icon graphics view
     QIcon icon = QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation, nullptr, widget);
     QGraphicsScene *scene = new QGraphicsScene();
@@ -97,11 +92,11 @@ QWidget *GeneralTargetOptionPage::setupWidget()
     scene->addItem(item);
     ui()->infoIconGraphicsView->setScene(scene);
     // connect signals and slots
-    QObject::connect(ui()->selectDefaultDirPushButton, &QPushButton::clicked, std::bind(&GeneralTargetOptionPage::selectTargetDirectory, this));
+    QObject::connect(ui()->selectDefaultDirPushButton, &QPushButton::clicked, std::bind(&TargetPage::selectTargetDirectory, this));
     return widget;
 }
 
-void GeneralTargetOptionPage::selectTargetDirectory()
+void TargetPage::selectTargetDirectory()
 {
     QFileDialog *dlg = new QFileDialog(parentWindow());
 #ifdef Q_OS_WIN
@@ -121,19 +116,15 @@ void GeneralTargetOptionPage::selectTargetDirectory()
     dlg->show();
 }
 
-GeneralUiOptionPage::GeneralUiOptionPage() :
+UiPage::UiPage(QWidget *parentWidget) :
+    OptionPage(parentWidget),
     m_multiSelectionCheckBox(nullptr)
 {}
 
-GeneralUiOptionPage::~GeneralUiOptionPage()
+UiPage::~UiPage()
 {}
 
-QString GeneralUiOptionPage::displayName() const
-{
-    return QApplication::translate("QtGui::GeneralUiOptionPage", "User interface");
-}
-
-bool GeneralUiOptionPage::apply()
+bool UiPage::apply()
 {
     if(hasBeenShown()) {
         multiSelection() = m_multiSelectionCheckBox->isChecked();
@@ -141,34 +132,35 @@ bool GeneralUiOptionPage::apply()
     return true;
 }
 
-void GeneralUiOptionPage::reset()
+void UiPage::reset()
 {
     if(hasBeenShown()) {
         m_multiSelectionCheckBox->setChecked(multiSelection());
     }
 }
 
-QByteArray &GeneralUiOptionPage::mainWindowGeometry()
+QByteArray &UiPage::mainWindowGeometry()
 {
     static QByteArray geometry;
     return geometry;
 }
 
-QByteArray &GeneralUiOptionPage::mainWindowState()
+QByteArray &UiPage::mainWindowState()
 {
     static QByteArray state;
     return state;
 }
 
-bool &GeneralUiOptionPage::multiSelection()
+bool &UiPage::multiSelection()
 {
     static bool val = false;
     return val;
 }
 
-QWidget *GeneralUiOptionPage::setupWidget()
+QWidget *UiPage::setupWidget()
 {
     QWidget *widget = new QWidget();
+    widget->setWindowTitle(QApplication::translate("QtGui::GeneralUiOptionPage", "User interface"));
     QVBoxLayout *layout = new QVBoxLayout(widget);
     QLabel *mainWindowLabel = new QLabel(QApplication::translate("QtGui::GeneralUiOptionPage", "Main window"));
     mainWindowLabel->setStyleSheet(QStringLiteral("font-weight: bold;"));
@@ -178,18 +170,14 @@ QWidget *GeneralUiOptionPage::setupWidget()
     return widget;
 }
 
-NetworkProxyOptionPage::NetworkProxyOptionPage()
+ProxyPage::ProxyPage(QWidget *parentWidget) :
+    ProxyPageBase(parentWidget)
 {}
 
-NetworkProxyOptionPage::~NetworkProxyOptionPage()
+ProxyPage::~ProxyPage()
 {}
 
-QString NetworkProxyOptionPage::displayName() const
-{
-    return QApplication::translate("QtGui::NetworkProxyOptionPage", "Proxy server");
-}
-
-bool NetworkProxyOptionPage::apply()
+bool ProxyPage::apply()
 {
     if(hasBeenShown()) {
         // set entered values to proxy
@@ -213,7 +201,7 @@ bool NetworkProxyOptionPage::apply()
     return true;
 }
 
-void NetworkProxyOptionPage::reset()
+void ProxyPage::reset()
 {
     if(hasBeenShown()) {
         switch(proxy().type()) {
@@ -242,23 +230,24 @@ void NetworkProxyOptionPage::reset()
     }
 }
 
-QNetworkProxy &NetworkProxyOptionPage::proxy()
+QNetworkProxy &ProxyPage::proxy()
 {
     static QNetworkProxy proxy;
     return proxy;
 }
 
-QWidget *NetworkProxyOptionPage::setupWidget()
+QWidget *ProxyPage::setupWidget()
 {
-    QWidget *widget = Dialogs::UiFileBasedOptionPage<Ui::ProxyPage>::setupWidget();
+    QWidget *widget = ProxyPageBase::setupWidget();
+    widget->setWindowTitle(QApplication::translate("QtGui::NetworkProxyOptionPage", "Proxy server"));
     ui()->widget->setEnabled(false);
     // connect signals and slots
     QObject::connect(ui()->enableCheckBox, &QCheckBox::clicked, ui()->widget, &QWidget::setEnabled);
-    QObject::connect(ui()->hostNameLineEdit, &QLineEdit::editingFinished, std::bind(&NetworkProxyOptionPage::updateProxy, this));
+    QObject::connect(ui()->hostNameLineEdit, &QLineEdit::editingFinished, std::bind(&ProxyPage::updateProxy, this));
     return widget;
 }
 
-void NetworkProxyOptionPage::updateProxy()
+void ProxyPage::updateProxy()
 {
     QStringList parts = ui()->hostNameLineEdit->text().split(":", QString::SkipEmptyParts);
     if(parts.count() == 2) {
@@ -271,18 +260,14 @@ void NetworkProxyOptionPage::updateProxy()
     }
 }
 
-NetworkUserAgentOptionPage::NetworkUserAgentOptionPage()
+UserAgentPage::UserAgentPage(QWidget *parentWidget) :
+    UserAgentPageBase(parentWidget)
 {}
 
-NetworkUserAgentOptionPage::~NetworkUserAgentOptionPage()
+UserAgentPage::~UserAgentPage()
 {}
 
-QString NetworkUserAgentOptionPage::displayName() const
-{
-    return QApplication::translate("QtGui::NetworkUserAgentOptionPage", "HTTP user agent");
-}
-
-bool NetworkUserAgentOptionPage::apply()
+bool UserAgentPage::apply()
 {
     if(hasBeenShown()) {
         useCustomUserAgent() = ui()->customRadioButton->isChecked();
@@ -291,7 +276,7 @@ bool NetworkUserAgentOptionPage::apply()
     return true;
 }
 
-void NetworkUserAgentOptionPage::reset()
+void UserAgentPage::reset()
 {
     if(hasBeenShown()) {
         if(useCustomUserAgent()) {
@@ -303,31 +288,27 @@ void NetworkUserAgentOptionPage::reset()
     }
 }
 
-bool &NetworkUserAgentOptionPage::useCustomUserAgent()
+bool &UserAgentPage::useCustomUserAgent()
 {
     static bool useCustomUserAgent = false;
     return useCustomUserAgent;
 }
 
-QString &NetworkUserAgentOptionPage::customUserAgent()
+QString &UserAgentPage::customUserAgent()
 {
     static QString userAgent;
     return userAgent;
 }
 
-NetworkMiscOptionPage::NetworkMiscOptionPage() :
+MiscPage::MiscPage(QWidget *parentWidget) :
+    OptionPage(parentWidget),
     m_redirectCheckBox(nullptr)
 {}
 
-NetworkMiscOptionPage::~NetworkMiscOptionPage()
+MiscPage::~MiscPage()
 {}
 
-QString NetworkMiscOptionPage::displayName() const
-{
-    return QApplication::translate("QtGui::NetworkMiscOptionPage", "Misc");
-}
-
-bool NetworkMiscOptionPage::apply()
+bool MiscPage::apply()
 {
     if(hasBeenShown()) {
         redirectWithoutAsking() = m_redirectCheckBox->isChecked();
@@ -335,67 +316,65 @@ bool NetworkMiscOptionPage::apply()
     return true;
 }
 
-void NetworkMiscOptionPage::reset()
+void MiscPage::reset()
 {
     if(hasBeenShown()) {
         m_redirectCheckBox->setChecked(redirectWithoutAsking());
     }
 }
 
-bool &NetworkMiscOptionPage::redirectWithoutAsking()
+bool &MiscPage::redirectWithoutAsking()
 {
     static bool val = false;
     return val;
 }
 
-QWidget *NetworkMiscOptionPage::setupWidget()
+QWidget *MiscPage::setupWidget()
 {
     QWidget *widget = new QWidget();
+    widget->setWindowTitle(QApplication::translate("QtGui::NetworkMiscOptionPage", "Misc"));
     QVBoxLayout *layout = new QVBoxLayout(widget);
     layout->addWidget(m_redirectCheckBox = new QCheckBox(QApplication::translate("QtGui::NetworkMiscOptionPage", "follow redirections without asking"), widget));
     widget->setLayout(layout);
     return widget;
 }
 
-NetworkStatsOptionPage::NetworkStatsOptionPage() :
+StatsPage::StatsPage(QWidget *parentWidget) :
+    OptionPage(parentWidget),
     m_receivedLabel(nullptr)
 {}
 
-NetworkStatsOptionPage::~NetworkStatsOptionPage()
+StatsPage::~StatsPage()
 {}
 
-QString NetworkStatsOptionPage::displayName() const
-{
-    return QApplication::translate("QtGui::NetworkStatsOptionPage", "Statistics");
-}
-
-bool NetworkStatsOptionPage::apply()
+bool StatsPage::apply()
 {
     return true;
 }
 
-void NetworkStatsOptionPage::reset()
+void StatsPage::reset()
 {
     if(hasBeenShown()) {
         m_receivedLabel->setText(QString::fromStdString(ConversionUtilities::dataSizeToString(bytesReceived(), true)));
     }
 }
 
-quint64 &NetworkStatsOptionPage::bytesReceived()
+quint64 &StatsPage::bytesReceived()
 {
     static quint64 received;
     return received;
 }
 
-QWidget *NetworkStatsOptionPage::setupWidget()
+QWidget *StatsPage::setupWidget()
 {
     QWidget *widget = new QWidget();
+    widget->setWindowTitle(QApplication::translate("QtGui::NetworkStatsOptionPage", "Statistics"));
     QVBoxLayout *mainLayout = new QVBoxLayout(widget);
     QFormLayout *formLayout = new QFormLayout(widget);
     formLayout->addRow(QApplication::translate("QtGui::NetworkStatsOptionPage", "Received data"), m_receivedLabel = new QLabel());
     QPushButton *refreshButton = new QPushButton(QApplication::translate("QtGui::NetworkStatsOptionPage", "Refresh"));
     refreshButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    QObject::connect(refreshButton, &QPushButton::clicked, std::bind(&NetworkStatsOptionPage::reset, this));
+    QObject::connect(refreshButton, &QPushButton::clicked, std::bind(&StatsPage::reset, this));
     mainLayout->addLayout(formLayout);
     mainLayout->addWidget(refreshButton);
     widget->setLayout(mainLayout);
@@ -411,14 +390,14 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
     category = new Dialogs::OptionCategory(this);
     category->setDisplayName(tr("General"));
-    category->assignPages(QList<Dialogs::OptionPage *>() << new GeneralTargetOptionPage(this) << new GeneralUiOptionPage());
+    category->assignPages(QList<Dialogs::OptionPage *>() << new TargetPage(this) << new UiPage());
     category->setIcon(QIcon::fromTheme(QStringLiteral("preferences-other"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-general.png"))));
     categories << category;
 
     category = new Dialogs::OptionCategory(this);
     category->setDisplayName(tr("Network"));
     category->setIcon(QIcon::fromTheme(QStringLiteral("preferences-system-network"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-network.png"))));
-    category->assignPages(QList<Dialogs::OptionPage *>() << new NetworkProxyOptionPage() << new NetworkUserAgentOptionPage() << new NetworkMiscOptionPage() << new NetworkStatsOptionPage());
+    category->assignPages(QList<Dialogs::OptionPage *>() << new ProxyPage() << new UserAgentPage() << new MiscPage() << new StatsPage());
     categories << category;
 
     category = new Dialogs::OptionCategory(this);
@@ -440,18 +419,18 @@ void restoreSettings()
     QSettings settings(QSettings::IniFormat, QSettings::UserScope,  QApplication::organizationName(), QApplication::applicationName());
 
     settings.beginGroup("application");
-    GeneralTargetOptionPage::targetDirectory() = settings.value("defaulttargetdirectory").toString();
-    GeneralTargetOptionPage::overwriteWithoutAsking() = settings.value("overwritewithoutasking", false).toBool();
-    GeneralTargetOptionPage::determineTargetFileWithoutAsking() = settings.value("determinetargetfilewithoutasking", true).toBool();
-    NetworkMiscOptionPage::redirectWithoutAsking() = settings.value("redirectwithoutasking", true).toBool();
-    NetworkUserAgentOptionPage::useCustomUserAgent() = settings.value("usecustomuseragent", false).toBool();
-    NetworkUserAgentOptionPage::customUserAgent() = settings.value("customuseragent").toString();
+    TargetPage::targetDirectory() = settings.value("defaulttargetdirectory").toString();
+    TargetPage::overwriteWithoutAsking() = settings.value("overwritewithoutasking", false).toBool();
+    TargetPage::determineTargetFileWithoutAsking() = settings.value("determinetargetfilewithoutasking", true).toBool();
+    MiscPage::redirectWithoutAsking() = settings.value("redirectwithoutasking", true).toBool();
+    UserAgentPage::useCustomUserAgent() = settings.value("usecustomuseragent", false).toBool();
+    UserAgentPage::customUserAgent() = settings.value("customuseragent").toString();
 
     settings.beginGroup("proxy");
     bool validProxyType;
     int proxyType = settings.value("type", QVariant(QNetworkProxy::NoProxy)).toInt(&validProxyType);
     validProxyType = proxyType >= 0 && proxyType <= 5;
-    QNetworkProxy &proxy = NetworkProxyOptionPage::proxy();
+    QNetworkProxy &proxy = ProxyPage::proxy();
     proxy.setType(validProxyType ? static_cast<QNetworkProxy::ProxyType>(proxyType) : QNetworkProxy::NoProxy);
     proxy.setHostName(settings.value("hostname").toString());
     proxy.setPort(settings.value("port", QVariant(0)).toUInt());
@@ -461,13 +440,13 @@ void restoreSettings()
     settings.endGroup();
 
     settings.beginGroup("statistics");
-    NetworkStatsOptionPage::bytesReceived() = settings.value("totalbytesreceived", 0).toLongLong();
+    StatsPage::bytesReceived() = settings.value("totalbytesreceived", 0).toLongLong();
     settings.endGroup();
 
     settings.beginGroup("mainwindow");
-    GeneralUiOptionPage::mainWindowGeometry() = settings.value("geometry").toByteArray();
-    GeneralUiOptionPage::mainWindowState() = settings.value("state").toByteArray();
-    GeneralUiOptionPage::multiSelection() = settings.value("multiselection").toBool();
+    UiPage::mainWindowGeometry() = settings.value("geometry").toByteArray();
+    UiPage::mainWindowState() = settings.value("state").toByteArray();
+    UiPage::multiSelection() = settings.value("multiselection").toBool();
 
     // load grooveshark authentication file
     const auto errorMsg = QApplication::translate("QtGui::Settings", "Unable to read Grooveshark authentication information file.\n\nReason: %1\n\nThe values stored in this file are required when connection to Grooveshark. Built-in will values be used instead, but these might be deprecated.");
@@ -487,15 +466,15 @@ void saveSettings()
     QSettings settings(QSettings::IniFormat, QSettings::UserScope,  QApplication::organizationName(), QApplication::applicationName());
 
     settings.beginGroup("application");
-    settings.setValue("defaulttargetdirectory", GeneralTargetOptionPage::targetDirectory());
-    settings.setValue("overwritewithoutasking", GeneralTargetOptionPage::overwriteWithoutAsking());
-    settings.setValue("determinetargetfilewithoutasking", GeneralTargetOptionPage::determineTargetFileWithoutAsking());
-    settings.setValue("redirectwithoutasking", NetworkMiscOptionPage::redirectWithoutAsking());
-    settings.setValue("usecustomuseragent", NetworkUserAgentOptionPage::useCustomUserAgent());
-    settings.setValue("customuseragent", NetworkUserAgentOptionPage::customUserAgent());
+    settings.setValue("defaulttargetdirectory", TargetPage::targetDirectory());
+    settings.setValue("overwritewithoutasking", TargetPage::overwriteWithoutAsking());
+    settings.setValue("determinetargetfilewithoutasking", TargetPage::determineTargetFileWithoutAsking());
+    settings.setValue("redirectwithoutasking", MiscPage::redirectWithoutAsking());
+    settings.setValue("usecustomuseragent", UserAgentPage::useCustomUserAgent());
+    settings.setValue("customuseragent", UserAgentPage::customUserAgent());
 
     settings.beginGroup("proxy");
-    const QNetworkProxy &proxy = NetworkProxyOptionPage::proxy();
+    const QNetworkProxy &proxy = ProxyPage::proxy();
     settings.setValue("type", proxy.type());
     settings.setValue("hostname", proxy.hostName());
     settings.setValue("port", proxy.port());
@@ -505,21 +484,21 @@ void saveSettings()
     settings.endGroup();
 
     settings.beginGroup("statistics");
-    settings.setValue("totalbytesreceived", NetworkStatsOptionPage::bytesReceived());
+    settings.setValue("totalbytesreceived", StatsPage::bytesReceived());
     settings.endGroup();
 
     settings.beginGroup("mainwindow");
-    settings.setValue("geometry", GeneralUiOptionPage::mainWindowGeometry());
-    settings.setValue("state", GeneralUiOptionPage::mainWindowState());
-    settings.setValue("multiselection", GeneralUiOptionPage::multiSelection());
+    settings.setValue("geometry", UiPage::mainWindowGeometry());
+    settings.setValue("state", UiPage::mainWindowState());
+    settings.setValue("multiselection", UiPage::multiSelection());
     settings.endGroup();
 }
 
 void applySettingsToDownload(Download *download)
 {
-    download->setDefaultUserAgentUsed(!NetworkUserAgentOptionPage::useCustomUserAgent());
-    download->setCustomUserAgent(NetworkUserAgentOptionPage::useCustomUserAgent() ? NetworkUserAgentOptionPage::customUserAgent() : QString());
-    download->setProxy(NetworkProxyOptionPage::proxy());
+    download->setDefaultUserAgentUsed(!UserAgentPage::useCustomUserAgent());
+    download->setCustomUserAgent(UserAgentPage::useCustomUserAgent() ? UserAgentPage::customUserAgent() : QString());
+    download->setProxy(ProxyPage::proxy());
 }
 
 }
