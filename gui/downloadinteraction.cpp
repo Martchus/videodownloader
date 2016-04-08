@@ -203,26 +203,24 @@ void DownloadInteraction::downloadRequiresAuthentication(Download *download, siz
 void DownloadInteraction::downloadHasSslErrors(Download *download, size_t optionIndex, const QList<QSslError> &sslErrors)
 {
     QString downloadName = download->downloadUrl().isEmpty() ? download->id() : download->downloadUrl().toString();
-    QString message(QStringLiteral("<p style=\"font-weight: bold;\">"));
-    message.append(tr("The download <i>%1</i> has SSL errors:").arg(downloadName));
-    message.append(QStringLiteral("</p><ul>"));
+    QString details;
     foreach(const QSslError &error, sslErrors) {
-        message.append(QStringLiteral("<li><span style=\"font-style: italic;\">"));
-        message.append(error.errorString());
-        message.append(QStringLiteral("</span>"));
-        if(!error.certificate().isNull()) {
-            message.append(QStringLiteral("<br>"));
-            message.append(error.certificate().toText());
+        if(!details.isEmpty()) {
+            details.append(QStringLiteral("\n\n"));
         }
-        message.append(QStringLiteral("</li>"));
+        details.append(error.errorString());
+        if(!error.certificate().isNull()) {
+            details.append(QChar('\n'));
+            details.append(error.certificate().toText());
+        }
     }
-    message.append(QStringLiteral("</ul><p>"));
-    message.append(tr("Do you want to ignore the SSL errors for this download?"));
-    message.append(QStringLiteral("</p>"));
     QMessageBox *dlg = new QMessageBox(m_parentWidget);
     dlg->setModal(false);
+    dlg->setWindowTitle(tr("SSL errors occured") % QStringLiteral(" - ") % QCoreApplication::applicationName());
     dlg->setTextFormat(Qt::RichText);
-    dlg->setText(message);
+    dlg->setText(tr("The download <i>%1</i> has SSL errors.").arg(downloadName));
+    dlg->setInformativeText(tr("Do you want to ignore the SSL errors for this download?"));
+    dlg->setDetailedText(details);
     dlg->setIcon(QMessageBox::Warning);
     dlg->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     connect(dlg, &QMessageBox::finished, [download, optionIndex, dlg] (int result) {
