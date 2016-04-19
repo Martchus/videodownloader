@@ -376,6 +376,7 @@ void AddMultipleDownloadsResultsPage::updateSubTitle()
 AddMultipleDownloadsWizard::AddMultipleDownloadsWizard(QWidget *parent) :
     QWizard(parent)
 {
+    setWindowTitle(tr("Add multiple downloads"));
     setPage(AddMultipleDownloadsSelectSourcePageId, new AddMultipleDownloadsSelectSourcePage);
     setPage(AddMultipleDownloadsEnterSearchTermPageId, new AddMultipleDownloadsEnterSearchTermPage);
     setPage(AddMultipleDownloadsResultsPageId, new AddMultipleDownloadsResultsPage);
