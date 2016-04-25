@@ -117,11 +117,11 @@ set(ICON_FILES
 )
 
 # find c++utilities
-find_package(c++utilities REQUIRED)
+find_package(c++utilities 3.3.0 REQUIRED)
 use_cpp_utilities()
 
 # find qtutilities
-find_package(qtutilities REQUIRED)
+find_package(qtutilities 4.0.0 REQUIRED)
 use_qt_utilities()
 
 # add Qt modules which can currently not be detected automatically
