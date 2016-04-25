@@ -1,10 +1,7 @@
 #include "../cli/mainfeatures.h"
 #include "../gui/initiate.h"
 
-// include configuration from separate header file when building with CMake
-#ifndef APP_METADATA_AVAIL
 #include "resources/config.h"
-#endif
 
 #if defined(GUI_QTWIDGETS) || defined(GUI_QTQUICK)
 # include <qtutilities/resources/qtconfigarguments.h>
