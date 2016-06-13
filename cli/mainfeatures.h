@@ -2,18 +2,14 @@
 #define CLI_MAINFEATURES_H
 
 #include <vector>
-#include <string>
 
 namespace ApplicationUtilities {
-
-typedef std::vector<std::string> StringVector;
 class Argument;
-
 }
 
 namespace Cli {
 
-void download(int argc, char *argv[], const ApplicationUtilities::StringVector &parameterValues, const ApplicationUtilities::Argument &noConfirmArg);
+void download(int argc, char *argv[], const std::vector<const char *> &parameterValues, const ApplicationUtilities::Argument &urlsArg, const ApplicationUtilities::Argument &noConfirmArg);
 
 }
 

@@ -21,7 +21,7 @@ using namespace Network;
 
 namespace Cli {
 
-void download(int argc, char *argv[], const StringVector &parameterValues, const Argument &noConfirmArg)
+void download(int argc, char *argv[], const std::vector<const char *> &, const Argument &urlsArg, const Argument &noConfirmArg)
 {
     CMD_UTILS_START_CONSOLE;
     // init Qt
@@ -29,14 +29,14 @@ void download(int argc, char *argv[], const StringVector &parameterValues, const
     QObject rootObj;
     // instantiate downloads
     QList<Download *> downloads;
-    downloads.reserve(parameterValues.size());
+    downloads.reserve(urlsArg.values().size());
     QVariant currentTargetDirectory;
     QVariant currentTargetName;
     enum {
         Auto, HttpUrl, YoutubeUrl, YoutubeId, GroovesharkId
     } currentDownloadType = Auto;
     size_t specifiedDownloads = 0;
-    for(const auto &val  : parameterValues) {
+    for(const auto &val : urlsArg.values()) {
         // check whether value denotes target directory or download type
         auto parts = splitString<vector<string> >(val, "=", EmptyPartsTreat::Keep, 2);
         if(parts.size() >= 2) {
