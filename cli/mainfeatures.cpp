@@ -21,7 +21,7 @@ using namespace Network;
 
 namespace Cli {
 
-void download(int argc, char *argv[], const std::vector<const char *> &, const Argument &urlsArg, const Argument &noConfirmArg)
+void download(int argc, char *argv[], const ArgumentOccurance &, const Argument &urlsArg, const Argument &noConfirmArg)
 {
     CMD_UTILS_START_CONSOLE;
     // init Qt

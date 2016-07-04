@@ -153,6 +153,7 @@ include(QtGuiConfig)
 include(QtConfig)
 include(WindowsResources)
 include(AppTarget)
+include(ShellCompletion)
 
 # create desktop file using previously defined meta data
 add_desktop_file()
