@@ -120,6 +120,36 @@ set(DOC_FILES
     README.md
 )
 
+set(REQUIRED_ICONS
+    edit-paste
+    window-close
+    document-save-as
+    go-previous
+    document-open
+    edit-copy
+    preferences-other
+    document-revert
+    document-open-recent
+    list-remove
+    dialog-ok
+    media-playback-start
+    dialog-cancel
+    edit-clear
+    list-add
+    dialog-ok-apply
+    help-about
+    application-exit
+    edit-cut
+    media-playback-pause
+    edit-undo
+    system-file-manager
+    edit-select-all
+    preferences-system-network
+    system-run
+    go-next
+    qtcreator
+)
+
 # find c++utilities
 find_package(c++utilities 4.0.0 REQUIRED)
 use_cpp_utilities()
