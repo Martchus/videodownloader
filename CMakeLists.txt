@@ -2,11 +2,12 @@ cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
 
 # meta data
 set(META_PROJECT_NAME videodownloader)
+set(META_PROJECT_TYPE application)
 set(META_APP_NAME "Video Downloader")
 set(META_APP_CATEGORIES "Utility;Network;")
 set(META_APP_AUTHOR "Martchus")
 set(META_APP_URL "https://github.com/${META_APP_AUTHOR}/${META_PROJECT_NAME}")
-set(META_APP_DESCRIPTION "Simple video downloader with Qt GUI (currently only YouTube and Vimeo are maintained).")
+set(META_APP_DESCRIPTION "Simple video downloader with Qt GUI (currently only YouTube and Vimeo are maintained)")
 set(META_VERSION_MAJOR 1)
 set(META_VERSION_MINOR 3)
 set(META_VERSION_PATCH 1)
@@ -155,7 +156,7 @@ find_package(c++utilities 4.0.0 REQUIRED)
 use_cpp_utilities()
 
 # find qtutilities
-find_package(qtutilities 4.0.0 REQUIRED)
+find_package(qtutilities 5.0.0 REQUIRED)
 use_qt_utilities()
 
 # add Qt modules which can currently not be detected automatically
@@ -184,6 +185,7 @@ include(QtConfig)
 include(WindowsResources)
 include(AppTarget)
 include(ShellCompletion)
+include(ConfigHeader)
 
 # create desktop file using previously defined meta data
 add_desktop_file()
