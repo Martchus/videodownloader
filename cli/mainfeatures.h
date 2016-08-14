@@ -5,12 +5,12 @@
 
 namespace ApplicationUtilities {
 class Argument;
-class ArgumentOccurance;
+class ArgumentOccurrence;
 }
 
 namespace Cli {
 
-void download(int argc, char *argv[], const ApplicationUtilities::ArgumentOccurance &parameterValues, const ApplicationUtilities::Argument &urlsArg, const ApplicationUtilities::Argument &noConfirmArg);
+void download(int argc, char *argv[], const ApplicationUtilities::ArgumentOccurrence &parameterValues, const ApplicationUtilities::Argument &urlsArg, const ApplicationUtilities::Argument &noConfirmArg);
 
 }
 
