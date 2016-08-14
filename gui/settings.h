@@ -15,6 +15,10 @@ QT_FORWARD_DECLARE_CLASS(QLineEdit)
 QT_FORWARD_DECLARE_CLASS(QCheckBox)
 QT_FORWARD_DECLARE_CLASS(QNetworkProxy)
 
+namespace Dialogs {
+class QtSettings;
+}
+
 namespace Network {
 class Download;
 }
@@ -80,9 +84,10 @@ public:
 
 };
 
-extern void restoreSettings();
-extern void saveSettings();
-extern void applySettingsToDownload(Network::Download *download);
+Dialogs::QtSettings &qtSettings();
+void restoreSettings();
+void saveSettings();
+void applySettingsToDownload(Network::Download *download);
 
 }
 

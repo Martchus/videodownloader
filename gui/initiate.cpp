@@ -6,6 +6,7 @@
 
 #include <qtutilities/resources/qtconfigarguments.h>
 #include <qtutilities/resources/resources.h>
+#include <qtutilities/settingsdialog/qtsettings.h>
 
 #if defined(GUI_QTWIDGETS)
 # include <QApplication>
@@ -23,15 +24,16 @@ int runWidgetsGui(int argc, char *argv[], const QtConfigArguments &qtConfigArgs)
 #ifdef GUI_QTWIDGETS
     SET_QT_APPLICATION_INFO;
     QApplication a(argc, argv);
+    restoreSettings();
+    // apply settings specified via command line args after the settings chosen in the GUI to give the CLI options precedence
+    qtSettings().apply();
+    qtConfigArgs.applySettings(qtSettings().hasCustomFont());
     // load resources needed by classes of qtutilities
     QtUtilitiesResources::init();
-    // apply settings specified via command line args
-    qtConfigArgs.applySettings();
-    QtGui::restoreSettings();
-    QtGui::MainWindow w;
+    MainWindow w;
     w.show();
     int r = a.exec();
-    QtGui::saveSettings();
+    saveSettings();
     return r;
 #else
     CMD_UTILS_START_CONSOLE;

@@ -8,6 +8,7 @@
 #include <qtutilities/resources/resources.h>
 #include <qtutilities/settingsdialog/optioncategory.h>
 #include <qtutilities/settingsdialog/optioncategorymodel.h>
+#include <qtutilities/settingsdialog/qtsettings.h>
 #include <qtutilities/widgets/clearlineedit.h>
 
 #include <c++utilities/conversion/stringconversion.h>
@@ -402,6 +403,9 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     category->setIcon(QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-specific.png")));
     category->assignPages(QList<Dialogs::OptionPage *>());
     categories << category;
+
+    categories << qtSettings().category();
+
     categoryModel()->setCategories(categories);
 
     setMinimumSize(800, 450);
@@ -410,6 +414,12 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
 SettingsDialog::~SettingsDialog()
 {}
+
+Dialogs::QtSettings &qtSettings()
+{
+    static Dialogs::QtSettings v;
+    return v;
+}
 
 void restoreSettings()
 {
