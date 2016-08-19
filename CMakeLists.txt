@@ -148,7 +148,6 @@ set(REQUIRED_ICONS
     preferences-system-network
     system-run
     go-next
-    qtcreator
 )
 
 # find c++utilities
