@@ -18,8 +18,7 @@ ComboBoxItemDelegate::~ComboBoxItemDelegate()
 
 bool ComboBoxItemDelegate::ComboBoxItemDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
-    switch(event->type())
-    {
+    switch(event->type()) {
     case QEvent::MouseButtonPress:
         return false;
     case QEvent::GraphicsSceneWheel:

@@ -20,7 +20,6 @@ void ProgressBarItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
     progressBarOption.state = QStyle::State_Enabled;
     progressBarOption.direction = QApplication::layoutDirection();
     progressBarOption.rect = option.rect;
-    progressBarOption.fontMetrics = QApplication::fontMetrics();
     progressBarOption.textAlignment = Qt::AlignCenter;
     progressBarOption.textVisible = true;
     progressBarOption.progress = index.model()->data(index, DownloadModel::ProgressPercentageRole).toInt();
