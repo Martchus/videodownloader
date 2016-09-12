@@ -5,6 +5,10 @@
 
 #include "resources/config.h"
 
+#include "ui_targetpage.h"
+#include "ui_proxypage.h"
+#include "ui_useragentpage.h"
+
 #include <qtutilities/resources/resources.h>
 #include <qtutilities/settingsdialog/optioncategory.h>
 #include <qtutilities/settingsdialog/optioncategorymodel.h>
@@ -509,3 +513,7 @@ void applySettingsToDownload(Download *download)
 }
 
 }
+
+INSTANTIATE_UI_FILE_BASED_OPTION_PAGE_NS(QtGui, TargetPage)
+INSTANTIATE_UI_FILE_BASED_OPTION_PAGE_NS(QtGui, ProxyPage)
+INSTANTIATE_UI_FILE_BASED_OPTION_PAGE_NS(QtGui, UserAgentPage)
