@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include <QPushButton>
 #include <QStringBuilder>
+#include <QCoreApplication>
 
 using namespace Network;
 
@@ -214,7 +215,7 @@ void DownloadInteraction::downloadHasSslErrors(Download *download, size_t option
             details.append(error.certificate().toText());
         }
     }
-    QMessageBox *dlg = new QMessageBox(m_parentWidget);
+    auto *dlg = new QMessageBox(m_parentWidget);
     dlg->setModal(false);
     dlg->setWindowTitle(tr("SSL errors occured") % QStringLiteral(" - ") % QCoreApplication::applicationName());
     dlg->setTextFormat(Qt::RichText);
