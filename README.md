@@ -20,6 +20,11 @@ by YouTube which currently need to be downloaded separately and then muxed toget
  * Command line interface
  * Fix issues with some YouTube videos
 
+## Download / binary repository
+I currently provide packages for Arch Linux and Windows. Sources for those packages can be found in a
+separate [repository](https://github.com/Martchus/PKGBUILDs). For binaries checkout my
+[website](http://martchus.no-ip.biz/website/page.php?name=programming).
+
 ## Build instructions
 The video downloader depends on c++utilities and qtutilities and is built in the same way as these libaries.
 
