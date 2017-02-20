@@ -427,7 +427,11 @@ Dialogs::QtSettings &qtSettings()
 
 void restoreSettings()
 {
-    QSettings settings(QSettings::IniFormat, QSettings::UserScope,  QApplication::organizationName(), QApplication::applicationName());
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, QStringLiteral(PROJECT_NAME));
+    // move old config to new location
+    const QString oldConfig = QSettings(QSettings::IniFormat, QSettings::UserScope, QApplication::organizationName(), QApplication::applicationName()).fileName();
+    QFile::rename(oldConfig, settings.fileName()) || QFile::remove(oldConfig);
+    settings.sync();
 
     settings.beginGroup("application");
     TargetPage::targetDirectory() = settings.value("defaulttargetdirectory").toString();
@@ -474,7 +478,7 @@ void restoreSettings()
 
 void saveSettings()
 {
-    QSettings settings(QSettings::IniFormat, QSettings::UserScope,  QApplication::organizationName(), QApplication::applicationName());
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, QStringLiteral(PROJECT_NAME));
 
     settings.beginGroup("application");
     settings.setValue("defaulttargetdirectory", TargetPage::targetDirectory());
