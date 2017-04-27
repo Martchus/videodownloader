@@ -9,9 +9,9 @@
 #include <qtutilities/resources/importplugin.h>
 #include <qtutilities/settingsdialog/qtsettings.h>
 
-#if defined(GUI_QTWIDGETS)
+#if defined(VIDEODOWNLOADER_GUI_QTWIDGETS)
 # include <QApplication>
-#elif defined(GUI_QTQUICK)
+#elif defined(VIDEODOWNLOADER_GUI_QTQUICK)
 # include <QGuiApplication>
 #endif
 
@@ -22,7 +22,7 @@ namespace QtGui {
 
 int runWidgetsGui(int argc, char *argv[], const QtConfigArguments &qtConfigArgs)
 {
-#ifdef GUI_QTWIDGETS
+#ifdef VIDEODOWNLOADER_GUI_QTWIDGETS
     SET_QT_APPLICATION_INFO;
     QApplication a(argc, argv);
     restoreSettings();

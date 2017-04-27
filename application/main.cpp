@@ -3,7 +3,7 @@
 
 #include "resources/config.h"
 
-#if defined(GUI_QTWIDGETS) || defined(GUI_QTQUICK)
+#if defined(VIDEODOWNLOADER_GUI_QTWIDGETS) || defined(VIDEODOWNLOADER_GUI_QTQUICK)
 # include <qtutilities/resources/qtconfigarguments.h>
 #else
 # include <c++utilities/application/fakeqtconfigarguments.h>
