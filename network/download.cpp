@@ -1,16 +1,16 @@
 #include "./download.h"
 #include "./permissionstatus.h"
 // these includes are only needed to provide the Download::fromUrl method
-#include "./httpdownload.h"
-#include "./youtubedownload.h"
-#include "./socksharedownload.h"
 #include "./bitsharedownload.h"
+#include "./httpdownload.h"
+#include "./socksharedownload.h"
+#include "./youtubedownload.h"
 
 #include <c++utilities/io/path.h>
 #include <c++utilities/misc/random.h>
 
-#include <QIODevice>
 #include <QFileInfo>
+#include <QIODevice>
 #include <QMessageBox>
 #include <QTranslator>
 
@@ -85,16 +85,14 @@ int Download::m_defaultUserAgent = -1;
  */
 const QString &Download::defaultUserAgent()
 {
-    static const QString agents[] = {
-        QStringLiteral("Mozilla/5.0 (X11; Linux x86_64; rv:32.0) Gecko/20100101 Firefox/32.0"),
+    static const QString agents[] = { QStringLiteral("Mozilla/5.0 (X11; Linux x86_64; rv:32.0) Gecko/20100101 Firefox/32.0"),
         QStringLiteral("Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0"),
         QStringLiteral("Mozilla/5.0 (X11; OpenBSD amd64; rv:28.0) Gecko/20100101 Firefox/28.0"),
         QStringLiteral("Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36"),
         QStringLiteral("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36"),
         QStringLiteral("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.34 (KHTML, like Gecko) konqueror/4.14.0 Safari/534.34"),
-        QStringLiteral("Opera/9.80 (Windows NT 6.0) Presto/2.12.388 Version/12.14")
-    };
-    if(m_defaultUserAgent < 0 || m_defaultUserAgent > 6) {
+        QStringLiteral("Opera/9.80 (Windows NT 6.0) Presto/2.12.388 Version/12.14") };
+    if (m_defaultUserAgent < 0 || m_defaultUserAgent > 6) {
         scrambleDefaultUserAgent();
     }
     return agents[m_defaultUserAgent];
@@ -129,28 +127,29 @@ QString Download::suitableFilename() const
  *
  * This method might be useful to provide meta data from an external source.
  */
-void Download::provideMetaData(const QString &title, const QString &uploader, TimeSpan duration, const QString &collectionName, int positionInCollection, int views, const QString &rating)
+void Download::provideMetaData(const QString &title, const QString &uploader, TimeSpan duration, const QString &collectionName,
+    int positionInCollection, int views, const QString &rating)
 {
-    if(!title.isEmpty()) {
+    if (!title.isEmpty()) {
         this->m_title = title;
         this->m_dontAcceptNewTitleFromFilenameAnymore = true;
     }
-    if(!uploader.isEmpty()) {
+    if (!uploader.isEmpty()) {
         this->m_uploader = uploader;
     }
-    if(!duration.isNull()) {
+    if (!duration.isNull()) {
         this->m_duration = duration;
     }
-    if(!collectionName.isEmpty()) {
+    if (!collectionName.isEmpty()) {
         this->m_collectionName = collectionName;
     }
     if (positionInCollection > 0) {
         this->m_positionInCollection = positionInCollection;
     }
-    if(views > 0) {
+    if (views > 0) {
         this->m_views = views;
     }
-    if(!rating.isEmpty()) {
+    if (!rating.isEmpty()) {
         this->m_rating = rating;
     }
 }
@@ -176,12 +175,12 @@ Download *Download::fromUrl(const QUrl &url)
 {
     QString scheme = url.scheme();
     QString host = url.host(QUrl::FullyDecoded);
-    if(scheme == QLatin1String("http") || scheme == QLatin1String("https") || scheme == QLatin1String("ftp")) {
-        if(host.contains(QStringLiteral("youtube"), Qt::CaseInsensitive) || host.contains(QStringLiteral("youtu.be"), Qt::CaseInsensitive)) {
+    if (scheme == QLatin1String("http") || scheme == QLatin1String("https") || scheme == QLatin1String("ftp")) {
+        if (host.contains(QStringLiteral("youtube"), Qt::CaseInsensitive) || host.contains(QStringLiteral("youtu.be"), Qt::CaseInsensitive)) {
             return new YoutubeDownload(url);
-        } else if(host.contains(QStringLiteral("sockshare")) || host.contains(QStringLiteral("putlocker"))) {
+        } else if (host.contains(QStringLiteral("sockshare")) || host.contains(QStringLiteral("putlocker"))) {
             return new SockshareDownload(url);
-        } else if(host.contains(QStringLiteral("bitshare"))) {
+        } else if (host.contains(QStringLiteral("bitshare"))) {
             return new BitshareDownload(url);
         } else {
             return new HttpDownload(url);
@@ -200,11 +199,11 @@ Download *Download::fromUrl(const QUrl &url)
  */
 bool Download::canStart(QString &reasonIfNot)
 {
-    if(!isInitiated()) {
+    if (!isInitiated()) {
         reasonIfNot = tr("Download is not initiated.");
-    } else if(isStarted()) {
+    } else if (isStarted()) {
         reasonIfNot = tr("Download is already started.");
-    } else if(!isValidOptionChosen()) {
+    } else if (!isValidOptionChosen()) {
         reasonIfNot = tr("No valid option chosen.");
     } else {
         return true;
@@ -228,18 +227,18 @@ bool Download::canStart(QString &reasonIfNot)
  */
 void Download::start()
 {
-    if(!isStarted()) {
+    if (!isStarted()) {
         QString reasonForFail;
-        if(canStart(reasonForFail)) {
-            for(auto &optionData : m_optionData) {
+        if (canStart(reasonForFail)) {
+            for (auto &optionData : m_optionData) {
                 optionData.m_downloadComplete = false;
                 optionData.m_downloadAbortedInternally = false;
                 optionData.m_bytesWritten = 0;
             }
             OptionData &optionData = m_optionData.at(chosenOption());
-            if(!optionData.m_outputDevice && !m_targetPath.isEmpty()) {
+            if (!optionData.m_outputDevice && !m_targetPath.isEmpty()) {
                 unique_ptr<QFile> targetDevice(new QFile(m_targetPath));
-                if(prepareOutputDevice(chosenOption(), targetDevice.get(), true)) {
+                if (prepareOutputDevice(chosenOption(), targetDevice.get(), true)) {
                     targetDevice.release();
                 } else {
                     return; // output device couldn't be prepared, error already handled in prepareOutputDevice()
@@ -269,7 +268,7 @@ void Download::start()
  */
 void Download::start(const QString &targetPath)
 {
-    if(!isStarted()) {
+    if (!isStarted()) {
         finalizeOutputDevice(chosenOption());
         m_targetPath = targetPath;
         start();
@@ -293,11 +292,11 @@ void Download::start(const QString &targetPath)
  */
 void Download::start(QIODevice *targetDevice, bool giveOwnership)
 {
-    if(!isStarted()) {
+    if (!isStarted()) {
         QString reasonForFail;
-        if(canStart(reasonForFail)) {
+        if (canStart(reasonForFail)) {
             finalizeOutputDevice(chosenOption());
-            if(prepareOutputDevice(chosenOption(), targetDevice, giveOwnership)) {
+            if (prepareOutputDevice(chosenOption(), targetDevice, giveOwnership)) {
                 start();
             }
         } else {
@@ -312,8 +311,8 @@ void Download::start(QIODevice *targetDevice, bool giveOwnership)
  */
 void Download::stop()
 {
-    if(isStarted()) {
-        switch(status()) {
+    if (isStarted()) {
+        switch (status()) {
         case DownloadStatus::Interrupting:
             setStatus(DownloadStatus::Aborting);
         case DownloadStatus::Aborting:
@@ -322,7 +321,7 @@ void Download::stop()
             setStatus(DownloadStatus::Aborting);
             abortDownload();
         }
-    } else if(status() == DownloadStatus::Initiating) {
+    } else if (status() == DownloadStatus::Initiating) {
         setStatus(DownloadStatus::Aborting);
         abortDownload();
     }
@@ -336,8 +335,8 @@ void Download::stop()
  */
 void Download::interrupt()
 {
-    if(isStarted()) {
-        switch(status()) {
+    if (isStarted()) {
+        switch (status()) {
         case DownloadStatus::Aborting:
             setStatus(DownloadStatus::Interrupting);
             break;
@@ -350,35 +349,34 @@ void Download::interrupt()
     }
 }
 
-
 /*!
  * \brief Constructs a new donwload with the specified \a url.
  */
-Download::Download(const QUrl &url, QObject *parent) :
-    QObject(parent),
-    m_initialUrl(url),
-    m_dontAcceptNewTitleFromFilenameAnymore(false),
-    m_views(0),
-    m_positionInCollection(0),
-    m_chosenOption(0),
-    m_selectedOptionChanged(true),
-    m_availableOptionsChanged(true),
-    m_status(DownloadStatus::None),
-    m_lastState(DownloadStatus::None),
-    m_bytesReceived(-1),
-    m_bytesToReceive(-1),
-    m_newBytesReceived(0),
-    m_newBytesToReceive(0),
-    m_speed(0.0),
-    m_shiftSpeed(0.0),
-    m_shiftRemainingTime(TimeSpan()),
-    m_statusInfo(QString()),
-    m_time(QTime()),
-    m_networkError(QNetworkReply::NoError),
-    m_initiated(false),
-    m_progressUpdateInterval(300),
-    m_useDefaultUserAgent(true),
-    m_proxy(QNetworkProxy::NoProxy)
+Download::Download(const QUrl &url, QObject *parent)
+    : QObject(parent)
+    , m_initialUrl(url)
+    , m_dontAcceptNewTitleFromFilenameAnymore(false)
+    , m_views(0)
+    , m_positionInCollection(0)
+    , m_chosenOption(0)
+    , m_selectedOptionChanged(true)
+    , m_availableOptionsChanged(true)
+    , m_status(DownloadStatus::None)
+    , m_lastState(DownloadStatus::None)
+    , m_bytesReceived(-1)
+    , m_bytesToReceive(-1)
+    , m_newBytesReceived(0)
+    , m_newBytesToReceive(0)
+    , m_speed(0.0)
+    , m_shiftSpeed(0.0)
+    , m_shiftRemainingTime(TimeSpan())
+    , m_statusInfo(QString())
+    , m_time(QTime())
+    , m_networkError(QNetworkReply::NoError)
+    , m_initiated(false)
+    , m_progressUpdateInterval(300)
+    , m_useDefaultUserAgent(true)
+    , m_proxy(QNetworkProxy::NoProxy)
 {
     m_time.start();
 }
@@ -398,7 +396,8 @@ bool Download::followRedirection(size_t)
  * \brief Destroys the download.
  */
 Download::~Download()
-{}
+{
+}
 
 /*!
  * \brief Sets the chosen option. This option will be used when starting the download.
@@ -406,8 +405,8 @@ Download::~Download()
  */
 bool Download::setChosenOption(size_t optionIndex)
 {
-    if(optionIndex < availableOptionCount()) {
-        if(m_chosenOption != optionIndex) {
+    if (optionIndex < availableOptionCount()) {
+        if (m_chosenOption != optionIndex) {
             m_chosenOption = optionIndex;
             m_selectedOptionChanged = true;
         }
@@ -424,7 +423,7 @@ bool Download::setChosenOption(size_t optionIndex)
  */
 void Download::init()
 {
-    if((!m_initiated) && (status() != DownloadStatus::Initiating)) {
+    if ((!m_initiated) && (status() != DownloadStatus::Initiating)) {
         setStatus(DownloadStatus::Initiating);
         doInit();
     }
@@ -442,7 +441,7 @@ void Download::init()
 void Download::reportInitiated(bool success, const QString &reasonIfNot, const QNetworkReply::NetworkError &networkError)
 {
     setNetworkError(networkError);
-    if(success) {
+    if (success) {
         m_initiated = true;
         setStatus(DownloadStatus::Ready);
     } else {
@@ -466,17 +465,17 @@ bool Download::prepareOutputDevice(size_t optionIndex, QIODevice *device, bool t
     bool ok = true;
     bool ready = true;
     OptionData &optionData = m_optionData.at(optionIndex);
-    if(!device->isOpen()) {
-        if(QFile *file = qobject_cast<QFile *>(device)) {
-            if(file->exists() && file->size() > 0) {
-                if(m_range.isUsedForWritingOutput() && m_range.currentOffset() > 0) {
+    if (!device->isOpen()) {
+        if (QFile *file = qobject_cast<QFile *>(device)) {
+            if (file->exists() && file->size() > 0) {
+                if (m_range.isUsedForWritingOutput() && m_range.currentOffset() > 0) {
                     // we need to append to an existing file
-                    switch(optionData.m_appendPermission) {
+                    switch (optionData.m_appendPermission) {
                     case PermissionStatus::Unknown:
                     case PermissionStatus::Asking:
                         setStatus(DownloadStatus::Waiting);
                         optionData.m_outputDevice = device;
-                        if(optionData.m_appendPermission != PermissionStatus::Asking) {
+                        if (optionData.m_appendPermission != PermissionStatus::Asking) {
                             optionData.m_appendPermission = PermissionStatus::Asking;
                             emit appendingPermissionRequired(this, optionIndex, file->fileName(), m_range.currentOffset(), file->size());
                         }
@@ -493,12 +492,12 @@ bool Download::prepareOutputDevice(size_t optionIndex, QIODevice *device, bool t
                         ok = false;
                     }
                 } else { // we need to overwrite the existing file
-                    switch(optionData.m_overwritePermission) {
+                    switch (optionData.m_overwritePermission) {
                     case PermissionStatus::Unknown:
                     case PermissionStatus::Asking:
                         setStatus(DownloadStatus::Waiting);
                         optionData.m_outputDevice = device;
-                        if(optionData.m_overwritePermission != PermissionStatus::Asking) {
+                        if (optionData.m_overwritePermission != PermissionStatus::Asking) {
                             optionData.m_overwritePermission = PermissionStatus::Asking;
                             emit overwriteingPermissionRequired(this, optionIndex, file->fileName());
                         }
@@ -508,7 +507,7 @@ bool Download::prepareOutputDevice(size_t optionIndex, QIODevice *device, bool t
                     case PermissionStatus::AlwaysAllowed:
                         usePermission(optionData.m_overwritePermission);
                         // overwriting the file is allowed -> clear the present file
-                        if(!file->resize(0)) {
+                        if (!file->resize(0)) {
                             setStatusInfo(tr("The already existing output file couldn't be cleared."));
                             ok = false;
                         }
@@ -522,34 +521,34 @@ bool Download::prepareOutputDevice(size_t optionIndex, QIODevice *device, bool t
                 }
             }
         }
-        if(ok && ready && !device->open(QIODevice::WriteOnly | QIODevice::Append)) {
+        if (ok && ready && !device->open(QIODevice::WriteOnly | QIODevice::Append)) {
             setStatusInfo(tr("Unable to open the output file/stream."));
             ok = false;
         }
-    } else if(!device->isWritable()) {
+    } else if (!device->isWritable()) {
         setStatusInfo(tr("The output file/stream isn't writable."));
         ok = false;
     }
-    if(ok && ready && m_range.isUsedForWritingOutput() && m_range.currentOffset() >= 0) {
-        if(device->isSequential()) {
+    if (ok && ready && m_range.isUsedForWritingOutput() && m_range.currentOffset() >= 0) {
+        if (device->isSequential()) {
             setStatusInfo(tr("Unable to seek to the range on sequential output streams."));
             ok = false;
         } else {
-            if(!device->seek(m_range.currentOffset())) {
+            if (!device->seek(m_range.currentOffset())) {
                 setStatusInfo(tr("Unable to seek to the range in the output file/stream."));
                 ok = false;
             }
         }
     }
     optionData.m_outputDeviceReady = ok && ready;
-    if(ok) {
+    if (ok) {
         optionData.m_outputDevice = device;
         optionData.m_hasOutputDeviceOwnership = takeOwnership;
     } else { // handle error case
-        if(isStarted()) {
+        if (isStarted()) {
             abortDownload(); // ensure download is aborted
         }
-        if(takeOwnership && device) {
+        if (takeOwnership && device) {
             delete device;
         }
         optionData.m_outputDevice = nullptr;
@@ -573,13 +572,13 @@ bool Download::prepareOutputDevice(size_t optionIndex, QIODevice *device, bool t
 void Download::ensureOutputDeviceIsPrepared(size_t optionIndex)
 {
     OptionData &optionData = m_optionData.at(optionIndex);
-    if(optionData.m_outputDevice && !optionData.m_outputDeviceReady) {
-        if(!prepareOutputDevice(optionIndex, optionData.m_outputDevice, optionData.m_hasOutputDeviceOwnership)) {
+    if (optionData.m_outputDevice && !optionData.m_outputDeviceReady) {
+        if (!prepareOutputDevice(optionIndex, optionData.m_outputDevice, optionData.m_hasOutputDeviceOwnership)) {
             return; // output device can not be prepared
         }
         writeBufferToOutputDevice(optionIndex);
         optionData.m_stillWriting = false; // not writing anymore
-        if(optionData.m_downloadComplete) { // download has ended, too
+        if (optionData.m_downloadComplete) { // download has ended, too
             checkStatusAndClear(optionIndex);
         }
     }
@@ -595,9 +594,9 @@ void Download::ensureOutputDeviceIsPrepared(size_t optionIndex)
 void Download::finalizeOutputDevice(size_t optionIndex)
 {
     OptionData &optionData = m_optionData.at(optionIndex);
-    if(optionData.m_hasOutputDeviceOwnership && optionData.m_outputDevice) {
-        if(optionData.m_outputDevice->isOpen()) {
-            if(QFile *targetFile = qobject_cast<QFile *>(optionData.m_outputDevice)) {
+    if (optionData.m_hasOutputDeviceOwnership && optionData.m_outputDevice) {
+        if (optionData.m_outputDevice->isOpen()) {
+            if (QFile *targetFile = qobject_cast<QFile *>(optionData.m_outputDevice)) {
                 targetFile->flush();
             }
             optionData.m_outputDevice->close();
@@ -622,11 +621,11 @@ void Download::reportFinalDownloadStatus(size_t optionIndex, bool success, const
 {
     finalizeOutputDevice(optionIndex);
     const OptionData &optionData = m_optionData[optionIndex];
-    if(!optionData.m_downloadAbortedInternally) {
+    if (!optionData.m_downloadAbortedInternally) {
         m_range.increaseCurrentOffset(optionData.m_bytesWritten);
         m_range.setUsedForRequest();
         m_range.setUsedForWritingOutput();
-        if(success) {
+        if (success) {
             setStatusInfo(statusDescription);
             setStatus(DownloadStatus::Finished);
         } else {
@@ -665,11 +664,11 @@ void Download::reportDownloadInterrupted(size_t optionIndex)
 void Download::reportDownloadProgressUpdate(size_t optionIndex, qint64 bytesReceived, qint64 bytesToReceive)
 {
     const OptionData &optionData = m_optionData[optionIndex];
-    if(bytesReceived == bytesToReceive) {
+    if (bytesReceived == bytesToReceive) {
         setProgress(bytesReceived, bytesToReceive);
     } else {
-        if(!optionData.m_downloadComplete && lastProgressUpdate() >= m_progressUpdateInterval) {
-            switch(status()) {
+        if (!optionData.m_downloadComplete && lastProgressUpdate() >= m_progressUpdateInterval) {
+            switch (status()) {
             case DownloadStatus::Interrupting:
             case DownloadStatus::Aborting:
                 break;
@@ -696,14 +695,14 @@ void Download::reportNewDataToBeWritten(size_t optionIndex, QIODevice *inputDevi
     char buffer[1024];
     streamsize read;
     qint64 written;
-    if(optionData.m_outputDevice && optionData.m_outputDeviceReady) { // there's a ready output device
-        if(!writeBufferToOutputDevice(optionIndex)) { // write data which has been buffered earlier first
+    if (optionData.m_outputDevice && optionData.m_outputDeviceReady) { // there's a ready output device
+        if (!writeBufferToOutputDevice(optionIndex)) { // write data which has been buffered earlier first
             return; // error is already handled within writeBufferToOutputDevice(), just return here
         }
         // read the new data from the input device and write it to the output device
-        if(inputDevice) {
-            while((read = inputDevice->read(buffer, sizeof(buffer))) > 0) {
-                if((written = optionData.m_outputDevice->write(buffer, read)) == read) {
+        if (inputDevice) {
+            while ((read = inputDevice->read(buffer, sizeof(buffer))) > 0) {
+                if ((written = optionData.m_outputDevice->write(buffer, read)) == read) {
                     optionData.m_bytesWritten += written;
                 } else {
                     abortDownload(); // ensure download is aborted
@@ -717,25 +716,25 @@ void Download::reportNewDataToBeWritten(size_t optionIndex, QIODevice *inputDevi
             }
         }
         optionData.m_stillWriting = false; // not writing anymore
-        if(optionData.m_downloadComplete) {
+        if (optionData.m_downloadComplete) {
             // check status and clear if the download is done; shouldn't happen?
             checkStatusAndClear(optionIndex);
         }
     } else {
         // there's no ready output device -> use a buffer to store the data
-        if(!optionData.m_buffer) { // create a new buffer if none exists
+        if (!optionData.m_buffer) { // create a new buffer if none exists
             optionData.m_buffer.reset(new stringstream(stringstream::in | stringstream::out));
         }
         // write the data to the buffer
-        if(inputDevice) {
-            while((read = inputDevice->read(buffer, sizeof(buffer))) > 0) {
+        if (inputDevice) {
+            while ((read = inputDevice->read(buffer, sizeof(buffer))) > 0) {
                 optionData.m_buffer->write(buffer, read);
             }
         }
-        if(!optionData.m_outputDevice && !optionData.m_requestingNewOutputDevice) {
+        if (!optionData.m_outputDevice && !optionData.m_requestingNewOutputDevice) {
             // request a new output device if not requested yet
             optionData.m_requestingNewOutputDevice = true;
-            if(optionData.m_downloadComplete) {
+            if (optionData.m_downloadComplete) {
                 // set the status to waiting if the actual download is complete but an output device is still required
                 setStatus(DownloadStatus::Waiting);
             }
@@ -758,13 +757,13 @@ bool Download::writeBufferToOutputDevice(size_t optionIndex)
     OptionData &optionData = m_optionData[optionIndex];
     streamsize read;
     qint64 written;
-    if(optionData.m_buffer && optionData.m_outputDevice && optionData.m_outputDeviceReady) {
+    if (optionData.m_buffer && optionData.m_outputDevice && optionData.m_outputDeviceReady) {
         optionData.m_buffer->seekg(0);
         char buffer[1024];
-        while(optionData.m_buffer->good()) {
+        while (optionData.m_buffer->good()) {
             optionData.m_buffer->read(buffer, sizeof(buffer));
             read = optionData.m_buffer->gcount();
-            if((written = optionData.m_outputDevice->write(buffer, read)) >= 0) {
+            if ((written = optionData.m_outputDevice->write(buffer, read)) >= 0) {
                 optionData.m_bytesWritten += written;
             } else {
                 optionData.m_buffer.reset();
@@ -792,7 +791,7 @@ bool Download::writeBufferToOutputDevice(size_t optionIndex)
 void Download::reportRedirectionAvailable(size_t originalOptionIndex)
 {
     OptionData &optionData = m_optionData.at(originalOptionIndex);
-    switch(optionData.m_redirectPermission) {
+    switch (optionData.m_redirectPermission) {
     case PermissionStatus::Unknown:
         setStatus(DownloadStatus::Waiting);
         optionData.m_redirectPermission = PermissionStatus::Asking;
@@ -802,7 +801,7 @@ void Download::reportRedirectionAvailable(size_t originalOptionIndex)
     case PermissionStatus::AlwaysAllowed:
         usePermission(optionData.m_redirectPermission);
         m_range.resetCurrentOffset(); // reset current offset
-        if(followRedirection(optionData.m_redirectsTo)) {
+        if (followRedirection(optionData.m_redirectsTo)) {
             optionData.m_downloadComplete = false;
             setStatus(DownloadStatus::Downloading);
         } else {
@@ -814,8 +813,7 @@ void Download::reportRedirectionAvailable(size_t originalOptionIndex)
         usePermission(optionData.m_redirectPermission);
         reportFinalDownloadStatus(originalOptionIndex, true, tr("Download finished, redirection rejected."));
         break;
-    default:
-        ;
+    default:;
     }
 }
 
@@ -831,7 +829,7 @@ void Download::reportRedirectionAvailable(size_t originalOptionIndex)
 void Download::reportAuthenticationRequired(size_t optionIndex, const QString &realm)
 {
     AuthenticationCredentials &credentials = optionIndex == InvalidOptionIndex ? m_initAuthData : m_optionData.at(optionIndex).m_authData;
-    if(!credentials.m_requested) {
+    if (!credentials.m_requested) {
         credentials.m_requested = true;
         emit authenticationRequired(this, optionIndex, realm);
     }
@@ -850,7 +848,7 @@ void Download::reportAuthenticationRequired(size_t optionIndex, const QString &r
 void Download::reportSslErrors(size_t optionIndex, QNetworkReply *reply, const QList<QSslError> &sslErrors)
 {
     OptionData &optionData = m_optionData.at(optionIndex);
-    switch(optionData.m_ignoreSslErrorsPermission) {
+    switch (optionData.m_ignoreSslErrorsPermission) {
     case PermissionStatus::Unknown:
         optionData.m_ignoreSslErrorsPermission = PermissionStatus::Asking;
         emit this->sslErrors(this, optionIndex, sslErrors);
@@ -861,8 +859,7 @@ void Download::reportSslErrors(size_t optionIndex, QNetworkReply *reply, const Q
     case PermissionStatus::AlwaysAllowed:
         reply->ignoreSslErrors(sslErrors);
         break;
-    default:
-        ;
+    default:;
     }
 }
 
@@ -875,17 +872,17 @@ void Download::reportDownloadComplete(size_t optionIndex)
 {
     OptionData &optionData = m_optionData[optionIndex];
     optionData.m_downloadComplete = true; // everything downloaded
-    if(!optionData.m_stillWriting) {
+    if (!optionData.m_stillWriting) {
         // not writing anymore -> check status and clear
         checkStatusAndClear(optionIndex);
     } else {
-        if(optionData.m_outputDevice && optionData.m_outputDeviceReady) {
+        if (optionData.m_outputDevice && optionData.m_outputDeviceReady) {
             // there's an output device and the download is still writing buffered data to it
             setStatus(DownloadStatus::FinishOuputFile);
         } else {
             // an output device is needed, the download is currently just waiting
             setStatus(DownloadStatus::Waiting);
-            if(!optionData.m_requestingNewOutputDevice) {
+            if (!optionData.m_requestingNewOutputDevice) {
                 // request an output device if not done yet
                 optionData.m_requestingNewOutputDevice = true;
                 emit outputDeviceRequired(this, optionIndex);
@@ -909,13 +906,13 @@ void Download::reportDownloadComplete(size_t optionIndex)
 size_t Download::addDownloadUrl(const QString &optionName, const QUrl &url, size_t redirectionOf)
 {
     size_t optionCount = m_optionData.size();
-    if(redirectionOf == InvalidOptionIndex || redirectionOf >= optionCount) {
+    if (redirectionOf == InvalidOptionIndex || redirectionOf >= optionCount) {
         redirectionOf = optionCount;
     }
     // check if the URL is already present
-    for(size_t index = 0; index < optionCount; ++index) {
+    for (size_t index = 0; index < optionCount; ++index) {
         OptionData &data = m_optionData[index];
-        if(data.m_url == url) {
+        if (data.m_url == url) {
             // URL has already been added previously -> just update it
             data.m_name = optionName;
             data.m_redirectionOf = redirectionOf;
@@ -925,8 +922,8 @@ size_t Download::addDownloadUrl(const QString &optionName, const QUrl &url, size
     // the URL hasn't been added yet
     m_optionData.emplace_back(optionName, url, optionCount, redirectionOf);
     m_availableOptionsChanged = true;
-    end: // update "m_redirectsTo" of original option
-    if(redirectionOf != optionCount) {
+end: // update "m_redirectsTo" of original option
+    if (redirectionOf != optionCount) {
         m_optionData.at(redirectionOf).m_redirectsTo = optionCount;
     }
     return optionCount;
@@ -957,22 +954,22 @@ void Download::provideOutputDevice(size_t optionIndex, QIODevice *device, bool g
 {
     OptionData &optionData = m_optionData[optionIndex];
     optionData.m_requestingNewOutputDevice = false;
-    if(!optionData.m_outputDevice || !optionData.m_outputDeviceReady) { // an output device has been requested
+    if (!optionData.m_outputDevice || !optionData.m_outputDeviceReady) { // an output device has been requested
         finalizeOutputDevice(optionIndex); // finalize last output device
-        if(device) { // a device has been provided
-            if(prepareOutputDevice(optionIndex, device, giveOwnership)) { // prepare the output device
-                if(optionData.m_outputDeviceReady) { // only proceed if output device is ready
+        if (device) { // a device has been provided
+            if (prepareOutputDevice(optionIndex, device, giveOwnership)) { // prepare the output device
+                if (optionData.m_outputDeviceReady) { // only proceed if output device is ready
                     optionData.m_hasOutputDeviceOwnership = giveOwnership;
-                    if(!writeBufferToOutputDevice(optionIndex)) { // if there's buffered data write it to the provided device
+                    if (!writeBufferToOutputDevice(optionIndex)) { // if there's buffered data write it to the provided device
                         return; // error already handled within writeBufferToOutputDevice(), so just return here
                     }
                     optionData.m_stillWriting = false; // not writing anymore
-                    if(optionData.m_downloadComplete) { // download has ended, too
+                    if (optionData.m_downloadComplete) { // download has ended, too
                         checkStatusAndClear(optionIndex);
                     }
                 }
             } // else: the provided device couldn't be prepared, handled within prepareOutputDevice()
-        } else if(isStarted()) { // no device has been provided -> abort the download
+        } else if (isStarted()) { // no device has been provided -> abort the download
             optionData.m_stillWriting = false; // not writing anymore
             abortDownload(); // ensure download is aborted
             optionData.m_buffer.reset();
@@ -993,17 +990,17 @@ void Download::provideOutputDevice(size_t optionIndex, QIODevice *device, bool g
  */
 void Download::provideAuthenticationCredentials(size_t optionIndex, const AuthenticationCredentials &credentials)
 {
-    if(optionIndex == InvalidOptionIndex) {
+    if (optionIndex == InvalidOptionIndex) {
         // credentials are provided for initialization
-        if(m_initAuthData.m_requested) {
+        if (m_initAuthData.m_requested) {
             m_initAuthData = credentials;
         }
     } else {
         // credentials are provided for specific option
         OptionData &optionData = m_optionData.at(optionIndex);
-        if(optionData.m_authData.m_requested) {
+        if (optionData.m_authData.m_requested) {
             optionData.m_authData = credentials;
-            if(!isStarted()) {
+            if (!isStarted()) {
                 // restart the download
                 //range().resetCurrentOffset();
                 start();
@@ -1019,10 +1016,9 @@ void Download::provideAuthenticationCredentials(size_t optionIndex, const Authen
  */
 void Download::setProgress(qint64 bytesReceived, qint64 bytesToReceive)
 {
-    if(m_bytesReceived != bytesReceived || m_bytesToReceive != bytesToReceive) {
-        if(bytesReceived > m_bytesReceived && m_time.elapsed()) {
-            m_speed = (static_cast<double>(bytesReceived - m_bytesReceived) * 0.008)
-                    / (static_cast<double>(m_time.restart()) * 0.001);
+    if (m_bytesReceived != bytesReceived || m_bytesToReceive != bytesToReceive) {
+        if (bytesReceived > m_bytesReceived && m_time.elapsed()) {
+            m_speed = (static_cast<double>(bytesReceived - m_bytesReceived) * 0.008) / (static_cast<double>(m_time.restart()) * 0.001);
         }
         m_bytesReceived = bytesReceived;
         m_bytesToReceive = bytesToReceive;
@@ -1043,13 +1039,13 @@ void Download::setProgress(qint64 bytesReceived, qint64 bytesToReceive)
 void Download::setOverwritePermission(size_t optionIndex, PermissionStatus permission)
 {
     OptionData &data = m_optionData.at(optionIndex);
-    switch(permission) {
+    switch (permission) {
     case PermissionStatus::Unknown:
         data.m_overwritePermission = PermissionStatus::Unknown;
     case PermissionStatus::Asking:
         return; // can not be set here
     default:
-        if(data.m_overwritePermission == PermissionStatus::Asking) {
+        if (data.m_overwritePermission == PermissionStatus::Asking) {
             // the download previously asked for that permission
             data.m_overwritePermission = permission;
             ensureOutputDeviceIsPrepared(optionIndex);
@@ -1071,12 +1067,12 @@ void Download::setOverwritePermission(size_t optionIndex, PermissionStatus permi
 void Download::setAppendPermission(size_t optionIndex, PermissionStatus permission)
 {
     OptionData &data = m_optionData.at(optionIndex);
-    switch(permission) {
+    switch (permission) {
     case PermissionStatus::Unknown:
     case PermissionStatus::Asking:
         return; // can not be set here
     default:
-        if(data.m_appendPermission == PermissionStatus::Asking) {
+        if (data.m_appendPermission == PermissionStatus::Asking) {
             // the download previously asked for that permission
             data.m_appendPermission = permission;
             ensureOutputDeviceIsPrepared(optionIndex);
@@ -1098,12 +1094,12 @@ void Download::setAppendPermission(size_t optionIndex, PermissionStatus permissi
 void Download::setRedirectPermission(size_t originalOptionIndex, PermissionStatus permission)
 {
     OptionData &data = m_optionData.at(originalOptionIndex);
-    switch(permission) {
+    switch (permission) {
     case PermissionStatus::Unknown:
     case PermissionStatus::Asking:
         return; // can not be set here
     default:
-        if(data.m_redirectPermission == PermissionStatus::Asking) {
+        if (data.m_redirectPermission == PermissionStatus::Asking) {
             data.m_redirectPermission = permission;
             // the download previously asked for that permission
             reportRedirectionAvailable(originalOptionIndex);
@@ -1125,17 +1121,17 @@ void Download::setRedirectPermission(size_t originalOptionIndex, PermissionStatu
 void Download::setIgnoreSslErrorsPermission(size_t optionIndex, PermissionStatus permission)
 {
     OptionData &data = m_optionData.at(optionIndex);
-    switch(permission) {
+    switch (permission) {
     case PermissionStatus::Unknown:
     case PermissionStatus::Asking:
         return; // can not be set here
     default:
-        if(data.m_ignoreSslErrorsPermission == PermissionStatus::Asking) {
+        if (data.m_ignoreSslErrorsPermission == PermissionStatus::Asking) {
             data.m_ignoreSslErrorsPermission = permission;
-            switch(data.m_ignoreSslErrorsPermission) {
+            switch (data.m_ignoreSslErrorsPermission) {
             case PermissionStatus::Allowed:
             case PermissionStatus::AlwaysAllowed:
-                if(networkError() == QNetworkReply::SslHandshakeFailedError) {
+                if (networkError() == QNetworkReply::SslHandshakeFailedError) {
                     start(); // restart the download if it failed because of the SSL error
                 }
                 break;
@@ -1143,8 +1139,7 @@ void Download::setIgnoreSslErrorsPermission(size_t optionIndex, PermissionStatus
             case PermissionStatus::AlwaysRefused:
                 usePermission(data.m_ignoreSslErrorsPermission);
                 break;
-            default:
-                ;
+            default:;
             }
 
         } else {
@@ -1250,5 +1245,4 @@ void Download::setIgnoreSslErrorsPermission(size_t optionIndex, PermissionStatus
  *
  * To be implemented when subclassing.
  */
-
 }

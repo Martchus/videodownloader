@@ -3,14 +3,13 @@
 
 #include "./httpdownloadwithinforequst.h"
 
-#include <QStringList>
 #include <QHash>
 #include <QJsonObject>
+#include <QStringList>
 
 namespace Network {
 
-class YoutubeDownload : public HttpDownloadWithInfoRequst
-{
+class YoutubeDownload : public HttpDownloadWithInfoRequst {
     Q_OBJECT
 
 public:
@@ -30,7 +29,6 @@ private:
     QStringList m_itags;
     static QJsonObject m_itagInfo;
 };
-
 }
 
 #endif // YOUTUBEDOWNLOAD_H

@@ -1,26 +1,26 @@
 #include "./utils.h"
 
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonParseError>
 #include <QString>
 #include <QTextDocument>
-#include <QJsonObject>
-#include <QJsonDocument>
-#include <QJsonParseError>
-#include <QFile>
 
 namespace Application {
 
 int substring(const QString &source, QString &target, int startIndex, const QString &startStr, const QString &endStr)
 {
     int beg = source.indexOf(startStr, startIndex);
-    if(beg > -1) {
+    if (beg > -1) {
         beg += startStr.length();
         int end = source.indexOf(endStr, beg);
-        if(end > -1) {
+        if (end > -1) {
             int len = end - beg;
-            if(len > 0) {
+            if (len > 0) {
                 target = source.mid(beg, len);
                 return beg;
-            } else if(len == 0) {
+            } else if (len == 0) {
                 target.clear();
                 return beg;
             }
@@ -35,8 +35,8 @@ void replaceHtmlEntities(QString &text)
     QTextDocument textDocument;
     textDocument.setHtml(text);
     text = textDocument.toPlainText();
-    foreach(const QChar &c, text) {
-        if(!c.isSpace()) {
+    foreach (const QChar &c, text) {
+        if (!c.isSpace()) {
             return;
         }
     }
@@ -46,29 +46,28 @@ void replaceHtmlEntities(QString &text)
 QJsonObject loadJsonObjectFromResource(const QString &resource, QString *error)
 {
     QFile file(resource);
-    if(file.open(QFile::ReadOnly)) {
+    if (file.open(QFile::ReadOnly)) {
         QJsonParseError parseError;
         QJsonDocument doc = QJsonDocument::fromJson(file.readAll(), &parseError);
-        if(parseError.error == QJsonParseError::NoError) {
-            if(doc.isObject())
+        if (parseError.error == QJsonParseError::NoError) {
+            if (doc.isObject())
                 return doc.object();
             else {
-                if(error) {
+                if (error) {
                     *error = QStringLiteral("JSON doesn't contain a main object.");
                 }
             }
         } else {
-            if(error) {
+            if (error) {
                 *error = parseError.errorString();
             }
         }
     } else {
-        if(error) {
+        if (error) {
             *error = QStringLiteral("Unable to open file.");
         }
     }
 
     return QJsonObject();
 }
-
 }

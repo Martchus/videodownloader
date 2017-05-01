@@ -5,8 +5,7 @@
 
 namespace Network {
 
-class DownloadRange
-{
+class DownloadRange {
 public:
     DownloadRange();
     qint64 startOffset() const;
@@ -93,7 +92,6 @@ inline void DownloadRange::setUsedForWritingOutput(bool value)
 {
     m_useForWritingOutput = value;
 }
-
 }
 
 #endif // DOWNLOADRANGE_H

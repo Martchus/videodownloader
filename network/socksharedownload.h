@@ -5,8 +5,7 @@
 
 namespace Network {
 
-class SockshareDownload : public HttpDownloadWithInfoRequst
-{
+class SockshareDownload : public HttpDownloadWithInfoRequst {
     Q_OBJECT
 
 public:
@@ -23,7 +22,6 @@ private:
     QByteArray m_postData;
     QUrl m_playlistUrl;
 };
-
 }
 
 #endif // SOCKSHAREDOWNLOAD_H

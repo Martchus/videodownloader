@@ -16,10 +16,9 @@ namespace Ui {
 class AddDownloadDialog;
 }
 
-class AddDownloadDialog : public QDialog
-{
+class AddDownloadDialog : public QDialog {
     Q_OBJECT
-    
+
 public:
     explicit AddDownloadDialog(QWidget *parent = nullptr);
     ~AddDownloadDialog();
@@ -48,7 +47,6 @@ private:
     QInputDialog *m_selectDownloadTypeInputDialog;
     QString m_lastUrl;
 };
-
 }
 
 #endif // ADDDOWNLOADDIALOG_H

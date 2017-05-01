@@ -10,13 +10,14 @@ namespace Network {
 /*!
  * \brief Constructs a new download range.
  */
-DownloadRange::DownloadRange() :
-    m_startOffset(-1),
-    m_currentOffset(-1),
-    m_endOffset(-1),
-    m_useForRequest(true),
-    m_useForWritingOutput(true)
-{}
+DownloadRange::DownloadRange()
+    : m_startOffset(-1)
+    , m_currentOffset(-1)
+    , m_endOffset(-1)
+    , m_useForRequest(true)
+    , m_useForWritingOutput(true)
+{
+}
 
 /*!
  * \brief Sets the offset of the first byte to be downloaded.
@@ -24,11 +25,11 @@ DownloadRange::DownloadRange() :
  */
 bool DownloadRange::setStartOffset(qint64 value)
 {
-    if(m_endOffset >= 0 && value >= 0 && m_endOffset < value) {
+    if (m_endOffset >= 0 && value >= 0 && m_endOffset < value) {
         return false;
     } else {
         m_startOffset = value;
-        if(m_startOffset >= 0 && m_currentOffset < m_startOffset) {
+        if (m_startOffset >= 0 && m_currentOffset < m_startOffset) {
             m_currentOffset = m_startOffset;
         }
     }
@@ -42,8 +43,7 @@ bool DownloadRange::setStartOffset(qint64 value)
  */
 bool DownloadRange::setCurrentOffset(qint64 value)
 {
-    if((m_startOffset >= 0 && value < m_startOffset)
-            || (m_endOffset >= 0 && value > m_endOffset)) {
+    if ((m_startOffset >= 0 && value < m_startOffset) || (m_endOffset >= 0 && value > m_endOffset)) {
         return false;
     } else {
         m_currentOffset = value;
@@ -57,9 +57,9 @@ bool DownloadRange::setCurrentOffset(qint64 value)
  */
 bool DownloadRange::increaseCurrentOffset(qint64 bytes)
 {
-    if(m_currentOffset >= 0) {
+    if (m_currentOffset >= 0) {
         return setCurrentOffset(m_currentOffset + bytes);
-    } else if(m_startOffset >= 0) {
+    } else if (m_startOffset >= 0) {
         return setCurrentOffset(m_startOffset + bytes);
     } else {
         return setCurrentOffset(bytes);
@@ -73,15 +73,14 @@ bool DownloadRange::increaseCurrentOffset(qint64 bytes)
  */
 bool DownloadRange::setEndOffset(qint64 value)
 {
-    if(m_startOffset >= 0 && value >= 0 && value < m_startOffset)
+    if (m_startOffset >= 0 && value >= 0 && value < m_startOffset)
         return false;
     else {
         m_endOffset = value;
-        if(m_endOffset >= 0 && m_currentOffset > m_endOffset) {
+        if (m_endOffset >= 0 && m_currentOffset > m_endOffset) {
             m_currentOffset = m_endOffset;
         }
     }
     return true;
 }
-
 }

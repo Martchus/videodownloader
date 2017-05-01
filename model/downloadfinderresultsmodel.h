@@ -14,8 +14,7 @@ class DownloadFinder;
 
 namespace QtGui {
 
-class DownloadFinderResultsModel : public QAbstractTableModel
-{
+class DownloadFinderResultsModel : public QAbstractTableModel {
     Q_OBJECT
 public:
     explicit DownloadFinderResultsModel(Network::DownloadFinder *finder = nullptr, QObject *parent = nullptr);
@@ -83,7 +82,6 @@ constexpr int DownloadFinderResultsModel::lastColumn()
 {
     return idColumn();
 }
-
 }
 
 #endif // DOWNLOADFINDERRESULTSMODEL_H

@@ -5,8 +5,7 @@
 
 namespace Network {
 
-class BitshareDownload : public HttpDownloadWithInfoRequst
-{
+class BitshareDownload : public HttpDownloadWithInfoRequst {
     Q_OBJECT
 
 public:
@@ -21,7 +20,6 @@ protected:
 private:
     QByteArray m_postData;
 };
-
 }
 
 #endif // BITSHAREDOWNLOAD_H

@@ -5,8 +5,7 @@
 
 namespace Network {
 
-class YoutubePlaylist : public DownloadFinder
-{
+class YoutubePlaylist : public DownloadFinder {
     Q_OBJECT
 public:
     explicit YoutubePlaylist(const QUrl &url, QObject *parent = nullptr);
@@ -17,11 +16,10 @@ protected:
 
 protected slots:
     ParsingResult parseResults(const QByteArray &data, QString &reasonForFail);
-    
-private:
-    QString m_playlistId;  
-};
 
+private:
+    QString m_playlistId;
+};
 }
 
 #endif // YOUTUBEPLAYLIST_H

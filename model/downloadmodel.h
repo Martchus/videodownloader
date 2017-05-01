@@ -10,15 +10,10 @@ class Download;
 
 namespace QtGui {
 
-class DownloadModel : public QAbstractItemModel
-{
+class DownloadModel : public QAbstractItemModel {
     Q_OBJECT
 public:
-    enum ItemDataRole {
-        ProgressPercentageRole = Qt::UserRole + 1,
-        AvailableOptionsRole = Qt::UserRole + 2,
-        ChosenOptionRole = Qt::UserRole + 3
-    };
+    enum ItemDataRole { ProgressPercentageRole = Qt::UserRole + 1, AvailableOptionsRole = Qt::UserRole + 2, ChosenOptionRole = Qt::UserRole + 3 };
 
     explicit DownloadModel(QObject *parent = nullptr);
 
@@ -30,7 +25,7 @@ public:
     QModelIndex index(Network::Download *download, int column = 0);
     QModelIndex parent(const QModelIndex &) const;
     int rowCount(const QModelIndex & = QModelIndex()) const;
-    bool hasChildren(const QModelIndex & index = QModelIndex()) const;
+    bool hasChildren(const QModelIndex &index = QModelIndex()) const;
     int columnCount(const QModelIndex & = QModelIndex()) const;
 
     void addDownload(Network::Download *download);
@@ -105,7 +100,6 @@ constexpr int DownloadModel::lastColumn()
 {
     return progressColumn();
 }
-
 }
 
 #endif // DOWNLOADMODEL_H

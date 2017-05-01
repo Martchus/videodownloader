@@ -8,8 +8,7 @@ namespace Network {
 /*!
  * \brief The GroovesharkRequestType enum defines the request types for Grooveshark downloads.
  */
-enum class GroovesharkRequestType
-{
+enum class GroovesharkRequestType {
     SongStream, /**< requests a song stream */
     AlbumGetSongs, /**< requests song IDs of an album */
     PlaylistGetSongs, /**< requests song IDs of a playlist */
@@ -22,14 +21,12 @@ enum class GroovesharkRequestType
 /*!
  * \brief The GroovesharkGetSongsRequestData struct holds the request data for Grooveshark downloads.
  */
-struct GroovesharkGetSongsRequestData
-{
+struct GroovesharkGetSongsRequestData {
     QString id;
     bool verified;
 };
 
-class GroovesharkDownload : public HttpDownloadWithInfoRequst
-{    
+class GroovesharkDownload : public HttpDownloadWithInfoRequst {
     Q_OBJECT
 
 public:
@@ -80,7 +77,6 @@ private:
     GroovesharkRequestType m_requestType;
     QVariant m_requestData;
 };
-
 }
 
 Q_DECLARE_METATYPE(Network::GroovesharkGetSongsRequestData)

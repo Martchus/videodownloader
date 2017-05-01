@@ -5,8 +5,8 @@
 
 #include "resources/config.h"
 
-#include "ui_targetpage.h"
 #include "ui_proxypage.h"
+#include "ui_targetpage.h"
 #include "ui_useragentpage.h"
 
 #include <qtutilities/resources/resources.h>
@@ -17,19 +17,19 @@
 
 #include <c++utilities/conversion/stringconversion.h>
 
-#include <QDir>
-#include <QFileInfo>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QFormLayout>
-#include <QLabel>
-#include <QCheckBox>
-#include <QMessageBox>
-#include <QFileDialog>
-#include <QGraphicsPixmapItem>
 #include <QApplication>
-#include <QSettings>
+#include <QCheckBox>
+#include <QDir>
+#include <QFileDialog>
+#include <QFileInfo>
+#include <QFormLayout>
+#include <QGraphicsPixmapItem>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QMessageBox>
 #include <QNetworkProxy>
+#include <QSettings>
+#include <QVBoxLayout>
 
 #include <functional>
 
@@ -40,16 +40,18 @@ using namespace Network;
 
 namespace QtGui {
 
-TargetPage::TargetPage(QWidget *parentWindow) :
-    TargetPageBase(parentWindow)
-{}
+TargetPage::TargetPage(QWidget *parentWindow)
+    : TargetPageBase(parentWindow)
+{
+}
 
 TargetPage::~TargetPage()
-{}
+{
+}
 
 bool TargetPage::apply()
 {
-    if(hasBeenShown()) {
+    if (hasBeenShown()) {
         targetDirectory() = ui()->defaultTargetLineEdit->text();
         overwriteWithoutAsking() = ui()->overwriteCheckBox->isChecked();
         determineTargetFileWithoutAsking() = ui()->askOnlyWhenThereIsNoAppropriateFilenameCheckBox->isChecked();
@@ -59,7 +61,7 @@ bool TargetPage::apply()
 
 void TargetPage::reset()
 {
-    if(hasBeenShown()) {
+    if (hasBeenShown()) {
         ui()->defaultTargetLineEdit->setText(targetDirectory());
         ui()->overwriteCheckBox->setChecked(overwriteWithoutAsking());
         ui()->askOnlyWhenThereIsNoAppropriateFilenameCheckBox->setChecked(determineTargetFileWithoutAsking());
@@ -111,24 +113,26 @@ void TargetPage::selectTargetDirectory()
     dlg->setWindowTitle(QApplication::translate("QtGui::GeneralTargetOptionPage", "Select download target directory"));
     dlg->setDirectory(ui()->defaultTargetLineEdit->text());
     QObject::connect(dlg, &QFileDialog::accepted, [this, dlg] {
-        if(dlg->selectedFiles().size() == 1) {
+        if (dlg->selectedFiles().size() == 1) {
             ui()->defaultTargetLineEdit->setText(dlg->selectedFiles().at(0));
         }
     });
     dlg->show();
 }
 
-UiPage::UiPage(QWidget *parentWidget) :
-    OptionPage(parentWidget),
-    m_multiSelectionCheckBox(nullptr)
-{}
+UiPage::UiPage(QWidget *parentWidget)
+    : OptionPage(parentWidget)
+    , m_multiSelectionCheckBox(nullptr)
+{
+}
 
 UiPage::~UiPage()
-{}
+{
+}
 
 bool UiPage::apply()
 {
-    if(hasBeenShown()) {
+    if (hasBeenShown()) {
         multiSelection() = m_multiSelectionCheckBox->isChecked();
     }
     return true;
@@ -136,7 +140,7 @@ bool UiPage::apply()
 
 void UiPage::reset()
 {
-    if(hasBeenShown()) {
+    if (hasBeenShown()) {
         m_multiSelectionCheckBox->setChecked(multiSelection());
     }
 }
@@ -167,24 +171,27 @@ QWidget *UiPage::setupWidget()
     QLabel *mainWindowLabel = new QLabel(QApplication::translate("QtGui::GeneralUiOptionPage", "Main window"));
     mainWindowLabel->setStyleSheet(QStringLiteral("font-weight: bold;"));
     layout->addWidget(mainWindowLabel);
-    layout->addWidget(m_multiSelectionCheckBox = new QCheckBox(QApplication::translate("QtGui::GeneralUiOptionPage", "enable multi-selection"), widget));
+    layout->addWidget(
+        m_multiSelectionCheckBox = new QCheckBox(QApplication::translate("QtGui::GeneralUiOptionPage", "enable multi-selection"), widget));
     widget->setLayout(layout);
     return widget;
 }
 
-ProxyPage::ProxyPage(QWidget *parentWidget) :
-    ProxyPageBase(parentWidget)
-{}
+ProxyPage::ProxyPage(QWidget *parentWidget)
+    : ProxyPageBase(parentWidget)
+{
+}
 
 ProxyPage::~ProxyPage()
-{}
+{
+}
 
 bool ProxyPage::apply()
 {
-    if(hasBeenShown()) {
+    if (hasBeenShown()) {
         // set entered values to proxy
-        if(ui()->enableCheckBox->isChecked()) {
-            switch(ui()->typeComboBox->currentIndex()) {
+        if (ui()->enableCheckBox->isChecked()) {
+            switch (ui()->typeComboBox->currentIndex()) {
             case 0:
                 proxy().setType(QNetworkProxy::HttpProxy);
                 break;
@@ -205,8 +212,8 @@ bool ProxyPage::apply()
 
 void ProxyPage::reset()
 {
-    if(hasBeenShown()) {
-        switch(proxy().type()) {
+    if (hasBeenShown()) {
+        switch (proxy().type()) {
         case QNetworkProxy::HttpProxy:
             ui()->typeComboBox->setCurrentIndex(1);
             ui()->enableCheckBox->setChecked(true);
@@ -222,8 +229,7 @@ void ProxyPage::reset()
             ui()->enableCheckBox->setChecked(false);
             ui()->widget->setEnabled(false);
             break;
-        default:
-            ;
+        default:;
         }
         ui()->hostNameLineEdit->setText(proxy().hostName());
         ui()->portSpinBox->setValue(proxy().port());
@@ -252,26 +258,28 @@ QWidget *ProxyPage::setupWidget()
 void ProxyPage::updateProxy()
 {
     QStringList parts = ui()->hostNameLineEdit->text().split(":", QString::SkipEmptyParts);
-    if(parts.count() == 2) {
+    if (parts.count() == 2) {
         bool ok;
         int port = parts.at(1).toInt(&ok);
-        if(ok) {
+        if (ok) {
             ui()->hostNameLineEdit->setText(parts.at(0));
             ui()->portSpinBox->setValue(port);
         }
     }
 }
 
-UserAgentPage::UserAgentPage(QWidget *parentWidget) :
-    UserAgentPageBase(parentWidget)
-{}
+UserAgentPage::UserAgentPage(QWidget *parentWidget)
+    : UserAgentPageBase(parentWidget)
+{
+}
 
 UserAgentPage::~UserAgentPage()
-{}
+{
+}
 
 bool UserAgentPage::apply()
 {
-    if(hasBeenShown()) {
+    if (hasBeenShown()) {
         useCustomUserAgent() = ui()->customRadioButton->isChecked();
         customUserAgent() = ui()->customLineEdit->text();
     }
@@ -280,8 +288,8 @@ bool UserAgentPage::apply()
 
 void UserAgentPage::reset()
 {
-    if(hasBeenShown()) {
-        if(useCustomUserAgent()) {
+    if (hasBeenShown()) {
+        if (useCustomUserAgent()) {
             ui()->customRadioButton->setChecked(true);
         } else {
             ui()->defaultRadioButton->setChecked(true);
@@ -302,17 +310,19 @@ QString &UserAgentPage::customUserAgent()
     return userAgent;
 }
 
-MiscPage::MiscPage(QWidget *parentWidget) :
-    OptionPage(parentWidget),
-    m_redirectCheckBox(nullptr)
-{}
+MiscPage::MiscPage(QWidget *parentWidget)
+    : OptionPage(parentWidget)
+    , m_redirectCheckBox(nullptr)
+{
+}
 
 MiscPage::~MiscPage()
-{}
+{
+}
 
 bool MiscPage::apply()
 {
-    if(hasBeenShown()) {
+    if (hasBeenShown()) {
         redirectWithoutAsking() = m_redirectCheckBox->isChecked();
     }
     return true;
@@ -320,7 +330,7 @@ bool MiscPage::apply()
 
 void MiscPage::reset()
 {
-    if(hasBeenShown()) {
+    if (hasBeenShown()) {
         m_redirectCheckBox->setChecked(redirectWithoutAsking());
     }
 }
@@ -336,18 +346,21 @@ QWidget *MiscPage::setupWidget()
     QWidget *widget = new QWidget();
     widget->setWindowTitle(QApplication::translate("QtGui::NetworkMiscOptionPage", "Misc"));
     QVBoxLayout *layout = new QVBoxLayout(widget);
-    layout->addWidget(m_redirectCheckBox = new QCheckBox(QApplication::translate("QtGui::NetworkMiscOptionPage", "follow redirections without asking"), widget));
+    layout->addWidget(
+        m_redirectCheckBox = new QCheckBox(QApplication::translate("QtGui::NetworkMiscOptionPage", "follow redirections without asking"), widget));
     widget->setLayout(layout);
     return widget;
 }
 
-StatsPage::StatsPage(QWidget *parentWidget) :
-    OptionPage(parentWidget),
-    m_receivedLabel(nullptr)
-{}
+StatsPage::StatsPage(QWidget *parentWidget)
+    : OptionPage(parentWidget)
+    , m_receivedLabel(nullptr)
+{
+}
 
 StatsPage::~StatsPage()
-{}
+{
+}
 
 bool StatsPage::apply()
 {
@@ -356,7 +369,7 @@ bool StatsPage::apply()
 
 void StatsPage::reset()
 {
-    if(hasBeenShown()) {
+    if (hasBeenShown()) {
         m_receivedLabel->setText(QString::fromStdString(ConversionUtilities::dataSizeToString(bytesReceived(), true)));
     }
 }
@@ -383,8 +396,8 @@ QWidget *StatsPage::setupWidget()
     return widget;
 }
 
-SettingsDialog::SettingsDialog(QWidget *parent) :
-    Dialogs::SettingsDialog(parent)
+SettingsDialog::SettingsDialog(QWidget *parent)
+    : Dialogs::SettingsDialog(parent)
 {
     // setup categories
     QList<Dialogs::OptionCategory *> categories;
@@ -393,12 +406,14 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     category = new Dialogs::OptionCategory(this);
     category->setDisplayName(tr("General"));
     category->assignPages(QList<Dialogs::OptionPage *>() << new TargetPage(this) << new UiPage());
-    category->setIcon(QIcon::fromTheme(QStringLiteral("preferences-other"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-general.png"))));
+    category->setIcon(
+        QIcon::fromTheme(QStringLiteral("preferences-other"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-general.png"))));
     categories << category;
 
     category = new Dialogs::OptionCategory(this);
     category->setDisplayName(tr("Network"));
-    category->setIcon(QIcon::fromTheme(QStringLiteral("preferences-system-network"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-network.png"))));
+    category->setIcon(QIcon::fromTheme(
+        QStringLiteral("preferences-system-network"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-network.png"))));
     category->assignPages(QList<Dialogs::OptionPage *>() << new ProxyPage() << new UserAgentPage() << new MiscPage() << new StatsPage());
     categories << category;
 
@@ -413,11 +428,13 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     categoryModel()->setCategories(categories);
 
     setMinimumSize(800, 450);
-    setWindowIcon(QIcon::fromTheme(QStringLiteral("preferences-other"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-general.png"))));
+    setWindowIcon(
+        QIcon::fromTheme(QStringLiteral("preferences-other"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-general.png"))));
 }
 
 SettingsDialog::~SettingsDialog()
-{}
+{
+}
 
 Dialogs::QtSettings &qtSettings()
 {
@@ -429,7 +446,8 @@ void restoreSettings()
 {
     QSettings settings(QSettings::IniFormat, QSettings::UserScope, QStringLiteral(PROJECT_NAME));
     // move old config to new location
-    const QString oldConfig = QSettings(QSettings::IniFormat, QSettings::UserScope, QApplication::organizationName(), QApplication::applicationName()).fileName();
+    const QString oldConfig
+        = QSettings(QSettings::IniFormat, QSettings::UserScope, QApplication::organizationName(), QApplication::applicationName()).fileName();
     QFile::rename(oldConfig, settings.fileName()) || QFile::remove(oldConfig);
     settings.sync();
 
@@ -464,15 +482,19 @@ void restoreSettings()
     UiPage::multiSelection() = settings.value("multiselection").toBool();
 
     // load grooveshark authentication file
-    const auto errorMsg = QApplication::translate("QtGui::Settings", "Unable to read Grooveshark authentication information file.\n\nReason: %1\n\nThe values stored in this file are required when connection to Grooveshark. Built-in will values be used instead, but these might be deprecated.");
-    const auto groovesharkAuthenticationFile = ConfigFile::locateConfigFile(QStringLiteral(PROJECT_NAME), QStringLiteral("json/groovesharkauthenticationinfo.json"), &settings);
+    const auto errorMsg = QApplication::translate(
+        "QtGui::Settings", "Unable to read Grooveshark authentication information file.\n\nReason: %1\n\nThe values stored in this file are required "
+                           "when connection to Grooveshark. Built-in will values be used instead, but these might be deprecated.");
+    const auto groovesharkAuthenticationFile
+        = ConfigFile::locateConfigFile(QStringLiteral(PROJECT_NAME), QStringLiteral("json/groovesharkauthenticationinfo.json"), &settings);
     QString reason;
-    if(!groovesharkAuthenticationFile.isEmpty()) {
-        if(!GroovesharkDownload::loadAuthenticationInformationFromFile(groovesharkAuthenticationFile, &reason)) {
+    if (!groovesharkAuthenticationFile.isEmpty()) {
+        if (!GroovesharkDownload::loadAuthenticationInformationFromFile(groovesharkAuthenticationFile, &reason)) {
             QMessageBox::warning(nullptr, QApplication::applicationName(), errorMsg.arg(reason));
         }
     } else {
-        QMessageBox::warning(nullptr, QApplication::applicationName(), errorMsg.arg(QApplication::translate("QtGui::Settings", "Unable to find \"groovesharkauthenticationinfo.json\".")));
+        QMessageBox::warning(nullptr, QApplication::applicationName(),
+            errorMsg.arg(QApplication::translate("QtGui::Settings", "Unable to find \"groovesharkauthenticationinfo.json\".")));
     }
 }
 
@@ -515,7 +537,6 @@ void applySettingsToDownload(Download *download)
     download->setCustomUserAgent(UserAgentPage::useCustomUserAgent() ? UserAgentPage::customUserAgent() : QString());
     download->setProxy(ProxyPage::proxy());
 }
-
 }
 
 INSTANTIATE_UI_FILE_BASED_OPTION_PAGE_NS(QtGui, TargetPage)

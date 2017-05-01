@@ -5,15 +5,9 @@
 
 namespace Network {
 
-enum class SpotifyRequestType
-{
-    Invalid,
-    GetAuthenticationData,
-    Authenticate
-};
+enum class SpotifyRequestType { Invalid, GetAuthenticationData, Authenticate };
 
-class SpotifyDownload : public HttpDownloadWithInfoRequst
-{
+class SpotifyDownload : public HttpDownloadWithInfoRequst {
     Q_OBJECT
 
 public:
@@ -41,7 +35,6 @@ private:
     SpotifyRequestType m_currentRequest;
     int m_triesToGetAuthenticationData;
 };
-
 }
 
 #endif // SPOTIFYDOWNLOAD_H

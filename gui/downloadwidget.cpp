@@ -2,26 +2,27 @@
 
 #include "ui_downloadwidget.h"
 
-#include <QPaintEvent>
-#include <QMouseEvent>
-#include <QStylePainter>
 #include <QMessageBox>
+#include <QMouseEvent>
+#include <QPaintEvent>
+#include <QStylePainter>
 
 namespace QtGui {
 
-DownloadWidget::DownloadWidget(QWidget *parent) :
-    QWidget(parent),
-    m_ui(new Ui::DownloadWidget)
+DownloadWidget::DownloadWidget(QWidget *parent)
+    : QWidget(parent)
+    , m_ui(new Ui::DownloadWidget)
 {
     m_ui->setupUi(this);
 }
 
 DownloadWidget::~DownloadWidget()
-{}
+{
+}
 
 void DownloadWidget::paintEvent(QPaintEvent *)
 {
-    if(true) {
+    if (true) {
         QStylePainter painter(this);
         QStyleOptionFocusRect option;
         option.initFrom(this);
@@ -29,5 +30,4 @@ void DownloadWidget::paintEvent(QPaintEvent *)
         painter.drawPrimitive(QStyle::PE_FrameFocusRect, option);
     }
 }
-
 }

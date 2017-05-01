@@ -11,8 +11,7 @@
 
 namespace Network {
 
-class HttpDownloadWithInfoRequst : public HttpDownload
-{   
+class HttpDownloadWithInfoRequst : public HttpDownload {
     Q_OBJECT
 
 public:
@@ -33,7 +32,6 @@ private:
     std::unique_ptr<Download> m_infoDownload;
     std::unique_ptr<QBuffer> m_infoBuffer;
 };
-
 }
 
 #endif // HTTPDOWNLOADWITHINFOREQUST_H

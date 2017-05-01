@@ -7,8 +7,7 @@
 
 namespace Network {
 
-class TestDownload : public Download
-{
+class TestDownload : public Download {
 public:
     TestDownload();
     ~TestDownload();
@@ -28,7 +27,6 @@ private slots:
 private:
     QTimer m_timer;
 };
-
 }
 
 #endif // TESTDOWNLOAD_H

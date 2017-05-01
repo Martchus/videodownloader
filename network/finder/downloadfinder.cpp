@@ -12,12 +12,13 @@ namespace Network {
 /*!
  * \brief Constructs a new download finder.
  */
-DownloadFinder::DownloadFinder(QObject *parent) :
-    QObject(parent),
-    m_resultCount(0),
-    m_continueAutomatically(true),
-    m_finished(false)
-{}
+DownloadFinder::DownloadFinder(QObject *parent)
+    : QObject(parent)
+    , m_resultCount(0)
+    , m_continueAutomatically(true)
+    , m_finished(false)
+{
+}
 
 /*!
  * \brief Destroys the download finder.
@@ -42,8 +43,8 @@ bool DownloadFinder::isDownloading() const
  */
 Download *DownloadFinder::downloadByInitialUrl(const QUrl &url) const
 {
-    for(Download *download : m_results) {
-        if(download->initialUrl() == url) {
+    for (Download *download : m_results) {
+        if (download->initialUrl() == url) {
             return download;
         }
     }
@@ -57,9 +58,9 @@ Download *DownloadFinder::downloadByInitialUrl(const QUrl &url) const
  */
 bool DownloadFinder::hasDownloadUrl(const QUrl &url) const
 {
-    for(const Download *download : m_results) {
-        for(const OptionData &option : download->options()) {
-            if(option.url() == url) {
+    for (const Download *download : m_results) {
+        for (const OptionData &option : download->options()) {
+            if (option.url() == url) {
                 return true;
             }
         }
@@ -73,8 +74,8 @@ bool DownloadFinder::hasDownloadUrl(const QUrl &url) const
 bool DownloadFinder::start()
 {
     m_finished = false;
-    if(!isDownloading()) {
-        if(m_download) {
+    if (!isDownloading()) {
+        if (m_download) {
             m_download->stop();
             m_download.release()->deleteLater();
         }
@@ -83,7 +84,7 @@ bool DownloadFinder::start()
     }
     QString reasonForFail;
     m_download.reset(createRequest(reasonForFail));
-    if(m_download) {
+    if (m_download) {
         // prepare download and buffer
         connect(m_download.get(), &Download::statusChanged, this, &DownloadFinder::downloadChangedStatus);
         m_download->setProxy(m_proxy);
@@ -104,7 +105,7 @@ bool DownloadFinder::start()
  */
 void DownloadFinder::stop()
 {
-    if(m_download) {
+    if (m_download) {
         m_download->stop();
     }
 }
@@ -126,10 +127,10 @@ void DownloadFinder::reportResult(Download *result)
  */
 void DownloadFinder::downloadChangedStatus(Download *download)
 {
-    switch(download->status()) {
+    switch (download->status()) {
     case DownloadStatus::Ready: {
         QString reasonForFail;
-        if(finalizeRequest(download, reasonForFail)) {
+        if (finalizeRequest(download, reasonForFail)) {
             download->start();
         } else {
             emitFinishedSignal(false, reasonForFail);
@@ -140,14 +141,14 @@ void DownloadFinder::downloadChangedStatus(Download *download)
         emitFinishedSignal(false, download->statusInfo());
         break;
     case DownloadStatus::Finished:
-        if(!m_buffer) {
+        if (!m_buffer) {
             emitFinishedSignal(false, tr("The buffer hasn't been initialized correctly."));
         } else {
             m_buffer->seek(0);
             QByteArray data = m_buffer->readAll();
             m_buffer.reset();
             QString reasonForFail;
-            switch(parseResults(data, reasonForFail)) {
+            switch (parseResults(data, reasonForFail)) {
             case ParsingResult::Error:
                 m_finished = true;
                 emitFinishedSignal(false, reasonForFail);
@@ -159,7 +160,7 @@ void DownloadFinder::downloadChangedStatus(Download *download)
                 break;
             case ParsingResult::AnotherRequestRequired:
                 emitNewResultsSignal();
-                if(m_continueAutomatically || m_results.size() <= 0) {
+                if (m_continueAutomatically || m_results.size() <= 0) {
                     start();
                 }
                 break;
@@ -168,15 +169,14 @@ void DownloadFinder::downloadChangedStatus(Download *download)
             }
         }
         break;
-    default:
-        ;
+    default:;
     }
 }
 
 void DownloadFinder::downloadRequiresOutputDevice(Download *download, size_t option)
 {
     m_buffer.reset(new QBuffer);
-    if(m_buffer->open(QIODevice::ReadWrite)) {
+    if (m_buffer->open(QIODevice::ReadWrite)) {
         download->provideOutputDevice(option, m_buffer.get(), false);
     } else {
         download->provideOutputDevice(option, nullptr);
@@ -188,13 +188,12 @@ void DownloadFinder::downloadRequiresOutputDevice(Download *download, size_t opt
  */
 void DownloadFinder::emitNewResultsSignal()
 {
-    if(m_resultCount < static_cast<unsigned int>(m_results.size())) {
+    if (m_resultCount < static_cast<unsigned int>(m_results.size())) {
         emit aboutToMakeNewResultsAvailable(static_cast<unsigned int>(m_results.size()) - m_resultCount);
         const QList<Download *> newResults = m_results.mid(m_resultCount);
         m_resultCount = m_results.size();
         emit newResultsAvailable(newResults);
     }
-
 }
 
 /*!
@@ -240,5 +239,4 @@ void DownloadFinder::emitNewResultsSignal()
  *
  * Needs to be implemented when subclassing.
  */
-
 }

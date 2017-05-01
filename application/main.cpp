@@ -4,13 +4,13 @@
 #include "resources/config.h"
 
 #if defined(VIDEODOWNLOADER_GUI_QTWIDGETS) || defined(VIDEODOWNLOADER_GUI_QTQUICK)
-# include <qtutilities/resources/qtconfigarguments.h>
+#include <qtutilities/resources/qtconfigarguments.h>
 #else
-# include <c++utilities/application/fakeqtconfigarguments.h>
+#include <c++utilities/application/fakeqtconfigarguments.h>
 #endif
 
-#include <c++utilities/application/failure.h>
 #include <c++utilities/application/commandlineutils.h>
+#include <c++utilities/application/failure.h>
 #include <qtutilities/resources/resources.h>
 
 #include <QCoreApplication>
@@ -34,13 +34,13 @@ int main(int argc, char *argv[])
     noConfirmArg.setCombinable(true);
     Argument urlsArg("urls", 'u', "specifies the URLs to download");
     urlsArg.setRequiredValueCount(-1);
-    urlsArg.setValueNames({"URL1", "URL2", "URL3"});
+    urlsArg.setValueNames({ "URL1", "URL2", "URL3" });
     urlsArg.setImplicit(true);
     Argument downloadArg("download", 'd', "downloads the specified data");
     downloadArg.setDenotesOperation(true);
-    downloadArg.setSubArguments({&urlsArg, &noConfirmArg});
+    downloadArg.setSubArguments({ &urlsArg, &noConfirmArg });
     downloadArg.setCallback(bind(Cli::download, argc, argv, _1, cref(urlsArg), cref(noConfirmArg)));
-    parser.setMainArguments({&qtConfigArgs.qtWidgetsGuiArg(), &downloadArg, &helpArg});
+    parser.setMainArguments({ &qtConfigArgs.qtWidgetsGuiArg(), &downloadArg, &helpArg });
     // parse arguments
     try {
         parser.parseArgs(argc, argv);
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
         cout << "Unable to parse arguments. " << ex.what() << "\nSee --help for available commands." << endl;
     }
     // set meta info for application
-    if(qtConfigArgs.areQtGuiArgsPresent()) {
+    if (qtConfigArgs.areQtGuiArgsPresent()) {
         return QtGui::runWidgetsGui(argc, argv, qtConfigArgs);
     }
     return 0;

@@ -5,8 +5,7 @@
 
 namespace Network {
 
-class VimeoDownload : public HttpDownloadWithInfoRequst
-{
+class VimeoDownload : public HttpDownloadWithInfoRequst {
     Q_OBJECT
 
 public:
@@ -19,7 +18,6 @@ public:
 
 protected:
     void evalVideoInformation(Download *, QBuffer *videoInfoBuffer);
-
 };
 
 } // namespace Network

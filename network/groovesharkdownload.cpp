@@ -4,13 +4,13 @@
 
 #include "resources/config.h"
 
-#include <QUrlQuery>
 #include <QCryptographicHash>
-#include <QUuid>
-#include <QJsonObject>
-#include <QJsonDocument>
-#include <QJsonValue>
 #include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QUrlQuery>
+#include <QUuid>
 
 using namespace ChronoUtilities;
 using namespace Application;
@@ -53,35 +53,30 @@ const QByteArray GroovesharkDownload::m_accept = QByteArray("text/html, image/jp
 /*!
  * \brief Constructs a new GroovesharkDownload for the specified \a songId.
  */
-GroovesharkDownload::GroovesharkDownload(const QString &songId, QObject *parent) :
-    GroovesharkDownload(GroovesharkRequestType::SongStream, songId, parent)
-{}
-
-GroovesharkDownload::GroovesharkDownload(GroovesharkRequestType requestType, const QVariant &requestData, QObject *parent) :
-    HttpDownloadWithInfoRequst(QUrl(), parent),
-    m_currentStep(0),
-    m_requestType(requestType),
-    m_requestData(requestData)
+GroovesharkDownload::GroovesharkDownload(const QString &songId, QObject *parent)
+    : GroovesharkDownload(GroovesharkRequestType::SongStream, songId, parent)
 {
-    // check if "steps" to establish session can be skiped because session is already set    
-    m_currentStep = m_sessionId.isNull()
-            ? 0
-            : (m_token.isEmpty()
-               ? 1
-               : (requestType == GroovesharkRequestType::SongStream
-                  ? 2
-                  : -1));
-    switch(requestType) {
+}
+
+GroovesharkDownload::GroovesharkDownload(GroovesharkRequestType requestType, const QVariant &requestData, QObject *parent)
+    : HttpDownloadWithInfoRequst(QUrl(), parent)
+    , m_currentStep(0)
+    , m_requestType(requestType)
+    , m_requestData(requestData)
+{
+    // check if "steps" to establish session can be skiped because session is already set
+    m_currentStep = m_sessionId.isNull() ? 0 : (m_token.isEmpty() ? 1 : (requestType == GroovesharkRequestType::SongStream ? 2 : -1));
+    switch (requestType) {
     case GroovesharkRequestType::SongStream:
-        if(requestData.type() == QVariant::String)
+        if (requestData.type() == QVariant::String)
             setId(requestData.toString());
         break;
     case GroovesharkRequestType::AlbumGetSongs:
     case GroovesharkRequestType::PlaylistGetSongs:
     case GroovesharkRequestType::ArtistGetSongs:
-        if(requestData.canConvert<GroovesharkGetSongsRequestData>())
+        if (requestData.canConvert<GroovesharkGetSongsRequestData>())
             setId(requestData.value<GroovesharkGetSongsRequestData>().id);
-        else if(requestData.type() == QVariant::String)
+        else if (requestData.type() == QVariant::String)
             setId(requestData.toString());
         break;
     case GroovesharkRequestType::SearchForAlbum:
@@ -96,12 +91,12 @@ Download *GroovesharkDownload::infoRequestDownload(bool &success, QString &reaso
     Download *download = nullptr;
     QJsonObject headerObj;
     QJsonObject paramObj;
-    switch(m_currentStep) {
+    switch (m_currentStep) {
     case -1:
         success = true;
         break;
     case 0:
-        if(m_sessionId.isNull()) {
+        if (m_sessionId.isNull()) {
             // initiateSession
             headerObj.insert(QStringLiteral("client"), m_htmlClient);
             headerObj.insert(QStringLiteral("clientRevision"), m_clientRevision);
@@ -113,7 +108,7 @@ Download *GroovesharkDownload::infoRequestDownload(bool &success, QString &reaso
         success = true;
         break;
     case 1:
-        if(m_token.isEmpty()) {
+        if (m_token.isEmpty()) {
             // getCommunicationToken
             headerObj.insert(QStringLiteral("client"), m_htmlClient);
             headerObj.insert(QStringLiteral("clientRevision"), m_clientRevision);
@@ -182,18 +177,18 @@ void GroovesharkDownload::resetSession()
 void GroovesharkDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
 {
     QString code;
-    if(videoInfoBuffer) { // the buffer might be zero!
+    if (videoInfoBuffer) { // the buffer might be zero!
         code.append(videoInfoBuffer->readAll());
     }
-    switch(m_currentStep) {
+    switch (m_currentStep) {
     case -1:
         setupFinalRequest();
         reportInitiated(true);
         break;
     case 0: {
         QString value;
-        if((substring(code, value, 0, QStringLiteral("\"session\":\""), QStringLiteral("\"")) <= 0) || value.isEmpty()) {
-            if((substring(code, value, 0, QStringLiteral("\"message\":\""), QStringLiteral("\"")) <= 0) || value.isEmpty()) {
+        if ((substring(code, value, 0, QStringLiteral("\"session\":\""), QStringLiteral("\"")) <= 0) || value.isEmpty()) {
+            if ((substring(code, value, 0, QStringLiteral("\"message\":\""), QStringLiteral("\"")) <= 0) || value.isEmpty()) {
                 reportInitiated(false, tr("The session couldn't be initialized."));
             } else {
                 reportInitiated(false, tr("The session couldn't be initialized (%1).").arg(value));
@@ -206,10 +201,10 @@ void GroovesharkDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuf
         break;
     }
     case 1:
-        if((substring(code, m_token, 0, QStringLiteral("\"result\":\""), QStringLiteral("\"")) <= 0) || m_token.isEmpty()) {
+        if ((substring(code, m_token, 0, QStringLiteral("\"result\":\""), QStringLiteral("\"")) <= 0) || m_token.isEmpty()) {
             reportInitiated(false, tr("The communication token couldn't be retireved."));
         } else {
-            if(m_requestType == GroovesharkRequestType::SongStream) {
+            if (m_requestType == GroovesharkRequestType::SongStream) {
                 ++m_currentStep;
                 doInit();
             } else {
@@ -219,12 +214,10 @@ void GroovesharkDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuf
         }
         break;
     case 2:
-        if((substring(code, m_streamKey, 0, QStringLiteral("\"streamKey\":\""), QStringLiteral("\"")) <= 0)
-                || m_streamKey.isEmpty()) {
+        if ((substring(code, m_streamKey, 0, QStringLiteral("\"streamKey\":\""), QStringLiteral("\"")) <= 0) || m_streamKey.isEmpty()) {
             reportInitiated(false, tr("The stream key couldn't be found."));
         } else {
-            if((substring(code, m_streamHost, 0, QStringLiteral("\"ip\":\""), QStringLiteral("\"")) <= 0)
-                    || m_streamHost.isEmpty()) {
+            if ((substring(code, m_streamHost, 0, QStringLiteral("\"ip\":\""), QStringLiteral("\"")) <= 0) || m_streamHost.isEmpty()) {
                 reportInitiated(false, tr("The stream host couldn't be found."));
             } else {
                 setupFinalRequest();
@@ -244,7 +237,7 @@ QJsonValue GroovesharkDownload::generateUuid()
 {
     QString res = QUuid::createUuid().toString();
     int pos = res.startsWith('{') ? 1 : 0;
-    int length = res.endsWith('}') ? res.length() - pos - 1: -1;
+    int length = res.endsWith('}') ? res.length() - pos - 1 : -1;
     return QJsonValue(res.mid(pos, length));
 }
 
@@ -269,7 +262,7 @@ QJsonValue GroovesharkDownload::generateDefaultCountry()
 bool GroovesharkDownload::loadAuthenticationInformationFromFile(const QString &path, QString *errorMessage)
 {
     QJsonObject fileObj = loadJsonObjectFromResource(path, errorMessage);
-    if(fileObj.isEmpty()) {
+    if (fileObj.isEmpty()) {
         return false;
     } else {
         QJsonValue clientVal;
@@ -278,39 +271,39 @@ bool GroovesharkDownload::loadAuthenticationInformationFromFile(const QString &p
         QJsonValue revision;
         QJsonValue randomizer;
         clientVal = fileObj.value(QStringLiteral("htmlClient"));
-        if(clientVal.isObject()) {
+        if (clientVal.isObject()) {
             clientObj = clientVal.toObject();
             name = clientObj.value(QStringLiteral("name"));
-            if(name.isString()) {
+            if (name.isString()) {
                 m_htmlClient = name;
             }
             revision = clientObj.value(QStringLiteral("revision"));
-            if(revision.isString()) {
+            if (revision.isString()) {
                 m_clientRevision = revision;
             }
             randomizer = clientObj.value(QStringLiteral("randomizer"));
-            if(randomizer.isString()) {
+            if (randomizer.isString()) {
                 m_htmlRandomizer = randomizer.toString();
             }
         }
         clientVal = fileObj.value(QStringLiteral("jsClient"));
-        if(clientVal.isObject()) {
+        if (clientVal.isObject()) {
             clientObj = clientVal.toObject();
             name = clientObj.value(QStringLiteral("name"));
-            if(name.isString()) {
+            if (name.isString()) {
                 m_jsClient = name;
             }
             revision = clientObj.value(QStringLiteral("revision"));
-            if(revision.isString()) {
+            if (revision.isString()) {
                 m_jsClientRevision = revision;
             }
             randomizer = clientObj.value(QStringLiteral("randomizer"));
-            if(randomizer.isString()) {
+            if (randomizer.isString()) {
                 m_jsRandomizer = randomizer.toString();
             }
         }
         clientVal = fileObj.value(QStringLiteral("referer"));
-        if(clientVal.isString()) {
+        if (clientVal.isString()) {
             m_referer.append(clientVal.toString());
         }
         return true;
@@ -326,7 +319,7 @@ QJsonValue GroovesharkDownload::generateTokenHash(QString method, int mode)
     toHash.append(method);
     toHash.append(':');
     toHash.append(m_token);
-    switch(mode) {
+    switch (mode) {
     case 1:
         toHash.append(m_htmlRandomizer);
         break;
@@ -384,7 +377,7 @@ HttpDownload *GroovesharkDownload::createJsonPostRequest(const QString &method, 
 void GroovesharkDownload::setupFinalRequest()
 {
     setMethod(HttpDownloadMethod::Post);
-    switch(m_requestType) {
+    switch (m_requestType) {
     case GroovesharkRequestType::SongStream: {
         setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
         setHeader("Accept", m_accept);
@@ -408,12 +401,14 @@ void GroovesharkDownload::setupFinalRequest()
         header.insert(QStringLiteral("uuid"), m_uuid);
         header.insert(QStringLiteral("country"), m_country);
 
-        switch(m_requestType) {
+        switch (m_requestType) {
         case GroovesharkRequestType::AlbumGetSongs:
             method = QStringLiteral("albumGetAllSongs");
             params.insert(QStringLiteral("offset"), QJsonValue(0));
             params.insert(QStringLiteral("albumID"), QJsonValue(id()));
-            params.insert(QStringLiteral("isVerified"), QJsonValue(m_requestData.canConvert<GroovesharkGetSongsRequestData>() ? m_requestData.value<GroovesharkGetSongsRequestData>().verified : false));
+            params.insert(QStringLiteral("isVerified"),
+                QJsonValue(m_requestData.canConvert<GroovesharkGetSongsRequestData>() ? m_requestData.value<GroovesharkGetSongsRequestData>().verified
+                                                                                      : false));
             break;
         case GroovesharkRequestType::PlaylistGetSongs:
             method = QStringLiteral("playlistGetSongs");
@@ -428,25 +423,24 @@ void GroovesharkDownload::setupFinalRequest()
             params.insert(QStringLiteral("guts"), QJsonValue(QStringLiteral("0")));
             params.insert(QStringLiteral("query"), QJsonValue(m_requestData.toString()));
             params.insert(QStringLiteral("ppOverride"), QStringLiteral("false"));
-        { QJsonArray types;
-            switch(m_requestType) {
-            case GroovesharkRequestType::SearchForAlbum:
-                types.append(QJsonValue(QStringLiteral("Albums")));
-                break;
-            case GroovesharkRequestType::SearchForPlaylist:
-                types.append(QJsonValue(QStringLiteral("Playlists")));
-                break;
-            case GroovesharkRequestType::SearchForArtists:
-                types.append(QJsonValue(QStringLiteral("Artists")));
-                break;
-            default:
-                ;
+            {
+                QJsonArray types;
+                switch (m_requestType) {
+                case GroovesharkRequestType::SearchForAlbum:
+                    types.append(QJsonValue(QStringLiteral("Albums")));
+                    break;
+                case GroovesharkRequestType::SearchForPlaylist:
+                    types.append(QJsonValue(QStringLiteral("Playlists")));
+                    break;
+                case GroovesharkRequestType::SearchForArtists:
+                    types.append(QJsonValue(QStringLiteral("Artists")));
+                    break;
+                default:;
+                }
+                params.insert(QStringLiteral("type"), QJsonValue(types));
             }
-            params.insert(QStringLiteral("type"), QJsonValue(types));
-        }
             break;
-        default:
-            ;
+        default:;
         }
         header.insert(QStringLiteral("token"), generateTokenHash(method, 1));
         QJsonObject mainObj;
@@ -478,7 +472,7 @@ GroovesharkRequestType GroovesharkDownload::requestType() const
 QString GroovesharkDownload::suitableFilename() const
 {
     auto filename = Download::suitableFilename();
-    if(!filename.endsWith(QLatin1String(".mp3"))) {
+    if (!filename.endsWith(QLatin1String(".mp3"))) {
         filename.append(QStringLiteral(".mp3"));
     }
     return filename;
@@ -488,5 +482,4 @@ QString GroovesharkDownload::typeName() const
 {
     return tr("Grooveshark");
 }
-
 }

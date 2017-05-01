@@ -13,16 +13,22 @@ using namespace ApplicationUtilities;
 
 namespace Cli {
 
-CliDownloadInteraction::CliDownloadInteraction(QObject *parent) :
-    QObject(parent)
-{}
+CliDownloadInteraction::CliDownloadInteraction(QObject *parent)
+    : QObject(parent)
+{
+}
 
 void CliDownloadInteraction::connectDownload(Download *download)
 {
-    connect(download, &Download::outputDeviceRequired, this, static_cast<void (CliDownloadInteraction::*) (Download *, size_t)>(&CliDownloadInteraction::downloadRequiresOutputDevice), Qt::QueuedConnection);
-    connect(download, &Download::overwriteingPermissionRequired, this, &CliDownloadInteraction::downloadRequriesOverwritePermission, Qt::QueuedConnection);
-    connect(download, &Download::appendingPermissionRequired, this, &CliDownloadInteraction::downloadRequriesAppendingPermission, Qt::QueuedConnection);
-    connect(download, &Download::redirectionPermissonRequired, this, &CliDownloadInteraction::downloadRequiresRedirectionPermission, Qt::QueuedConnection);
+    connect(download, &Download::outputDeviceRequired, this,
+        static_cast<void (CliDownloadInteraction::*)(Download *, size_t)>(&CliDownloadInteraction::downloadRequiresOutputDevice),
+        Qt::QueuedConnection);
+    connect(download, &Download::overwriteingPermissionRequired, this, &CliDownloadInteraction::downloadRequriesOverwritePermission,
+        Qt::QueuedConnection);
+    connect(
+        download, &Download::appendingPermissionRequired, this, &CliDownloadInteraction::downloadRequriesAppendingPermission, Qt::QueuedConnection);
+    connect(download, &Download::redirectionPermissonRequired, this, &CliDownloadInteraction::downloadRequiresRedirectionPermission,
+        Qt::QueuedConnection);
     connect(download, &Download::authenticationRequired, this, &CliDownloadInteraction::downloadRequiresAuthentication, Qt::QueuedConnection);
     connect(download, &Download::sslErrors, this, &CliDownloadInteraction::downloadHasSslErrors, Qt::QueuedConnection);
 }
@@ -47,7 +53,8 @@ void CliDownloadInteraction::downloadRequriesOverwritePermission(Download *downl
     // TODO
 }
 
-void CliDownloadInteraction::downloadRequriesAppendingPermission(Download *download, size_t optionIndex, const QString &file, quint64 offset, quint64 fileSize)
+void CliDownloadInteraction::downloadRequriesAppendingPermission(
+    Download *download, size_t optionIndex, const QString &file, quint64 offset, quint64 fileSize)
 {
     // TODO
 }
@@ -67,13 +74,12 @@ void CliDownloadInteraction::downloadHasSslErrors(Download *download, size_t opt
     // TODO
     const string downloadName = (download->downloadUrl().isEmpty() ? download->id() : download->downloadUrl().toString()).toStdString();
     cout << "The download \"" << downloadName << "\" has SSL errors:" << endl;
-    foreach(const QSslError &error, sslErrors) {
+    foreach (const QSslError &error, sslErrors) {
         cout << "- " << error.errorString().toStdString() << ":" << endl;
         cout << "  " << error.certificate().toText().toStdString() << endl;
     }
-    if(confirmPrompt("Do you want to ignore the SSL errors for this download?")) {
+    if (confirmPrompt("Do you want to ignore the SSL errors for this download?")) {
         // TODO
     }
 }
-
 }

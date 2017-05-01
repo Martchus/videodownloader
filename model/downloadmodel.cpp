@@ -16,19 +16,20 @@ namespace QtGui {
 /*!
  * \brief Constructs a new download model.
  */
-DownloadModel::DownloadModel(QObject *parent) :
-    QAbstractItemModel(parent)
-{}
+DownloadModel::DownloadModel(QObject *parent)
+    : QAbstractItemModel(parent)
+{
+}
 
 QVariant DownloadModel::data(const QModelIndex &index, int role) const
 {
-    if(index.isValid()) {
-        if(Download *download = this->download(index)) {
-            switch(role) {
+    if (index.isValid()) {
+        if (Download *download = this->download(index)) {
+            switch (role) {
             case Qt::DisplayRole:
-                switch(index.column()) {
+                switch (index.column()) {
                 case initialUrlColumn():
-                    if(download->initialUrl().isEmpty()) {
+                    if (download->initialUrl().isEmpty()) {
                         // show ID if no URL is available
                         return infoString(download->id());
                     } else {
@@ -51,25 +52,24 @@ QVariant DownloadModel::data(const QModelIndex &index, int role) const
                 }
                 break;
             case Qt::ToolTipRole:
-                switch(index.column()) {
+                switch (index.column()) {
                 case statusColumn():
                     return download->statusInfo();
-                default:
-                    ;
+                default:;
                 }
                 break;
             case DownloadModel::ProgressPercentageRole:
                 return download->progressPercentage();
             case DownloadModel::AvailableOptionsRole: {
-                QStringList optionNames;                
-                for(const OptionData &optionData : download->options()) {
+                QStringList optionNames;
+                for (const OptionData &optionData : download->options()) {
                     optionNames << optionData.name();
                 }
                 return optionNames;
-            } case DownloadModel::ChosenOptionRole:
+            }
+            case DownloadModel::ChosenOptionRole:
                 return QVariant::fromValue(download->chosenOption());
-            default:
-                ;
+            default:;
             }
         }
     }
@@ -78,14 +78,14 @@ QVariant DownloadModel::data(const QModelIndex &index, int role) const
 
 bool DownloadModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if(index.isValid()) {
-        switch(role) {
+    if (index.isValid()) {
+        switch (role) {
         case DownloadModel::ChosenOptionRole: {
             bool ok;
             int chosenOption = value.toInt(&ok);
-            if(ok) {
-                if(Download *download = this->download(index)) {
-                    if(download->setChosenOption(chosenOption)) {
+            if (ok) {
+                if (Download *download = this->download(index)) {
+                    if (download->setChosenOption(chosenOption)) {
                         QModelIndex downloadUrlIndex = this->index(index.row(), downloadUrlColumn());
                         QModelIndex optionsIndex = this->index(index.row(), optionsColumn());
                         emit dataChanged(downloadUrlIndex, downloadUrlIndex, QVector<int>() << Qt::DisplayRole);
@@ -94,10 +94,8 @@ bool DownloadModel::setData(const QModelIndex &index, const QVariant &value, int
                     }
                 }
             }
-        }
-            break;
-        default:
-            ;
+        } break;
+        default:;
         }
     }
     return false;
@@ -105,11 +103,11 @@ bool DownloadModel::setData(const QModelIndex &index, const QVariant &value, int
 
 QVariant DownloadModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    switch(orientation) {
+    switch (orientation) {
     case Qt::Horizontal:
-        switch(role) {
+        switch (role) {
         case Qt::DisplayRole:
-            switch(section) {
+            switch (section) {
             case initialUrlColumn():
                 return tr("Initial URL/ID");
             case downloadUrlColumn():
@@ -126,28 +124,24 @@ QVariant DownloadModel::headerData(int section, Qt::Orientation orientation, int
                 return tr("Status");
             case progressColumn():
                 return tr("Progress");
-            default:
-                ;
+            default:;
             }
             break;
-        default:
-            ;
+        default:;
         }
         break;
-    default:
-        ;
+    default:;
     }
     return QVariant();
 }
 
 Qt::ItemFlags DownloadModel::flags(const QModelIndex &index) const
 {
-    if(index.isValid()) {
-        switch(index.column()) {
+    if (index.isValid()) {
+        switch (index.column()) {
         case optionsColumn():
             return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
-        default:
-            ;
+        default:;
         }
     }
     return QAbstractItemModel::flags(index);
@@ -191,7 +185,7 @@ int DownloadModel::columnCount(const QModelIndex &) const
  */
 void DownloadModel::addDownload(Download *download)
 {
-    if(!m_downloads.contains(download)) {
+    if (!m_downloads.contains(download)) {
         int index = m_downloads.size();
         beginInsertRows(QModelIndex(), index, index);
         connect(download, &Download::statusChanged, this, &DownloadModel::downloadChangedStatus);
@@ -210,7 +204,7 @@ void DownloadModel::addDownload(Download *download)
 void DownloadModel::removeDownload(Download *download)
 {
     int index = m_downloads.indexOf(download);
-    while(index >= 0) {
+    while (index >= 0) {
         beginRemoveRows(QModelIndex(), index, index);
         download->disconnect(this);
         m_downloads.removeAt(index);
@@ -225,7 +219,7 @@ void DownloadModel::removeDownload(Download *download)
  */
 Download *DownloadModel::download(const QModelIndex &index) const
 {
-    if(index.isValid()) {
+    if (index.isValid()) {
         return static_cast<Download *>(index.internalPointer());
     }
     return nullptr;
@@ -237,7 +231,7 @@ Download *DownloadModel::download(const QModelIndex &index) const
  */
 Download *DownloadModel::download(int row) const
 {
-    if(row < rowCount()) {
+    if (row < rowCount()) {
         return m_downloads.at(row);
     }
     return nullptr;
@@ -250,7 +244,7 @@ void DownloadModel::downloadChangedStatus(Download *download)
 {
     QModelIndex topLeft = index(download, 0);
     QModelIndex bottomRight = index(download, lastColumn());
-    if(topLeft.isValid() && bottomRight.isValid()) {
+    if (topLeft.isValid() && bottomRight.isValid()) {
         emit dataChanged(topLeft, bottomRight, QVector<int>() << Qt::DisplayRole);
     }
 }
@@ -263,7 +257,7 @@ void DownloadModel::downloadProgressChanged(Download *download)
     // emit the data changed signal
     QModelIndex topLeft = index(download, statusColumn());
     QModelIndex bottomRight = index(download, lastColumn());
-    if(topLeft.isValid() && bottomRight.isValid()) {
+    if (topLeft.isValid() && bottomRight.isValid()) {
         emit dataChanged(topLeft, bottomRight, QVector<int>() << Qt::DisplayRole);
     }
 }
@@ -274,7 +268,7 @@ void DownloadModel::downloadProgressChanged(Download *download)
 void DownloadModel::downloadInfoChanged(Download *download)
 {
     QModelIndex topLeft = index(download, statusColumn());
-    if(topLeft.isValid()) {
+    if (topLeft.isValid()) {
         emit dataChanged(topLeft, topLeft, QVector<int>() << Qt::ToolTipRole);
     }
 }
@@ -293,7 +287,7 @@ const QString &DownloadModel::infoString(const QString &infostring)
  */
 QString DownloadModel::statusString(Download *download)
 {
-    switch(download->status()) {
+    switch (download->status()) {
     case DownloadStatus::None:
         return tr("just added");
     case DownloadStatus::Initiating:
@@ -325,17 +319,16 @@ QString DownloadModel::statusString(Download *download)
  */
 QString DownloadModel::progressString(Download *download)
 {
-    if(download->bytesReceived() > 0) {
-        if(download->bytesToReceive() > download->bytesReceived()) {
+    if (download->bytesReceived() > 0) {
+        if (download->bytesToReceive() > download->bytesReceived()) {
             return tr("%1 of %2 received, %3 %")
-                    .arg(QString::fromStdString(ConversionUtilities::dataSizeToString(download->bytesReceived())))
-                    .arg(QString::fromStdString(ConversionUtilities::dataSizeToString(download->bytesToReceive())))
-                    .arg(download->progressPercentage());
+                .arg(QString::fromStdString(ConversionUtilities::dataSizeToString(download->bytesReceived())))
+                .arg(QString::fromStdString(ConversionUtilities::dataSizeToString(download->bytesToReceive())))
+                .arg(download->progressPercentage());
         } else {
             return tr("%1 received").arg(QString::fromStdString(ConversionUtilities::dataSizeToString(download->bytesReceived())));
         }
     }
     return QString();
 }
-
 }

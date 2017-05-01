@@ -17,10 +17,11 @@ namespace Network {
 /*!
  * \brief Constructs a new FileNukeDownload for the specified \a url.
  */
-FileNukeDownload::FileNukeDownload(const QUrl &url, QObject *parent) :
-    HttpDownloadWithInfoRequst(url, parent),
-    m_currentStep(0)
-{ }
+FileNukeDownload::FileNukeDownload(const QUrl &url, QObject *parent)
+    : HttpDownloadWithInfoRequst(url, parent)
+    , m_currentStep(0)
+{
+}
 
 void FileNukeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
 {
@@ -30,16 +31,16 @@ void FileNukeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer
     QString str;
     QString id;
     QString fname;
-    switch(m_currentStep) {
+    switch (m_currentStep) {
     case 0:
-        if(substring(videoInfo, str, 0, QStringLiteral("<h1>"), QStringLiteral("<")) > 0 && !str.isEmpty()) {
+        if (substring(videoInfo, str, 0, QStringLiteral("<h1>"), QStringLiteral("<")) > 0 && !str.isEmpty()) {
             setTitle(str);
         }
         substring(videoInfo, id, 0, QStringLiteral("<input type=\"hidden\" name=\"id\" value=\""), QStringLiteral("\""));
         substring(videoInfo, fname, 0, QStringLiteral("<input type=\"hidden\" name=\"fname\" value=\""), QStringLiteral("\""));
-        if(id.isEmpty()) {
+        if (id.isEmpty()) {
             reportInitiated(false, tr("Couldn't find the id."));
-        } else if(fname.isEmpty()) {
+        } else if (fname.isEmpty()) {
             reportInitiated(false, tr("Couldn't find the file name."));
         } else {
             QUrlQuery query;
@@ -56,14 +57,16 @@ void FileNukeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer
         break;
     case 1:
         pos = videoInfo.indexOf(QLatin1String(";return p}("));
-        if(pos > 0) {
+        if (pos > 0) {
             pos = videoInfo.indexOf(QLatin1String(",'"), pos + 1);
-            if(pos > 0) {
+            if (pos > 0) {
                 substring(videoInfo, str, pos, QStringLiteral("'"), QStringLiteral("'"));
                 QStringList parts = str.split(QChar('|'), QString::KeepEmptyParts);
 
-                if(parts.count() >= 21) {
-                    addDownloadUrl(tr("H.264/AAC/MP4"), QUrl(QStringLiteral("http://%1.%2.%3.%4/d/%5/%6.%7").arg(parts.at(8), parts.at(7), parts.at(6), parts.at(5), parts.at(20), parts.at(19), parts.at(18))));
+                if (parts.count() >= 21) {
+                    addDownloadUrl(tr("H.264/AAC/MP4"),
+                        QUrl(QStringLiteral("http://%1.%2.%3.%4/d/%5/%6.%7")
+                                 .arg(parts.at(8), parts.at(7), parts.at(6), parts.at(5), parts.at(20), parts.at(19), parts.at(18))));
                     reportInitiated(true);
                 } else
                     reportInitiated(false, tr("Download link info is incomplete."));
@@ -80,7 +83,7 @@ void FileNukeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer
 Download *FileNukeDownload::infoRequestDownload(bool &success, QString &reasonForFail)
 {
     HttpDownload *download;
-    switch(m_currentStep) {
+    switch (m_currentStep) {
     case 0:
         download = new HttpDownload(initialUrl());
         success = true;
@@ -107,5 +110,4 @@ QString FileNukeDownload::typeName() const
 {
     return tr("FileNuke");
 }
-
 }

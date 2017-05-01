@@ -3,10 +3,10 @@
 
 #include <c++utilities/chrono/timespan.h>
 
+#include <QList>
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 #include <QTime>
-#include <QList>
 
 #include <memory>
 
@@ -38,8 +38,7 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -120,7 +119,6 @@ private:
     SettingsDialog *m_settingsDlg;
     Dialogs::AboutDialog *m_aboutDlg;
 };
-
 }
 
 #endif // MAINWINDOW_H

@@ -1,9 +1,9 @@
 #ifndef VIDEOFINDER_H
 #define VIDEOFINDER_H
 
-#include <QObject>
 #include <QBuffer>
 #include <QNetworkProxy>
+#include <QObject>
 
 #include <memory>
 
@@ -11,8 +11,7 @@ namespace Network {
 
 class Download;
 
-class DownloadFinder : public QObject
-{
+class DownloadFinder : public QObject {
     Q_OBJECT
 
 public:
@@ -42,20 +41,19 @@ signals:
     void aboutToClearResults();
     void resultsCleared();
     void finished(bool success, const QString &reason = QString());
-    
+
 protected:
     /*!
      * \brief Specifies possible return values of the evalResults() method.
      */
-    enum class ParsingResult
-    {
+    enum class ParsingResult {
         Error, /**< Indicates that an error occured. reasonForFail might hold an error message. */
         Success, /**< Indicates that the results could be parsed correctly. */
         AnotherRequestRequired /**< Indicates that the results could be parsed correctly but there are still results to be fetched. */
     };
 
     virtual Download *createRequest(QString &reasonForFail) = 0;
-    virtual bool finalizeRequest(Download* download, QString &reasonForFail);
+    virtual bool finalizeRequest(Download *download, QString &reasonForFail);
     virtual ParsingResult parseResults(const QByteArray &data, QString &reasonForFail) = 0;
 
     void reportCollectionTitle(const QString &title);
@@ -182,7 +180,6 @@ inline void DownloadFinder::emitFinishedSignal(bool success, const QString &reas
     m_finished = true;
     emit finished(success, reason);
 }
-
 }
 
 #endif // VIDEOFINDER_H

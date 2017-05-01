@@ -1,7 +1,7 @@
 #include "./downloadfinderresultsmodel.h"
 
-#include "../network/finder/downloadfinder.h"
 #include "../network/download.h"
+#include "../network/finder/downloadfinder.h"
 
 #include <functional>
 
@@ -18,9 +18,9 @@ namespace QtGui {
 /*!
  * \brief Constructs a new download finder model.
  */
-DownloadFinderResultsModel::DownloadFinderResultsModel(DownloadFinder *finder, QObject *parent) :
-    QAbstractTableModel(parent),
-    m_finder(nullptr)
+DownloadFinderResultsModel::DownloadFinderResultsModel(DownloadFinder *finder, QObject *parent)
+    : QAbstractTableModel(parent)
+    , m_finder(nullptr)
 {
     setFinder(finder);
 }
@@ -30,25 +30,25 @@ DownloadFinderResultsModel::DownloadFinderResultsModel(DownloadFinder *finder, Q
  */
 void DownloadFinderResultsModel::setFinder(DownloadFinder *finder)
 {
-    if(finder != m_finder) {
+    if (finder != m_finder) {
         beginResetModel();
-        if((m_finder = finder)) {
+        if ((m_finder = finder)) {
             // results are about to be cleared
             connect(m_finder, &DownloadFinder::aboutToClearResults, std::bind(&DownloadFinderResultsModel::beginResetModel, this));
             // results have been cleared
             connect(m_finder, &DownloadFinder::clearResults, std::bind(&DownloadFinderResultsModel::endResetModel, this));
             // new results are about to be available
-            connect(m_finder, &DownloadFinder::aboutToMakeNewResultsAvailable, [this] (unsigned int count) {
-                if(count > 0) {
+            connect(m_finder, &DownloadFinder::aboutToMakeNewResultsAvailable, [this](unsigned int count) {
+                if (count > 0) {
                     beginInsertRows(QModelIndex(), rowCount(), count - 1);
                 }
             });
             // new results are available
-            connect(m_finder, &DownloadFinder::newResultsAvailable, [this] (const QList<Download *> &results) {
-                foreach(Download *download, results) {
+            connect(m_finder, &DownloadFinder::newResultsAvailable, [this](const QList<Download *> &results) {
+                foreach (Download *download, results) {
                     connect(download, &Download::statusChanged, this, &DownloadFinderResultsModel::downloadChangedStatus);
                     // initiate the download if not done yet and instant initiation is recommendable
-                    if(!download->isInitiated() && download->isInitiatingInstantlyRecommendable()) {
+                    if (!download->isInitiated() && download->isInitiatingInstantlyRecommendable()) {
                         download->init();
                     }
                 }
@@ -61,10 +61,10 @@ void DownloadFinderResultsModel::setFinder(DownloadFinder *finder)
 
 QVariant DownloadFinderResultsModel::data(const QModelIndex &index, int role) const
 {
-    if(m_finder && index.isValid() && index.row() >= 0 && index.row() < m_finder->results().size()) {
-        switch(role) {
+    if (m_finder && index.isValid() && index.row() >= 0 && index.row() < m_finder->results().size()) {
+        switch (role) {
         case Qt::DisplayRole:
-            switch(index.column()) {
+            switch (index.column()) {
             case titleColumn():
                 return infoString(m_finder->results().at(index.row())->title());
             case uploaderColumn():
@@ -74,16 +74,14 @@ QVariant DownloadFinderResultsModel::data(const QModelIndex &index, int role) co
             case durationColumn():
                 return infoString(m_finder->results().at(index.row())->duration());
             case idColumn():
-                if(m_finder->results().at(index.row())->id().isEmpty()) {
+                if (m_finder->results().at(index.row())->id().isEmpty()) {
                     return infoString(m_finder->results().at(index.row())->initialUrl().toString());
                 }
                 return infoString(m_finder->results().at(index.row())->id());
-            default:
-                ;
+            default:;
             }
             break;
-        default:
-            ;
+        default:;
         }
     }
     return QVariant();
@@ -91,11 +89,11 @@ QVariant DownloadFinderResultsModel::data(const QModelIndex &index, int role) co
 
 QVariant DownloadFinderResultsModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    switch(orientation) {
+    switch (orientation) {
     case Qt::Horizontal:
-        switch(role) {
+        switch (role) {
         case Qt::DisplayRole:
-            switch(section) {
+            switch (section) {
             case titleColumn():
                 return tr("Title");
             case uploaderColumn():
@@ -106,23 +104,20 @@ QVariant DownloadFinderResultsModel::headerData(int section, Qt::Orientation ori
                 return tr("Duration");
             case idColumn():
                 return tr("ID/URL");
-            default:
-                ;
+            default:;
             }
             break;
-        default:
-            ;
+        default:;
         }
         break;
-    default:
-        ;
+    default:;
     }
     return QVariant();
 }
 
 int DownloadFinderResultsModel::rowCount(const QModelIndex &parent) const
 {
-    if(m_finder && !parent.isValid()) {
+    if (m_finder && !parent.isValid()) {
         return m_finder->resultCount();
     }
     return 0;
@@ -130,7 +125,7 @@ int DownloadFinderResultsModel::rowCount(const QModelIndex &parent) const
 
 int DownloadFinderResultsModel::columnCount(const QModelIndex &parent) const
 {
-    if(!parent.isValid()) {
+    if (!parent.isValid()) {
         return lastColumn() + 1;
     }
     return 0;
@@ -179,14 +174,13 @@ QString DownloadFinderResultsModel::infoString(const TimeSpan &timeSpan)
  */
 void DownloadFinderResultsModel::downloadChangedStatus(Download *download)
 {
-    if(m_finder) {
+    if (m_finder) {
         int row = m_finder->results().indexOf(download);
         QModelIndex topLeft = index(row, 0);
         QModelIndex bottomRight = index(row, lastColumn());
-        if(topLeft.isValid() && bottomRight.isValid()) {
+        if (topLeft.isValid() && bottomRight.isValid()) {
             emit dataChanged(topLeft, bottomRight, QVector<int>() << Qt::DisplayRole);
         }
     }
 }
-
 }

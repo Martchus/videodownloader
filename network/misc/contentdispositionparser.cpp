@@ -20,22 +20,22 @@ ContentDispositionParser::ContentDispositionParser(const QString &contentDisposi
  */
 void ContentDispositionParser::addData(QString fieldName, QString value)
 {
-    while(fieldName.length() > 0 && fieldName.at(0) == ' ') {
+    while (fieldName.length() > 0 && fieldName.at(0) == ' ') {
         fieldName = fieldName.mid(1);
     }
-    while(value.length() > 0 && value.at(0) == ' ') {
+    while (value.length() > 0 && value.at(0) == ' ') {
         value = value.mid(1);
     }
-    while(fieldName.endsWith(' ')) {
+    while (fieldName.endsWith(' ')) {
         fieldName = fieldName.mid(0, fieldName.length() - 1);
     }
-    while(value.endsWith(' ')) {
+    while (value.endsWith(' ')) {
         value = value.mid(0, value.length() - 1);
     }
 
-    if(fieldName.compare("attachment", Qt::CaseInsensitive)) {
+    if (fieldName.compare("attachment", Qt::CaseInsensitive)) {
         m_attachment = true;
-    } else if(fieldName.compare("filename", Qt::CaseInsensitive)) {
+    } else if (fieldName.compare("filename", Qt::CaseInsensitive)) {
         m_fileName = value;
     }
 
@@ -51,12 +51,12 @@ void ContentDispositionParser::pharse()
     PharsingPosition pos = FieldName;
     QString fieldName;
     QString value;
-    foreach(QChar c, m_contentDisposition) {
-        if(c == '\"') {
+    foreach (QChar c, m_contentDisposition) {
+        if (c == '\"') {
             inQuotationMarks = !inQuotationMarks;
-        } else if(c == ';') {
-            if(inQuotationMarks) {
-                switch(pos) {
+        } else if (c == ';') {
+            if (inQuotationMarks) {
+                switch (pos) {
                 case FieldName:
                     fieldName.append(c);
                     break;
@@ -70,9 +70,9 @@ void ContentDispositionParser::pharse()
                 value.clear();
                 pos = FieldName;
             }
-        } else if(c == '=') {
-            if(inQuotationMarks) {
-                switch(pos) {
+        } else if (c == '=') {
+            if (inQuotationMarks) {
+                switch (pos) {
                 case FieldName:
                     fieldName.append(c);
                     break;
@@ -81,7 +81,7 @@ void ContentDispositionParser::pharse()
                     break;
                 }
             } else {
-                switch(pos) {
+                switch (pos) {
                 case FieldName:
                     pos = Value;
                     break;
@@ -91,7 +91,7 @@ void ContentDispositionParser::pharse()
                 }
             }
         } else {
-            switch(pos) {
+            switch (pos) {
             case FieldName:
                 fieldName.append(c);
                 break;
@@ -101,7 +101,7 @@ void ContentDispositionParser::pharse()
             }
         }
     }
-    if(!fieldName.isEmpty()) {
+    if (!fieldName.isEmpty()) {
         addData(fieldName, value);
     }
 }
@@ -129,5 +129,4 @@ const QMap<QString, QString> &ContentDispositionParser::data()
 {
     return m_data;
 }
-
 }

@@ -3,8 +3,8 @@
 
 #include "./download.h"
 
-#include <QNetworkAccessManager>
 #include <QEventLoop>
+#include <QNetworkAccessManager>
 #include <QNetworkCookie>
 
 namespace Network {
@@ -12,14 +12,12 @@ namespace Network {
 /*!
  * \brief Specifies the HTTP method.
  */
-enum class HttpDownloadMethod
-{
+enum class HttpDownloadMethod {
     Get, /**< GET method */
     Post /**< POST method */
 };
 
-class HttpDownloadInfo
-{
+class HttpDownloadInfo {
 public:
     HttpDownloadInfo(int optionIndex, QNetworkReply *reply);
 
@@ -37,11 +35,12 @@ private:
 /*!
  * \brief Constructs a new HTTP download info.
  */
-inline HttpDownloadInfo::HttpDownloadInfo(int optionIndex, QNetworkReply *reply) :
-    m_optionIndex(optionIndex),
-    m_reply(reply),
-    m_headerRead(false)
-{}
+inline HttpDownloadInfo::HttpDownloadInfo(int optionIndex, QNetworkReply *reply)
+    : m_optionIndex(optionIndex)
+    , m_reply(reply)
+    , m_headerRead(false)
+{
+}
 
 /*!
  * \brief Returns the option index.
@@ -75,8 +74,7 @@ inline void HttpDownloadInfo::setHeaderRead(bool read)
     m_headerRead = read;
 }
 
-class HttpDownload : public Download
-{
+class HttpDownload : public Download {
     Q_OBJECT
 
 public:
@@ -126,14 +124,14 @@ private:
 
 inline void HttpDownload::doDownload()
 {
-    if(isValidOptionChosen()) {
+    if (isValidOptionChosen()) {
         startRequest(chosenOption());
     }
 }
 
 inline void HttpDownload::abortDownload()
 {
-    for(QNetworkReply *reply : m_replies) {
+    for (QNetworkReply *reply : m_replies) {
         reply->abort();
     }
 }
@@ -227,7 +225,6 @@ inline QString HttpDownload::typeName() const
 {
     return initialUrl().scheme();
 }
-
 }
 
 #endif // HTTPDOWNLOAD_H

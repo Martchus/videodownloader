@@ -1,18 +1,18 @@
 #include "./initiate.h"
-#include "./settings.h"
 #include "./mainwindow.h"
+#include "./settings.h"
 
 #include "resources/config.h"
 
+#include <qtutilities/resources/importplugin.h>
 #include <qtutilities/resources/qtconfigarguments.h>
 #include <qtutilities/resources/resources.h>
-#include <qtutilities/resources/importplugin.h>
 #include <qtutilities/settingsdialog/qtsettings.h>
 
 #if defined(VIDEODOWNLOADER_GUI_QTWIDGETS)
-# include <QApplication>
+#include <QApplication>
 #elif defined(VIDEODOWNLOADER_GUI_QTQUICK)
-# include <QGuiApplication>
+#include <QGuiApplication>
 #endif
 
 using namespace std;
@@ -42,5 +42,4 @@ int runWidgetsGui(int argc, char *argv[], const QtConfigArguments &qtConfigArgs)
     return 0;
 #endif
 }
-
 }

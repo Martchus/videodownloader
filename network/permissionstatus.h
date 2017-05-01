@@ -6,8 +6,7 @@ namespace Network {
 /*!
  * \brief Specifies whether an action is allowed.
  */
-enum class PermissionStatus
-{
+enum class PermissionStatus {
     Unknown, /**< The download will ask for the permission if required by emitting the corresponding signal. */
     Asking, /**< The download is asking for the permission. The corresponding signal has been emitted. */
     Allowed, /**< The download is allowed to perform the action once but the status will turn to Unknown when doing the action. */
@@ -21,17 +20,14 @@ enum class PermissionStatus
  */
 inline void usePermission(PermissionStatus &permission)
 {
-    switch(permission) {
+    switch (permission) {
     case PermissionStatus::Allowed:
     case PermissionStatus::Refused:
         permission = PermissionStatus::Unknown;
         break;
-    default:
-        ;
+    default:;
     }
 }
-
 }
 
 #endif // PERMISSIONSTATUS
-

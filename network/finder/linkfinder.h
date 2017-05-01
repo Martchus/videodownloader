@@ -7,8 +7,7 @@
 
 namespace Network {
 
-class LinkFinder : public DownloadFinder
-{
+class LinkFinder : public DownloadFinder {
     Q_OBJECT
 public:
     explicit LinkFinder(const QUrl &url, QObject *parent = nullptr);
@@ -22,7 +21,6 @@ protected slots:
 private:
     QUrl m_url;
 };
-
 }
 
 #endif // LINKFINDER_H

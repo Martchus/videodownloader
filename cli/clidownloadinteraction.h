@@ -14,8 +14,7 @@ class Download;
 
 namespace Cli {
 
-class CliDownloadInteraction : public QObject
-{
+class CliDownloadInteraction : public QObject {
     Q_OBJECT
 public:
     explicit CliDownloadInteraction(QObject *parent = nullptr);
@@ -32,9 +31,7 @@ private slots:
     void downloadRequiresRedirectionPermission(Network::Download *download, size_t optionIndex);
     void downloadRequiresAuthentication(Network::Download *download, size_t optionIndex, const QString &realm);
     void downloadHasSslErrors(Network::Download *download, size_t optionIndex, const QList<QSslError> &sslErrors);
-
 };
-
 }
 
 #endif // CLI_DOWNLOADINTERACTION_H

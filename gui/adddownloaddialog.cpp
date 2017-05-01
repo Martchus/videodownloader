@@ -1,11 +1,11 @@
 #include "./adddownloaddialog.h"
 
-#include "../network/youtubedownload.h"
-#include "../network/vimeodownload.h"
-#include "../network/socksharedownload.h"
 #include "../network/bitsharedownload.h"
-#include "../network/groovesharkdownload.h"
 #include "../network/filenukedownload.h"
+#include "../network/groovesharkdownload.h"
+#include "../network/socksharedownload.h"
+#include "../network/vimeodownload.h"
+#include "../network/youtubedownload.h"
 #ifdef UNDER_CONSTRUCTION
 #include "../network/spotifydownload.h"
 #endif
@@ -14,10 +14,10 @@
 
 #include <qtutilities/misc/dialogutils.h>
 
-#include <QInputDialog>
-#include <QSettings>
 #include <QClipboard>
+#include <QInputDialog>
 #include <QMessageBox>
+#include <QSettings>
 
 using namespace Dialogs;
 using namespace Network;
@@ -25,25 +25,20 @@ using namespace Network;
 namespace QtGui {
 
 QStringList AddDownloadDialog::m_knownDownloadTypeNames = QStringList()
-        << QStringLiteral("standard http(s)/ftp")
-        << QStringLiteral("Youtube")
-        << QStringLiteral("Vimeo")
-        << QStringLiteral("Grooveshark")
-        << QStringLiteral("Sockshare/Putlocker")
-        << QStringLiteral("Bitshare")
-        << QStringLiteral("FileNuke")
+    << QStringLiteral("standard http(s)/ftp") << QStringLiteral("Youtube") << QStringLiteral("Vimeo") << QStringLiteral("Grooveshark")
+    << QStringLiteral("Sockshare/Putlocker") << QStringLiteral("Bitshare") << QStringLiteral("FileNuke")
 #ifdef UNDER_CONSTRUCTION
-        << QStringLiteral("Spotify")
+    << QStringLiteral("Spotify")
 #endif
-           ;
+    ;
 
-AddDownloadDialog::AddDownloadDialog(QWidget *parent) :
-    QDialog(parent),
-    m_ui(new Ui::AddDownloadDialog),
-    m_downloadTypeIndex(0),
-    m_downloadTypeIndexAdjustedManually(false),
-    m_validInput(false),
-    m_selectDownloadTypeInputDialog(nullptr)
+AddDownloadDialog::AddDownloadDialog(QWidget *parent)
+    : QDialog(parent)
+    , m_ui(new Ui::AddDownloadDialog)
+    , m_downloadTypeIndex(0)
+    , m_downloadTypeIndexAdjustedManually(false)
+    , m_validInput(false)
+    , m_selectDownloadTypeInputDialog(nullptr)
 {
     m_ui->setupUi(this);
     makeHeading(m_ui->mainInstructionLabel);
@@ -57,7 +52,7 @@ AddDownloadDialog::AddDownloadDialog(QWidget *parent) :
     connect(m_ui->adjustDetectedTypePushButton, &QPushButton::clicked, this, &AddDownloadDialog::adjustDetectedDownloadType);
     connect(m_ui->insertTextFromClipboardPushButton, &QPushButton::clicked, this, &AddDownloadDialog::insertTextFromClipboard);
 
-    QSettings settings(QSettings::IniFormat, QSettings::UserScope,  QApplication::organizationName(), QApplication::applicationName());
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, QApplication::organizationName(), QApplication::applicationName());
     settings.beginGroup("adddownloaddialog");
     m_lastUrl = settings.value("lasturl", QString()).toString();
     m_ui->downloadTypeInfoWidget->setHidden(true);
@@ -69,16 +64,17 @@ AddDownloadDialog::AddDownloadDialog(QWidget *parent) :
 }
 
 AddDownloadDialog::~AddDownloadDialog()
-{}
+{
+}
 
 Download *AddDownloadDialog::result() const
 {
-    if(!hasValidInput()) {
+    if (!hasValidInput()) {
         return nullptr;
     }
 
     QString res(m_ui->urlLineEdit->text());
-    switch(m_downloadTypeIndex) {
+    switch (m_downloadTypeIndex) {
     case 0:
         return new HttpDownload(QUrl(res));
     case 1:
@@ -105,7 +101,7 @@ Download *AddDownloadDialog::result() const
 void AddDownloadDialog::reset()
 {
     m_downloadTypeIndexAdjustedManually = false;
-    if(m_ui->urlLineEdit->text() != m_lastUrl) {
+    if (m_ui->urlLineEdit->text() != m_lastUrl) {
         m_validInput = false;
         m_ui->urlLineEdit->setText(m_lastUrl);
     }
@@ -124,7 +120,7 @@ void AddDownloadDialog::back()
 
 void AddDownloadDialog::returnPressed()
 {
-    if(hasValidInput()) {
+    if (hasValidInput()) {
         setLastUrl();
         emit addDownloadClicked();
         accept();
@@ -135,7 +131,7 @@ void AddDownloadDialog::insertTextFromClipboard()
 {
     QClipboard *clipboard = QApplication::clipboard();
     QString text = clipboard->text();
-    if(text.isEmpty()) {
+    if (text.isEmpty()) {
         QMessageBox::warning(this, windowTitle(), tr("The clipboard does not contain any text."));
     } else {
         m_ui->urlLineEdit->setText(text);
@@ -144,16 +140,16 @@ void AddDownloadDialog::insertTextFromClipboard()
 
 void AddDownloadDialog::textChanged(const QString &text)
 {
-    if(!text.isEmpty()) {
+    if (!text.isEmpty()) {
         // entered value might be a grooveshark song id
         bool isValidGroovesharkId = true;
-        for(const auto c : text) {
-            if(!c.isDigit()) {
+        for (const auto c : text) {
+            if (!c.isDigit()) {
                 isValidGroovesharkId = false;
                 break;
             }
         }
-        if(isValidGroovesharkId) {
+        if (isValidGroovesharkId) {
             m_ui->downloadTypeInfoWidget->setHidden(false);
             m_ui->addPushButton->setEnabled(true);
             m_validInput = true;
@@ -168,29 +164,30 @@ void AddDownloadDialog::textChanged(const QString &text)
         QString host = url.host();
         QString scheme = url.scheme();
 
-        if(!(host.isEmpty() || scheme.isEmpty())) {
+        if (!(host.isEmpty() || scheme.isEmpty())) {
             m_ui->downloadTypeInfoWidget->setHidden(false);
 
             // check if the protocol is supported
-            if(scheme == QLatin1String("http") || scheme == QLatin1String("https") || scheme == QLatin1String("ftp")) {
+            if (scheme == QLatin1String("http") || scheme == QLatin1String("https") || scheme == QLatin1String("ftp")) {
                 m_ui->addPushButton->setEnabled(true);
                 m_validInput = true;
                 // detect download type (if not adjusted manually)
-                if(!m_downloadTypeIndexAdjustedManually) {
+                if (!m_downloadTypeIndexAdjustedManually) {
                     m_downloadTypeIndex = 0;
-                    if(host.contains(QLatin1String("youtube"), Qt::CaseInsensitive) || host.startsWith(QLatin1String("youtu.be"))) {
+                    if (host.contains(QLatin1String("youtube"), Qt::CaseInsensitive) || host.startsWith(QLatin1String("youtu.be"))) {
                         m_downloadTypeIndex = 1;
-                    } else if(host.contains(QLatin1String("vimeo"))) {
+                    } else if (host.contains(QLatin1String("vimeo"))) {
                         m_downloadTypeIndex = 2;
-                    } else if(host.contains(QLatin1String("sockshare")) || host.contains(QLatin1String("putlocker"))) {
+                    } else if (host.contains(QLatin1String("sockshare")) || host.contains(QLatin1String("putlocker"))) {
                         m_downloadTypeIndex = 5;
-                    } else if(host.contains(QLatin1String("bitshare"))) {
+                    } else if (host.contains(QLatin1String("bitshare"))) {
                         m_downloadTypeIndex = 6;
-                    } else if(host.contains(QLatin1String("filenuke"))) {
+                    } else if (host.contains(QLatin1String("filenuke"))) {
                         m_downloadTypeIndex = 7;
                     }
-                    if(m_downloadTypeIndex) {
-                        m_ui->downloadTypeLabel->setText(tr("The entered url seems to be from %1 so it will be added as %1 download.").arg(m_knownDownloadTypeNames.at(m_downloadTypeIndex)));
+                    if (m_downloadTypeIndex) {
+                        m_ui->downloadTypeLabel->setText(tr("The entered url seems to be from %1 so it will be added as %1 download.")
+                                                             .arg(m_knownDownloadTypeNames.at(m_downloadTypeIndex)));
                     } else {
                         m_ui->downloadTypeLabel->setText(tr("The entered url will be added as standard %1 download.").arg(scheme));
                     }
@@ -213,7 +210,7 @@ void AddDownloadDialog::textChanged(const QString &text)
 
 void AddDownloadDialog::adjustDetectedDownloadType()
 {
-    if(!m_selectDownloadTypeInputDialog) {
+    if (!m_selectDownloadTypeInputDialog) {
         m_selectDownloadTypeInputDialog = new QInputDialog(this);
         m_selectDownloadTypeInputDialog->setWindowTitle(tr("Select download type"));
         m_selectDownloadTypeInputDialog->setLabelText(tr("Select as which kind of download the entered url should be treated."));
@@ -223,20 +220,20 @@ void AddDownloadDialog::adjustDetectedDownloadType()
     }
 
     m_selectDownloadTypeInputDialog->setTextValue(m_knownDownloadTypeNames.at(m_downloadTypeIndex));
-    if(m_selectDownloadTypeInputDialog->exec()) {
+    if (m_selectDownloadTypeInputDialog->exec()) {
         m_downloadTypeIndex = m_knownDownloadTypeNames.indexOf(m_selectDownloadTypeInputDialog->textValue());
-        m_ui->downloadTypeLabel->setText(tr("The entered url will be added as %1 download (adjusted).").arg(m_knownDownloadTypeNames.at(m_downloadTypeIndex)));
+        m_ui->downloadTypeLabel->setText(
+            tr("The entered url will be added as %1 download (adjusted).").arg(m_knownDownloadTypeNames.at(m_downloadTypeIndex)));
         m_downloadTypeIndexAdjustedManually = true;
     }
 }
 
 void AddDownloadDialog::setLastUrl()
 {
-    QSettings settings(QSettings::IniFormat, QSettings::UserScope,  QApplication::organizationName(), QApplication::applicationName());
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, QApplication::organizationName(), QApplication::applicationName());
     settings.beginGroup("adddownloaddialog");
     m_lastUrl = m_ui->urlLineEdit->text();
     settings.setValue("lasturl", m_lastUrl);
     settings.endGroup();
 }
-
 }

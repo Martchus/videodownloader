@@ -8,9 +8,10 @@
 
 namespace QtGui {
 
-ProgressBarItemDelegate::ProgressBarItemDelegate(QObject* parent) :
-    QStyledItemDelegate(parent)
-{}
+ProgressBarItemDelegate::ProgressBarItemDelegate(QObject *parent)
+    : QStyledItemDelegate(parent)
+{
+}
 
 void ProgressBarItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
@@ -29,5 +30,4 @@ void ProgressBarItemDelegate::paint(QPainter *painter, const QStyleOptionViewIte
     // draw the progress bar onto the view.
     QApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter);
 }
-
 }

@@ -1,17 +1,16 @@
 #ifndef AUTHENTICATIONCREDENTIALS
 #define AUTHENTICATIONCREDENTIALS
 
-#include <QString>
 #include <QList>
 #include <QMap>
+#include <QString>
 #include <QVariant>
 
 namespace Network {
 
 class Download;
 
-class AuthenticationCredentials
-{
+class AuthenticationCredentials {
     friend class Download;
 
 public:
@@ -31,15 +30,17 @@ private:
     QList<QMap<QString, QVariant> > m_options;
 };
 
-inline AuthenticationCredentials::AuthenticationCredentials() :
-    m_requested(false)
-{}
+inline AuthenticationCredentials::AuthenticationCredentials()
+    : m_requested(false)
+{
+}
 
-inline AuthenticationCredentials::AuthenticationCredentials(const QString &userName, const QString &password) :
-    m_requested(false),
-    m_userName(userName),
-    m_password(password)
-{}
+inline AuthenticationCredentials::AuthenticationCredentials(const QString &userName, const QString &password)
+    : m_requested(false)
+    , m_userName(userName)
+    , m_password(password)
+{
+}
 
 inline const QString &AuthenticationCredentials::userName() const
 {
@@ -67,8 +68,6 @@ inline void AuthenticationCredentials::clear()
     m_password.clear();
     m_options.clear();
 }
-
 }
 
 #endif // AUTHENTICATIONCREDENTIALS
-

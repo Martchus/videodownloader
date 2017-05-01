@@ -4,20 +4,20 @@
 
 #include "../network/download.h"
 #include "../network/finder/downloadfinder.h"
+#include "../network/finder/groovesharksearcher.h"
 #include "../network/finder/linkfinder.h"
 #include "../network/finder/youtubeplaylist.h"
-#include "../network/finder/groovesharksearcher.h"
 
 #include "../model/downloadfinderresultsmodel.h"
 
 #include <qtutilities/widgets/clearlineedit.h>
 
-#include <QVBoxLayout>
-#include <QCommandLinkButton>
 #include <QCheckBox>
-#include <QTreeView>
+#include <QCommandLinkButton>
 #include <QHeaderView>
 #include <QScrollBar>
+#include <QTreeView>
+#include <QVBoxLayout>
 
 #include <functional>
 
@@ -26,26 +26,21 @@ using namespace Network;
 
 namespace QtGui {
 
-enum
-{
-    AddMultipleDownloadsSelectSourcePageId,
-    AddMultipleDownloadsEnterSearchTermPageId,
-    AddMultipleDownloadsResultsPageId
-};
+enum { AddMultipleDownloadsSelectSourcePageId, AddMultipleDownloadsEnterSearchTermPageId, AddMultipleDownloadsResultsPageId };
 
 DownloadSource downloadSourceFromField(const QVariant &fieldValue)
 {
     bool ok = false;
     int value = fieldValue.toInt(&ok);
-    if(ok && value > 0 && value < 4) {
+    if (ok && value > 0 && value < 4) {
         return static_cast<DownloadSource>(value);
     }
     return DownloadSource::None;
 }
 
-AddMultipleDownloadsSelectSourcePage::AddMultipleDownloadsSelectSourcePage(QWidget *parent) :
-    QWizardPage(parent),
-    m_selectedSource(DownloadSource::None)
+AddMultipleDownloadsSelectSourcePage::AddMultipleDownloadsSelectSourcePage(QWidget *parent)
+    : QWizardPage(parent)
+    , m_selectedSource(DownloadSource::None)
 {
     // create buttons
     QCommandLinkButton *webpageLinksButton = new QCommandLinkButton(tr("Links in ordinary webpage"));
@@ -60,10 +55,14 @@ AddMultipleDownloadsSelectSourcePage::AddMultipleDownloadsSelectSourcePage(QWidg
     layout->addWidget(groovesharkPlaylistButton);
     setLayout(layout);
     // connect signals and slots
-    connect(webpageLinksButton, &QCommandLinkButton::clicked, std::bind(&AddMultipleDownloadsSelectSourcePage::changeSource, this, DownloadSource::WebpageLinks));
-    connect(youtubePlaylistButton, &QCommandLinkButton::clicked, std::bind(&AddMultipleDownloadsSelectSourcePage::changeSource, this, DownloadSource::YoutubePlaylist));
-    connect(groovesharkAlbumButton, &QCommandLinkButton::clicked, std::bind(&AddMultipleDownloadsSelectSourcePage::changeSource, this, DownloadSource::GroovesharkAlbum));
-    connect(groovesharkPlaylistButton, &QCommandLinkButton::clicked, std::bind(&AddMultipleDownloadsSelectSourcePage::changeSource, this, DownloadSource::GroovesharkPlaylist));
+    connect(webpageLinksButton, &QCommandLinkButton::clicked,
+        std::bind(&AddMultipleDownloadsSelectSourcePage::changeSource, this, DownloadSource::WebpageLinks));
+    connect(youtubePlaylistButton, &QCommandLinkButton::clicked,
+        std::bind(&AddMultipleDownloadsSelectSourcePage::changeSource, this, DownloadSource::YoutubePlaylist));
+    connect(groovesharkAlbumButton, &QCommandLinkButton::clicked,
+        std::bind(&AddMultipleDownloadsSelectSourcePage::changeSource, this, DownloadSource::GroovesharkAlbum));
+    connect(groovesharkPlaylistButton, &QCommandLinkButton::clicked,
+        std::bind(&AddMultipleDownloadsSelectSourcePage::changeSource, this, DownloadSource::GroovesharkPlaylist));
     // set title
     setTitle(tr("Source"));
     setSubTitle(tr("Select the source you want to add downloads from."));
@@ -74,8 +73,8 @@ bool AddMultipleDownloadsSelectSourcePage::isComplete() const
     return m_selectedSource != DownloadSource::None;
 }
 
-AddMultipleDownloadsEnterSearchTermPage::AddMultipleDownloadsEnterSearchTermPage(QWidget *parent) :
-    QWizardPage(parent)
+AddMultipleDownloadsEnterSearchTermPage::AddMultipleDownloadsEnterSearchTermPage(QWidget *parent)
+    : QWizardPage(parent)
 {
     // create line edit
     m_searchTermLineEdit = new ClearLineEdit(this);
@@ -102,11 +101,11 @@ QString AddMultipleDownloadsEnterSearchTermPage::searchTerm() const
 void AddMultipleDownloadsEnterSearchTermPage::initializePage()
 {
     DownloadSource source = DownloadSource::None;
-    if(AddMultipleDownloadsWizard *w = qobject_cast<AddMultipleDownloadsWizard *>(wizard())) {
+    if (AddMultipleDownloadsWizard *w = qobject_cast<AddMultipleDownloadsWizard *>(wizard())) {
         source = w->source();
     }
     // source = downloadSourceFromField(field(QStringLiteral("source"))); // does not work for some reason
-    switch(source) {
+    switch (source) {
     case DownloadSource::WebpageLinks:
         setTitle(tr("Specify the webpage"));
         setSubTitle(tr("Enter the URL."));
@@ -148,12 +147,12 @@ void AddMultipleDownloadsEnterSearchTermPage::initializePage()
     }
 }
 
-AddMultipleDownloadsResultsPage::AddMultipleDownloadsResultsPage(QWidget *parent) :
-    QWizardPage(parent),
-    m_finder(nullptr),
-    m_model(nullptr),
-    m_interaction(new DownloadInteraction(parent)),
-    m_complete(false)
+AddMultipleDownloadsResultsPage::AddMultipleDownloadsResultsPage(QWidget *parent)
+    : QWizardPage(parent)
+    , m_finder(nullptr)
+    , m_model(nullptr)
+    , m_interaction(new DownloadInteraction(parent))
+    , m_complete(false)
 {
     // setup view
     m_view = new QTreeView(this);
@@ -172,7 +171,7 @@ AddMultipleDownloadsResultsPage::AddMultipleDownloadsResultsPage(QWidget *parent
 void AddMultipleDownloadsResultsPage::initializePage()
 {
     DownloadSource source = DownloadSource::None;
-    if(AddMultipleDownloadsWizard *w = qobject_cast<AddMultipleDownloadsWizard *>(wizard())) {
+    if (AddMultipleDownloadsWizard *w = qobject_cast<AddMultipleDownloadsWizard *>(wizard())) {
         source = w->source();
         w->setButtonText(QWizard::CustomButton1, tr("Select all"));
         w->button(QWizard::CustomButton1)->setIcon(QIcon::fromTheme(QStringLiteral("edit-select-all")));
@@ -180,14 +179,14 @@ void AddMultipleDownloadsResultsPage::initializePage()
         connect(w, &QWizard::customButtonClicked, this, &AddMultipleDownloadsResultsPage::customButtonClicked);
     }
     // source = downloadSourceFromField(field(QStringLiteral("source"))); // does not work for some reason
-    if(m_finder) {
+    if (m_finder) {
         delete m_finder;
         m_finder = nullptr;
     }
     bool byId = field(QStringLiteral("byid")).toBool();
     QString term = field(QStringLiteral("term")).toString();
     bool verifiedOnly = field(QStringLiteral("verfiedonly")).toBool();
-    switch(source) {
+    switch (source) {
     case DownloadSource::WebpageLinks:
         setTitle(tr("Select links to be added"));
         m_collectionKind = tr("Webpage");
@@ -204,13 +203,15 @@ void AddMultipleDownloadsResultsPage::initializePage()
         setTitle(tr("Select songs to be added"));
         m_collectionKind = tr("Grooveshark album");
         m_collectionContent = tr("songs");
-        m_finder = new GroovesharkSearcher(term, byId ?GroovesharkSearchTermRole::AlbumId : GroovesharkSearchTermRole::AlbumName, verifiedOnly, this);
+        m_finder
+            = new GroovesharkSearcher(term, byId ? GroovesharkSearchTermRole::AlbumId : GroovesharkSearchTermRole::AlbumName, verifiedOnly, this);
         break;
     case DownloadSource::GroovesharkPlaylist:
         setTitle(tr("Select songs to be added"));
         m_collectionKind = tr("Grooveshark playlist");
         m_collectionContent = tr("songs");
-        m_finder = new GroovesharkSearcher(term, byId ?GroovesharkSearchTermRole::PlaylistId : GroovesharkSearchTermRole::PlaylistName, verifiedOnly, this);
+        m_finder = new GroovesharkSearcher(
+            term, byId ? GroovesharkSearchTermRole::PlaylistId : GroovesharkSearchTermRole::PlaylistName, verifiedOnly, this);
         break;
     default:
         setTitle(tr("No source selected"));
@@ -218,7 +219,7 @@ void AddMultipleDownloadsResultsPage::initializePage()
     m_model->setFinder(m_finder);
     updateSubTitle();
     selectionChanged(QItemSelection(), QItemSelection());
-    if(m_finder) {
+    if (m_finder) {
         connect(m_finder, &DownloadFinder::requestCreated, m_interaction, &DownloadInteraction::connectDownload);
         connect(m_finder, &DownloadFinder::finished, this, &AddMultipleDownloadsResultsPage::finderFinished);
         connect(m_finder, &DownloadFinder::newResultsAvailable, this, &AddMultipleDownloadsResultsPage::finderHasResults);
@@ -230,12 +231,12 @@ void AddMultipleDownloadsResultsPage::initializePage()
 
 void AddMultipleDownloadsResultsPage::cleanupPage()
 {
-    if(wizard()) {
+    if (wizard()) {
         wizard()->disconnect(this);
         wizard()->setOption(QWizard::HaveCustomButton1, false);
     }
     m_model->setFinder(nullptr);
-    if(m_finder) {
+    if (m_finder) {
         delete m_finder;
         m_finder = nullptr;
     }
@@ -249,11 +250,11 @@ bool AddMultipleDownloadsResultsPage::isComplete() const
 QList<Download *> AddMultipleDownloadsResultsPage::results() const
 {
     QList<Download *> results;
-    if(m_finder) {
+    if (m_finder) {
         QModelIndexList selectedRows = m_view->selectionModel()->selectedRows();
         const QList<Download *> &allResults = m_finder->results();
-        foreach(const QModelIndex &index, selectedRows) {
-            if(index.row() < allResults.size()) {
+        foreach (const QModelIndex &index, selectedRows) {
+            if (index.row() < allResults.size()) {
                 results << allResults.at(index.row());
             }
         }
@@ -263,11 +264,11 @@ QList<Download *> AddMultipleDownloadsResultsPage::results() const
 
 void AddMultipleDownloadsResultsPage::finderHasResults(const QList<Download *> &newResults)
 {
-    if(m_finder && !newResults.isEmpty()) {
+    if (m_finder && !newResults.isEmpty()) {
         updateSubTitle();
-        if(!m_finder->hasFinished() && !m_finder->isDownloading()) {
+        if (!m_finder->hasFinished() && !m_finder->isDownloading()) {
             QScrollBar *sb = m_view->verticalScrollBar();
-            if(!sb || ((sb->maximum() + sb->minimum()) == 0)) {
+            if (!sb || ((sb->maximum() + sb->minimum()) == 0)) {
                 m_finder->start();
             }
         }
@@ -276,11 +277,11 @@ void AddMultipleDownloadsResultsPage::finderHasResults(const QList<Download *> &
 
 void AddMultipleDownloadsResultsPage::finderFinished(bool success, const QString &reason)
 {
-    if(m_finder) {
-        if(success) {
+    if (m_finder) {
+        if (success) {
             updateSubTitle();
         } else {
-            if(reason.isEmpty()) {
+            if (reason.isEmpty()) {
                 setSubTitle(tr("Failed to retrieve %1.").arg(m_collectionContent));
             } else {
                 setSubTitle(tr("Failed to retrieve %1: %2").arg(m_collectionContent, reason));
@@ -292,17 +293,17 @@ void AddMultipleDownloadsResultsPage::finderFinished(bool success, const QString
 void AddMultipleDownloadsResultsPage::selectionChanged(const QItemSelection &, const QItemSelection &)
 {
     int count = m_view->selectionModel()->selectedRows().count();
-    if(wizard()) {
-        if(count == 1) {
+    if (wizard()) {
+        if (count == 1) {
             wizard()->setButtonText(QWizard::FinishButton, tr("Add selected download").arg(count));
             setComplete(true);
-        } else if(count > 0) {
+        } else if (count > 0) {
             wizard()->setButtonText(QWizard::FinishButton, tr("Add selected downloads (%1)").arg(count));
             setComplete(true);
         } else {
             setComplete(false);
         }
-        if(count >= m_model->rowCount()) {
+        if (count >= m_model->rowCount()) {
             wizard()->setButtonText(QWizard::CustomButton1, tr("Repeal selection"));
         } else {
             wizard()->setButtonText(QWizard::CustomButton1, tr("Select all"));
@@ -312,9 +313,9 @@ void AddMultipleDownloadsResultsPage::selectionChanged(const QItemSelection &, c
 
 void AddMultipleDownloadsResultsPage::scrollBarValueChanged()
 {
-    if(m_finder && !m_finder->hasFinished() && !m_finder->isDownloading()) {
+    if (m_finder && !m_finder->hasFinished() && !m_finder->isDownloading()) {
         QScrollBar *sb = m_view->verticalScrollBar();
-        if(!sb || (sb->value() == sb->maximum()) || ((sb->maximum() + sb->minimum()) == 0)) {
+        if (!sb || (sb->value() == sb->maximum()) || ((sb->maximum() + sb->minimum()) == 0)) {
             m_finder->start();
         }
     }
@@ -322,14 +323,14 @@ void AddMultipleDownloadsResultsPage::scrollBarValueChanged()
 
 void AddMultipleDownloadsResultsPage::customButtonClicked(int which)
 {
-    if(which == QWizard::CustomButton1) {
+    if (which == QWizard::CustomButton1) {
         selectAll();
     }
 }
 
 void AddMultipleDownloadsResultsPage::setComplete(bool complete)
 {
-    if(m_complete != complete) {
+    if (m_complete != complete) {
         m_complete = complete;
         emit completeChanged();
     }
@@ -338,7 +339,7 @@ void AddMultipleDownloadsResultsPage::setComplete(bool complete)
 void AddMultipleDownloadsResultsPage::selectAll()
 {
     QItemSelectionModel *selectionModel = m_view->selectionModel();
-    if(selectionModel->selectedRows().length() >= m_model->rowCount()) {
+    if (selectionModel->selectedRows().length() >= m_model->rowCount()) {
         selectionModel->clearSelection();
     } else {
         m_view->selectAll();
@@ -348,20 +349,22 @@ void AddMultipleDownloadsResultsPage::selectAll()
 void AddMultipleDownloadsResultsPage::updateSubTitle()
 {
     QString subTitle;
-    if(m_finder) {
-        if(m_finder->resultCount()) {
+    if (m_finder) {
+        if (m_finder->resultCount()) {
             const QString &collectionTitle = m_finder->collectionTitle();
-            if(collectionTitle.isEmpty()) {
+            if (collectionTitle.isEmpty()) {
                 subTitle = tr("%1 %2 of the %3 have been retrieved.").arg(m_finder->resultCount()).arg(m_collectionContent, m_collectionKind);
             } else {
-                subTitle = tr("%1 %2 of the %3 »%4« have been retrieved.").arg(m_finder->resultCount()).arg(m_collectionContent, m_collectionKind, collectionTitle);
+                subTitle = tr("%1 %2 of the %3 »%4« have been retrieved.")
+                               .arg(m_finder->resultCount())
+                               .arg(m_collectionContent, m_collectionKind, collectionTitle);
             }
-            if(!m_finder->hasFinished()) {
+            if (!m_finder->hasFinished()) {
                 subTitle.append(' ');
                 subTitle.append(tr("More %1 are available.").arg(m_collectionContent));
             }
         } else {
-            if(m_finder->hasFinished()) {
+            if (m_finder->hasFinished()) {
                 subTitle = tr("No %1 could be found.").arg(m_collectionContent);
             } else {
                 subTitle = tr("Retrieving %1 ...").arg(m_collectionContent);
@@ -373,8 +376,8 @@ void AddMultipleDownloadsResultsPage::updateSubTitle()
     setSubTitle(subTitle);
 }
 
-AddMultipleDownloadsWizard::AddMultipleDownloadsWizard(QWidget *parent) :
-    QWizard(parent)
+AddMultipleDownloadsWizard::AddMultipleDownloadsWizard(QWidget *parent)
+    : QWizard(parent)
 {
     setWindowTitle(tr("Add multiple downloads"));
     setPage(AddMultipleDownloadsSelectSourcePageId, new AddMultipleDownloadsSelectSourcePage);
@@ -399,5 +402,4 @@ QList<Download *> AddMultipleDownloadsWizard::results() const
 {
     return qobject_cast<AddMultipleDownloadsResultsPage *>(page(AddMultipleDownloadsResultsPageId))->results();
 }
-
 }

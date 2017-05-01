@@ -8,7 +8,6 @@ class QtConfigArguments;
 namespace QtGui {
 
 int runWidgetsGui(int argc, char *argv[], const ApplicationUtilities::QtConfigArguments &qtConfigArgs);
-
 }
 
 #endif // QTGUI_INIT_H

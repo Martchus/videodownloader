@@ -6,9 +6,9 @@
 #include <QString>
 #include <QUrl>
 
+#include <limits>
 #include <memory>
 #include <sstream>
-#include <limits>
 
 QT_FORWARD_DECLARE_CLASS(QIODevice)
 
@@ -18,8 +18,7 @@ enum class PermissionStatus;
 
 constexpr size_t InvalidOptionIndex = std::numeric_limits<decltype(InvalidOptionIndex)>::max();
 
-class OptionData
-{
+class OptionData {
     friend class Download;
 
 public:

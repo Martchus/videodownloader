@@ -7,12 +7,12 @@
 #include <c++utilities/chrono/timespan.h>
 
 #include <QAuthenticator>
+#include <QBuffer>
+#include <QFile>
+#include <QNetworkProxy>
 #include <QNetworkReply>
 #include <QObject>
-#include <QFile>
 #include <QTime>
-#include <QNetworkProxy>
-#include <QBuffer>
 
 #include <tuple>
 
@@ -21,8 +21,7 @@ namespace Network {
 /*!
  * \brief Specifies the download status.
  */
-enum class DownloadStatus
-{
+enum class DownloadStatus {
     None, /**< The download has just been created. Call init() to initialize the download. */
     Initiating, /**< The download is currently initiating after init() has been called. */
     Waiting, /**< The download is currently waiting for a permission or the output device to be set. */
@@ -36,8 +35,7 @@ enum class DownloadStatus
     Finished /**< The download has been finished and all received data has been written to the output file. */
 };
 
-class Download : public QObject
-{    
+class Download : public QObject {
     Q_OBJECT
 public:
     virtual ~Download();
@@ -115,7 +113,9 @@ public:
     bool setRange(const DownloadRange &value);
     virtual bool supportsRange() const;
     virtual QString typeName() const = 0;
-    void provideMetaData(const QString &title = QString(), const QString &uploader = QString(), ChronoUtilities::TimeSpan duration = ChronoUtilities::TimeSpan(), const QString &collectionName = QString(), int positionInCollection = 0, int views = 0, const QString &rating = QString());
+    void provideMetaData(const QString &title = QString(), const QString &uploader = QString(),
+        ChronoUtilities::TimeSpan duration = ChronoUtilities::TimeSpan(), const QString &collectionName = QString(), int positionInCollection = 0,
+        int views = 0, const QString &rating = QString());
     void setOverwritePermission(size_t optionIndex, PermissionStatus permission);
     void setAppendPermission(size_t optionIndex, PermissionStatus permission);
     void setRedirectPermission(size_t originalOptionIndex, PermissionStatus permission);
@@ -154,8 +154,10 @@ protected:
     //  meant to be called by derived classes
     size_t addDownloadUrl(const QString &optionName, const QUrl &url, size_t redirectionOf = InvalidOptionIndex);
     void changeDownloadUrl(size_t optionIndex, const QUrl &value);
-    void reportInitiated(bool success, const QString &reasonIfNot = QString(), const QNetworkReply::NetworkError &networkError = QNetworkReply::NoError);
-    void reportFinalDownloadStatus(size_t optionIndex, bool success, const QString &statusDescription = QString(), QNetworkReply::NetworkError networkError = QNetworkReply::NoError);
+    void reportInitiated(
+        bool success, const QString &reasonIfNot = QString(), const QNetworkReply::NetworkError &networkError = QNetworkReply::NoError);
+    void reportFinalDownloadStatus(size_t optionIndex, bool success, const QString &statusDescription = QString(),
+        QNetworkReply::NetworkError networkError = QNetworkReply::NoError);
 protected slots:
     void reportDownloadInterrupted(size_t optionIndex);
     void reportNewDataToBeWritten(size_t optionIndex, QIODevice *inputDevice);
@@ -372,7 +374,7 @@ inline bool Download::areOptionsAvailable() const
  */
 inline const QString &Download::optionName(size_t optionIndex) const
 {
-    if(optionIndex < m_optionData.size()) {
+    if (optionIndex < m_optionData.size()) {
         return m_optionData.at(optionIndex).m_name;
     } else {
         return emptyString();
@@ -436,7 +438,7 @@ inline bool Download::hasSelectedOptionChanged()
  */
 inline const QString &Download::userAgent()
 {
-    if(m_userAgent.isEmpty() && isDefaultUserAgentUsed()) {
+    if (m_userAgent.isEmpty() && isDefaultUserAgentUsed()) {
         return defaultUserAgent();
     }
     return m_userAgent;
@@ -574,7 +576,7 @@ inline DownloadRange &Download::range()
  */
 inline bool Download::setRange(const DownloadRange &value)
 {
-    if(supportsRange()) {
+    if (supportsRange()) {
         m_range = value;
         return true;
     }
@@ -597,7 +599,7 @@ inline bool Download::supportsRange() const
  */
 inline bool Download::isStarted() const
 {
-    switch(status()) {
+    switch (status()) {
     case DownloadStatus::Downloading:
     case DownloadStatus::Waiting:
     case DownloadStatus::FinishOuputFile:
@@ -614,7 +616,7 @@ inline bool Download::isStarted() const
  */
 inline bool Download::isWorking() const
 {
-    switch(status()) {
+    switch (status()) {
     case DownloadStatus::Downloading:
     case DownloadStatus::FinishOuputFile:
     case DownloadStatus::Interrupting:
@@ -630,7 +632,7 @@ inline bool Download::isWorking() const
  */
 inline bool Download::isDownloading() const
 {
-    switch(status()) {
+    switch (status()) {
     case DownloadStatus::Downloading:
         return true;
     default:
@@ -680,7 +682,7 @@ inline void Download::setTitle(const QString &value)
  */
 inline void Download::setTitleFromFilename(const QString &valueObtainedFromFilename)
 {
-    if(!m_dontAcceptNewTitleFromFilenameAnymore) {
+    if (!m_dontAcceptNewTitleFromFilenameAnymore) {
         m_title = valueObtainedFromFilename;
     }
 }
@@ -808,7 +810,7 @@ inline DownloadStatus Download::status() const
  */
 inline void Download::setStatus(DownloadStatus value)
 {
-    if(value != m_status) {
+    if (value != m_status) {
         m_lastState = m_status;
         m_status = value;
         emit statusChanged(this);
@@ -829,7 +831,8 @@ inline DownloadStatus Download::lastStatus() const
  */
 inline int Download::progressPercentage() const
 {
-    return (m_bytesReceived > 0 && m_bytesToReceive > 0) ? (static_cast<double>(m_bytesReceived) / static_cast<double>(m_bytesToReceive) * 100.0) : -1;
+    return (m_bytesReceived > 0 && m_bytesToReceive > 0) ? (static_cast<double>(m_bytesReceived) / static_cast<double>(m_bytesToReceive) * 100.0)
+                                                         : -1;
 }
 
 /*!
@@ -858,8 +861,8 @@ inline double Download::shiftSpeed()
 inline ChronoUtilities::TimeSpan Download::remainingTime() const
 {
     return (m_status == DownloadStatus::Downloading && m_bytesToReceive != -1)
-            ? ChronoUtilities::TimeSpan::fromSeconds(static_cast<double>(m_bytesToReceive) / (m_speed * 125.0))
-            : ChronoUtilities::TimeSpan();
+        ? ChronoUtilities::TimeSpan::fromSeconds(static_cast<double>(m_bytesToReceive) / (m_speed * 125.0))
+        : ChronoUtilities::TimeSpan();
 }
 
 /*!
@@ -948,7 +951,7 @@ inline const QString &Download::statusInfo() const
  */
 inline void Download::setStatusInfo(const QString &value)
 {
-    if(m_statusInfo != value) {
+    if (m_statusInfo != value) {
         m_statusInfo = value;
         emit statusInfoChanged(this);
     }
@@ -989,7 +992,6 @@ inline AuthenticationCredentials &Download::initialAuthenticationCredentials()
 {
     return m_initAuthData;
 }
-
 }
 
 #endif // DOWNLOAD_H

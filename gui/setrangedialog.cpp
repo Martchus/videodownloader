@@ -13,10 +13,10 @@ using namespace Network;
 
 namespace QtGui {
 
-SetRangeDialog::SetRangeDialog(DownloadRange &range, QWidget *parent) :
-    QDialog(parent),
-    m_ui(new Ui::SetRangeDialog),
-    m_range(range)
+SetRangeDialog::SetRangeDialog(DownloadRange &range, QWidget *parent)
+    : QDialog(parent)
+    , m_ui(new Ui::SetRangeDialog)
+    , m_range(range)
 {
     m_ui->setupUi(this);
 #ifdef Q_OS_WIN32
@@ -30,11 +30,14 @@ SetRangeDialog::SetRangeDialog(DownloadRange &range, QWidget *parent) :
 }
 
 SetRangeDialog::~SetRangeDialog()
-{}
+{
+}
 
 void SetRangeDialog::confirm()
 {
-    if((m_ui->fromSpinBox->value() < m_ui->toSpinBox->value() || m_ui->toSpinBox->value() < 0) && (m_ui->fromSpinBox->value() <= m_ui->currentPosSpinBox->value()) && (m_ui->toSpinBox->value() > m_ui->currentPosSpinBox->value() || m_ui->toSpinBox->value() < 0)) {
+    if ((m_ui->fromSpinBox->value() < m_ui->toSpinBox->value() || m_ui->toSpinBox->value() < 0)
+        && (m_ui->fromSpinBox->value() <= m_ui->currentPosSpinBox->value())
+        && (m_ui->toSpinBox->value() > m_ui->currentPosSpinBox->value() || m_ui->toSpinBox->value() < 0)) {
         m_range.setStartOffset(m_ui->fromSpinBox->value());
         m_range.setEndOffset(m_ui->toSpinBox->value());
         m_range.setCurrentOffset(m_ui->currentPosSpinBox->value());
@@ -43,5 +46,4 @@ void SetRangeDialog::confirm()
         QMessageBox::warning(this, this->windowTitle(), tr("Values are invalid."));
     }
 }
-
 }

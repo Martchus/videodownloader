@@ -13,8 +13,7 @@ class Download;
 
 namespace QtGui {
 
-class DownloadInteraction : public QObject
-{
+class DownloadInteraction : public QObject {
     Q_OBJECT
 public:
     explicit DownloadInteraction(QObject *parent = nullptr);
@@ -35,9 +34,7 @@ private slots:
 
 private:
     QWidget *m_parentWidget;
-
 };
-
 }
 
 #endif // DOWNLOADINTERACTION_H

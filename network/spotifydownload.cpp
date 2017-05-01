@@ -2,13 +2,13 @@
 
 #include "../application/utils.h"
 
-#include <QUrlQuery>
 #include <QApplication>
 #include <QClipboard>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QJsonArray>
 #include <QJsonParseError>
+#include <QUrlQuery>
 
 using namespace Application;
 
@@ -21,7 +21,7 @@ QString SpotifyDownload::m_trackingId = QString();
 QString SpotifyDownload::m_referrer = QString();
 QString SpotifyDownload::m_creationFlow = QString();
 QStringList SpotifyDownload::m_supportedUseragents = QStringList()
-        << QStringLiteral("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:23.0) Gecko/20100101 Firefox/23.0");
+    << QStringLiteral("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:23.0) Gecko/20100101 Firefox/23.0");
 
 /*!
  * \class SpotifyDownload
@@ -32,10 +32,10 @@ QStringList SpotifyDownload::m_supportedUseragents = QStringList()
 /*!
  * \brief Constructs a new SpotifyDownload for the specified \a songid.
  */
-SpotifyDownload::SpotifyDownload(const QString &songid, QObject *parent) :
-    HttpDownloadWithInfoRequst(QUrl(), parent),
-    m_currentRequest(SpotifyRequestType::Invalid),
-    m_triesToGetAuthenticationData(0)
+SpotifyDownload::SpotifyDownload(const QString &songid, QObject *parent)
+    : HttpDownloadWithInfoRequst(QUrl(), parent)
+    , m_currentRequest(SpotifyRequestType::Invalid)
+    , m_triesToGetAuthenticationData(0)
 {
     setId(songid);
 }
@@ -57,8 +57,8 @@ void SpotifyDownload::resetSession()
 Download *SpotifyDownload::infoRequestDownload(bool &success, QString &reasonForFail)
 {
     HttpDownload *download = nullptr;
-    if(m_csrftoken.isEmpty() || m_trackingId.isEmpty()/* || creationFlow.isEmpty()*/) {
-        if(m_triesToGetAuthenticationData < 2) {
+    if (m_csrftoken.isEmpty() || m_trackingId.isEmpty() /* || creationFlow.isEmpty()*/) {
+        if (m_triesToGetAuthenticationData < 2) {
             download = new HttpDownload(m_spotifyUrl);
             download->setCustomUserAgent(m_supportedUseragents.at(0));
             success = true;
@@ -68,9 +68,10 @@ Download *SpotifyDownload::infoRequestDownload(bool &success, QString &reasonFor
             reasonForFail = tr("Unable to find data required for autentication.");
             success = false;
         }
-    } else if(!m_authenticationCredentialsValidated) {
-        if(initialAuthenticationCredentials().isIncomplete()) {
-            reportAuthenticationRequired(-1, tr("To download songs from Spotify authentication is required so you have to enter the credentials of your Spotify account."));
+    } else if (!m_authenticationCredentialsValidated) {
+        if (initialAuthenticationCredentials().isIncomplete()) {
+            reportAuthenticationRequired(
+                -1, tr("To download songs from Spotify authentication is required so you have to enter the credentials of your Spotify account."));
             reasonForFail = tr("Authentication credentials not given.");
             //networkError = QNetworkReply::AuthenticationRequiredError;
             success = false;
@@ -101,10 +102,10 @@ Download *SpotifyDownload::infoRequestDownload(bool &success, QString &reasonFor
 
 void SpotifyDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
 {
-    if(m_currentRequest == SpotifyRequestType::Invalid)
+    if (m_currentRequest == SpotifyRequestType::Invalid)
         reportInitiated(false, tr("Interal error (current request type not set)."));
     else {
-        switch(m_currentRequest) {
+        switch (m_currentRequest) {
         case SpotifyRequestType::GetAuthenticationData: {
             QString responseData(videoInfoBuffer->readAll());
             substring(responseData, m_csrftoken, 0, QStringLiteral("\"csrftoken\":\""), QStringLiteral("\""));
@@ -120,18 +121,18 @@ void SpotifyDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
             QApplication::clipboard()->setText(QString(responseData));
             QJsonParseError error;
             QJsonDocument document = QJsonDocument::fromJson(responseData, &error);
-            if(error.error == QJsonParseError::NoError) {
+            if (error.error == QJsonParseError::NoError) {
                 QJsonObject obj = document.object();
                 QJsonValue statusVal = obj.value(QStringLiteral("status"));
-                if(statusVal.toString().compare(QLatin1String("ok"), Qt::CaseInsensitive) == 0) {
+                if (statusVal.toString().compare(QLatin1String("ok"), Qt::CaseInsensitive) == 0) {
                     m_authenticationCredentialsValidated = true;
                     reportInitiated(true);
                 } else {
                     QString error = obj.value(QStringLiteral("error")).toString();
                     QString message;
-                    if(error.isEmpty()) {
+                    if (error.isEmpty()) {
                         message = tr("Authentication failed. Spotify returned no error message.");
-                    } else if(error.compare(QLatin1String("invalid_credentials"), Qt::CaseInsensitive) == 0) {
+                    } else if (error.compare(QLatin1String("invalid_credentials"), Qt::CaseInsensitive) == 0) {
                         message = tr("Authentication failed because the entered credentials are invalid.");
                     } else {
                         message = tr("Authentication failed. Error message returned by Spotify: %1").arg(error);
@@ -139,14 +140,14 @@ void SpotifyDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
                     reportInitiated(false, message);
                 }
             } else {
-                reportInitiated(false, tr("Authentication failed because the response by Spotify is no valid Json document (parse error: %1).").arg(error.errorString()));
+                reportInitiated(false,
+                    tr("Authentication failed because the response by Spotify is no valid Json document (parse error: %1).")
+                        .arg(error.errorString()));
             }
             break;
         }
-        case SpotifyRequestType::Invalid:
-            ;
+        case SpotifyRequestType::Invalid:;
         }
     }
 }
-
 }

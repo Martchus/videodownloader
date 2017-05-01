@@ -1,9 +1,9 @@
 #ifndef ADDMULTIPLEDOWNLOADSWIZARD_H
 #define ADDMULTIPLEDOWNLOADSWIZARD_H
 
+#include <QNetworkProxy>
 #include <QWizard>
 #include <QWizardPage>
-#include <QNetworkProxy>
 
 QT_FORWARD_DECLARE_CLASS(QCheckBox)
 QT_FORWARD_DECLARE_CLASS(QTreeView)
@@ -23,19 +23,11 @@ namespace QtGui {
 class DownloadFinderResultsModel;
 class DownloadInteraction;
 
-enum class DownloadSource : int
-{
-    None,
-    WebpageLinks,
-    YoutubePlaylist,
-    GroovesharkAlbum,
-    GroovesharkPlaylist
-};
+enum class DownloadSource : int { None, WebpageLinks, YoutubePlaylist, GroovesharkAlbum, GroovesharkPlaylist };
 
 extern DownloadSource downloadSourceFromField(const QVariant &fieldValue);
 
-class AddMultipleDownloadsSelectSourcePage : public QWizardPage
-{
+class AddMultipleDownloadsSelectSourcePage : public QWizardPage {
     Q_OBJECT
     //Q_PROPERTY(DownloadSource selectedSource READ selectedSource NOTIFY sourceSelected)
     Q_PROPERTY(DownloadSource selectedSource READ selectedSource)
@@ -61,27 +53,26 @@ inline void AddMultipleDownloadsSelectSourcePage::changeSource(DownloadSource so
 {
     m_selectedSource = source;
     emit completeChanged(); // might change
-    if(source != DownloadSource::None && wizard()) {
+    if (source != DownloadSource::None && wizard()) {
         setField(QStringLiteral("source"), QVariant(static_cast<int>(source)));
         wizard()->next();
     }
 }
 
-class AddMultipleDownloadsEnterSearchTermPage : public QWizardPage
-{
+class AddMultipleDownloadsEnterSearchTermPage : public QWizardPage {
     Q_OBJECT
 public:
     explicit AddMultipleDownloadsEnterSearchTermPage(QWidget *parent = nullptr);
     QString searchTerm() const;
     void initializePage();
+
 private:
     Widgets::ClearLineEdit *m_searchTermLineEdit;
     QCheckBox *m_byIdCheckBox;
     QCheckBox *m_verifiedOnlyCheckBox;
 };
 
-class AddMultipleDownloadsResultsPage : public QWizardPage
-{
+class AddMultipleDownloadsResultsPage : public QWizardPage {
     Q_OBJECT
 public:
     explicit AddMultipleDownloadsResultsPage(QWidget *parent = nullptr);
@@ -110,7 +101,6 @@ private:
     bool m_complete;
     QString m_collectionKind;
     QString m_collectionContent;
-
 };
 
 inline Network::DownloadFinder *AddMultipleDownloadsResultsPage::finder() const
@@ -118,15 +108,13 @@ inline Network::DownloadFinder *AddMultipleDownloadsResultsPage::finder() const
     return m_finder;
 }
 
-class AddMultipleDownloadsWizard : public QWizard
-{
+class AddMultipleDownloadsWizard : public QWizard {
     Q_OBJECT
 public:
     explicit AddMultipleDownloadsWizard(QWidget *parent = nullptr);
     DownloadSource source() const;
     QList<Network::Download *> results() const;
 };
-
 }
 
 #endif // ADDMULTIPLEDOWNLOADSWIZARD_H

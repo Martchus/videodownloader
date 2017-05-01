@@ -25,7 +25,8 @@ TestDownload::TestDownload()
  * \brief Destroys the test download.
  */
 TestDownload::~TestDownload()
-{}
+{
+}
 
 QString TestDownload::typeName() const
 {
@@ -62,11 +63,10 @@ void TestDownload::checkStatusAndClear(size_t optionIndex)
 
 void TestDownload::tick()
 {
-    if(bytesReceived() < 5000) {
+    if (bytesReceived() < 5000) {
         reportDownloadProgressUpdate(chosenOption(), bytesReceived() + 300, 5000);
     } else {
         reportDownloadComplete(0);
     }
 }
-
 }

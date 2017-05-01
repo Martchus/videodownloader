@@ -17,8 +17,7 @@ enum class GroovesharkSearchTermRole {
     PlaylistName /**< playlist name */
 };
 
-class GroovesharkSearcher : public DownloadFinder
-{
+class GroovesharkSearcher : public DownloadFinder {
     Q_OBJECT
 
 public:
@@ -65,7 +64,6 @@ inline bool GroovesharkSearcher::verified() const
 {
     return m_verified;
 }
-
 }
 
 #endif // GROOVESHARKALBUM_H

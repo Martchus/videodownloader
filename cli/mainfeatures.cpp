@@ -1,13 +1,13 @@
 #include "./mainfeatures.h"
 
 #include "../network/download.h"
+#include "../network/groovesharkdownload.h"
 #include "../network/httpdownload.h"
 #include "../network/youtubedownload.h"
-#include "../network/groovesharkdownload.h"
 
-#include <c++utilities/conversion/stringconversion.h>
 #include <c++utilities/application/argumentparser.h>
 #include <c++utilities/application/commandlineutils.h>
+#include <c++utilities/conversion/stringconversion.h>
 
 #include <QCoreApplication>
 
@@ -32,35 +32,33 @@ void download(int argc, char *argv[], const ArgumentOccurrence &, const Argument
     downloads.reserve(urlsArg.values().size());
     QVariant currentTargetDirectory;
     QVariant currentTargetName;
-    enum {
-        Auto, HttpUrl, YoutubeUrl, YoutubeId, GroovesharkId
-    } currentDownloadType = Auto;
+    enum { Auto, HttpUrl, YoutubeUrl, YoutubeId, GroovesharkId } currentDownloadType = Auto;
     size_t specifiedDownloads = 0;
-    for(const auto &val : urlsArg.values()) {
+    for (const auto &val : urlsArg.values()) {
         // check whether value denotes target directory or download type
         auto parts = splitString<vector<string> >(val, "=", EmptyPartsTreat::Keep, 2);
-        if(parts.size() >= 2) {
-            if(parts.front() == "type") {
+        if (parts.size() >= 2) {
+            if (parts.front() == "type") {
                 // value denotes download type
-                if(parts.back() == "http") {
+                if (parts.back() == "http") {
                     currentDownloadType = HttpUrl;
-                } else if(parts.back() == "youtubeurl") {
+                } else if (parts.back() == "youtubeurl") {
                     currentDownloadType = YoutubeUrl;
-                } else if(parts.back() == "youtubeid") {
+                } else if (parts.back() == "youtubeid") {
                     currentDownloadType = YoutubeId;
-                } else if(parts.back() == "groovesharkid") {
+                } else if (parts.back() == "groovesharkid") {
                     currentDownloadType = GroovesharkId;
                 } else {
                     currentDownloadType = Auto;
-                    if(parts.back() != "auto") {
+                    if (parts.back() != "auto") {
                         cout << "Specified type \"" << parts.back() << "\" is invalid; using auto-detection." << endl;
                     }
                 }
                 continue;
-            } else if(parts.front() == "targetdir") {
+            } else if (parts.front() == "targetdir") {
                 currentTargetDirectory = QString::fromStdString(parts.back());
                 continue;
-            } else if(parts.front() == "targetname") {
+            } else if (parts.front() == "targetname") {
                 currentTargetName = QString::fromStdString(parts.back());
                 continue;
             }
@@ -68,7 +66,7 @@ void download(int argc, char *argv[], const ArgumentOccurrence &, const Argument
         // do actual instantiation of new download object
         Download *download;
         QString qstrVal = QString::fromStdString(val);
-        switch(currentDownloadType) {
+        switch (currentDownloadType) {
         case HttpUrl:
             download = new HttpDownload(QUrl(qstrVal));
             break;
@@ -86,12 +84,12 @@ void download(int argc, char *argv[], const ArgumentOccurrence &, const Argument
             break;
         }
         // set properties of download accordingly current configuration
-        if(download) {
+        if (download) {
             download->setParent(&rootObj);
-            if(!currentTargetDirectory.isNull()) {
+            if (!currentTargetDirectory.isNull()) {
                 download->setProperty("targetdir", currentTargetDirectory);
             }
-            if(!currentTargetName.isNull()) {
+            if (!currentTargetName.isNull()) {
                 download->setProperty("targetname", currentTargetName);
                 currentTargetName.clear();
             }
@@ -103,13 +101,13 @@ void download(int argc, char *argv[], const ArgumentOccurrence &, const Argument
         ++specifiedDownloads;
     }
     // check whether downloads could be instantiated, print appropiate error messages if not
-    if(!specifiedDownloads) {
+    if (!specifiedDownloads) {
         cout << "No downloads have been specified." << endl;
-    } else if(downloads.isEmpty()) {
+    } else if (downloads.isEmpty()) {
         cout << "None of the specified downloads could be added." << endl;
     } else {
         // ask the user to continue
-        if(!noConfirmArg.isPresent() && !confirmPrompt("Do you want to start these downloads?", Response::Yes)) {
+        if (!noConfirmArg.isPresent() && !confirmPrompt("Do you want to start these downloads?", Response::Yes)) {
             return;
         }
         cout << "Starting downloads ..." << endl;
@@ -119,5 +117,4 @@ void download(int argc, char *argv[], const ArgumentOccurrence &, const Argument
         cout << "TODO" << endl;
     }
 }
-
 }

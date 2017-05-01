@@ -1,13 +1,12 @@
 #ifndef CONTENTDISPOSITIONPHARSER_H
 #define CONTENTDISPOSITIONPHARSER_H
 
-#include <QString>
 #include <QMap>
+#include <QString>
 
 namespace Network {
 
-class ContentDispositionParser
-{
+class ContentDispositionParser {
 public:
     ContentDispositionParser(const QString &contentDisposition);
     void pharse();
@@ -19,8 +18,7 @@ private:
     /*!
      * \brief Specifies the parsing position.
      */
-    enum PharsingPosition
-    {
+    enum PharsingPosition {
         FieldName, /**< file name */
         Value /**< value */
     };
@@ -32,7 +30,6 @@ private:
     bool m_attachment;
     QMap<QString, QString> m_data;
 };
-
 }
 
 #endif // CONTENTDISPOSITIONPHARSER_H
