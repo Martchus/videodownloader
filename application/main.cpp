@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     Argument noConfirmArg("no-confirm", 'n', "start downloading without confirmation");
     noConfirmArg.setCombinable(true);
     Argument urlsArg("urls", 'u', "specifies the URLs to download");
-    urlsArg.setRequiredValueCount(-1);
+    urlsArg.setRequiredValueCount(Argument::varValueCount);
     urlsArg.setValueNames({ "URL1", "URL2", "URL3" });
     urlsArg.setImplicit(true);
     Argument downloadArg("download", 'd', "downloads the specified data");
