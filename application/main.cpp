@@ -42,12 +42,7 @@ int main(int argc, char *argv[])
     downloadArg.setCallback(bind(Cli::download, argc, argv, _1, cref(urlsArg), cref(noConfirmArg)));
     parser.setMainArguments({ &qtConfigArgs.qtWidgetsGuiArg(), &downloadArg, &helpArg });
     // parse arguments
-    try {
-        parser.parseArgs(argc, argv);
-    } catch (const Failure &ex) {
-        CMD_UTILS_START_CONSOLE;
-        cout << "Unable to parse arguments. " << ex.what() << "\nSee --help for available commands." << endl;
-    }
+    parser.parseArgsOrExit(argc, argv);
     // set meta info for application
     if (qtConfigArgs.areQtGuiArgsPresent()) {
         return QtGui::runWidgetsGui(argc, argv, qtConfigArgs);
