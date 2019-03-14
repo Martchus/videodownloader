@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include <QPaintEvent>
 #include <QStylePainter>
+#include <QStyleOption>
 
 namespace QtGui {
 
@@ -22,12 +23,10 @@ DownloadWidget::~DownloadWidget()
 
 void DownloadWidget::paintEvent(QPaintEvent *)
 {
-    if (true) {
-        QStylePainter painter(this);
-        QStyleOptionFocusRect option;
-        option.initFrom(this);
-        option.backgroundColor = palette().color(QPalette::Highlight);
-        painter.drawPrimitive(QStyle::PE_FrameFocusRect, option);
-    }
+    QStylePainter painter(this);
+    QStyleOptionFocusRect option;
+    option.initFrom(this);
+    option.backgroundColor = palette().color(QPalette::Highlight);
+    painter.drawPrimitive(QStyle::PE_FrameFocusRect, option);
 }
 }
