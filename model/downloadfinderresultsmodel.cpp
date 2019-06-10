@@ -5,7 +5,7 @@
 
 #include <functional>
 
-using namespace ChronoUtilities;
+using namespace CppUtilities;
 using namespace Network;
 
 namespace QtGui {

@@ -43,7 +43,7 @@
       </widget>
      </item>
      <item>
-      <widget class="Widgets::ClearLineEdit" name="customLineEdit">
+      <widget class="QtUtilities::ClearLineEdit" name="customLineEdit">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -64,7 +64,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Widgets::ClearLineEdit</class>
+   <class>QtUtilities::ClearLineEdit</class>
    <extends>QLineEdit</extends>
    <header location="global">qtutilities/widgets/clearlineedit.h</header>
   </customwidget>

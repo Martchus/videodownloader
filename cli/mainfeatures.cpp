@@ -15,8 +15,7 @@
 
 using namespace std;
 using namespace std::placeholders;
-using namespace ApplicationUtilities;
-using namespace ConversionUtilities;
+using namespace CppUtilities;
 using namespace Network;
 
 namespace Cli {

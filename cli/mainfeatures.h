@@ -3,15 +3,15 @@
 
 #include <vector>
 
-namespace ApplicationUtilities {
+namespace CppUtilities {
 class Argument;
 class ArgumentOccurrence;
 }
 
 namespace Cli {
 
-void download(int argc, char *argv[], const ApplicationUtilities::ArgumentOccurrence &parameterValues, const ApplicationUtilities::Argument &urlsArg,
-    const ApplicationUtilities::Argument &noConfirmArg);
+void download(int argc, char *argv[], const CppUtilities::ArgumentOccurrence &parameterValues, const CppUtilities::Argument &urlsArg,
+    const CppUtilities::Argument &noConfirmArg);
 }
 
 #endif // CLI_MAINFEATURES_H

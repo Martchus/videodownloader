@@ -12,7 +12,7 @@
 #include <QUrlQuery>
 #include <QUuid>
 
-using namespace ChronoUtilities;
+using namespace CppUtilities;
 using namespace Application;
 
 namespace Network {
@@ -417,6 +417,7 @@ void GroovesharkDownload::setupFinalRequest()
         case GroovesharkRequestType::ArtistGetSongs:
             method = QStringLiteral("artistGetArtistSongs");
             params.insert(QStringLiteral("artistID"), QJsonValue(id()));
+            break;
         case GroovesharkRequestType::SearchForAlbum:
         case GroovesharkRequestType::SearchForPlaylist:
             method = QStringLiteral("getResultsFromSearch");

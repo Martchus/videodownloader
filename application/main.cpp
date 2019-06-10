@@ -10,7 +10,7 @@
 #endif
 
 #include <c++utilities/application/commandlineutils.h>
-#include <c++utilities/application/failure.h>
+#include <c++utilities/misc/parseerror.h>
 #include <qtutilities/resources/resources.h>
 
 #include <QCoreApplication>
@@ -21,7 +21,7 @@
 
 using namespace std;
 using namespace std::placeholders;
-using namespace ApplicationUtilities;
+using namespace CppUtilities;
 
 int main(int argc, char *argv[])
 {
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     downloadArg.setCallback(bind(Cli::download, argc, argv, _1, cref(urlsArg), cref(noConfirmArg)));
     parser.setMainArguments({ &qtConfigArgs.qtWidgetsGuiArg(), &downloadArg, &helpArg });
     // parse arguments
-    parser.parseArgsOrExit(argc, argv);
+    parser.parseArgs(argc, argv);
     // set meta info for application
     if (qtConfigArgs.areQtGuiArgsPresent()) {
         return QtGui::runWidgetsGui(argc, argv, qtConfigArgs);

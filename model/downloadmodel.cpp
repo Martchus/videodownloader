@@ -4,6 +4,7 @@
 
 #include <c++utilities/conversion/stringconversion.h>
 
+using namespace CppUtilities;
 using namespace Network;
 
 namespace QtGui {
@@ -297,7 +298,7 @@ QString DownloadModel::statusString(Download *download)
     case DownloadStatus::Waiting:
         return tr("waiting");
     case DownloadStatus::Downloading:
-        return tr("downloading, %1").arg(QString::fromStdString(ConversionUtilities::bitrateToString(download->speed(), true)));
+        return tr("downloading, %1").arg(QString::fromStdString(bitrateToString(download->speed(), true)));
     case DownloadStatus::FinishOuputFile:
         return tr("download ended, still writing to output device");
     case DownloadStatus::Interrupting:
@@ -322,11 +323,11 @@ QString DownloadModel::progressString(Download *download)
     if (download->bytesReceived() > 0) {
         if (download->bytesToReceive() > download->bytesReceived()) {
             return tr("%1 of %2 received, %3 %")
-                .arg(QString::fromStdString(ConversionUtilities::dataSizeToString(download->bytesReceived())))
-                .arg(QString::fromStdString(ConversionUtilities::dataSizeToString(download->bytesToReceive())))
+                .arg(QString::fromStdString(dataSizeToString(download->bytesReceived())))
+                .arg(QString::fromStdString(dataSizeToString(download->bytesToReceive())))
                 .arg(download->progressPercentage());
         } else {
-            return tr("%1 received").arg(QString::fromStdString(ConversionUtilities::dataSizeToString(download->bytesReceived())));
+            return tr("%1 received").arg(QString::fromStdString(dataSizeToString(download->bytesReceived())));
         }
     }
     return QString();

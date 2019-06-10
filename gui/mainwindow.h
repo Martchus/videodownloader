@@ -17,7 +17,7 @@ class QSpinBox;
 class QToolButton;
 QT_END_NAMESPACE
 
-namespace Dialogs {
+namespace QtUtilities {
 class AboutDialog;
 }
 
@@ -111,13 +111,13 @@ private:
     int m_initiatingDownloads;
     double m_totalSpeed;
     qint64 m_stillToReceive;
-    ChronoUtilities::TimeSpan m_remainingTime;
+    CppUtilities::TimeSpan m_remainingTime;
     QTime m_elapsedTime;
     DownloadInteraction *m_downloadInteraction;
     AddDownloadDialog *m_addDownloadDlg;
     AddMultipleDownloadsWizard *m_addMultipleDownloadsWizard;
     SettingsDialog *m_settingsDlg;
-    Dialogs::AboutDialog *m_aboutDlg;
+    QtUtilities::AboutDialog *m_aboutDlg;
 };
 }
 

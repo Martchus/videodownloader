@@ -5,7 +5,7 @@
 #include <QUrlQuery>
 
 using namespace Application;
-using namespace ChronoUtilities;
+using namespace CppUtilities;
 
 namespace Network {
 

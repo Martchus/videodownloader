@@ -9,7 +9,8 @@
 #include <QJsonDocument>
 #include <QUrlQuery>
 
-using namespace ChronoUtilities;
+using namespace CppUtilities;
+using namespace QtUtilities;
 using namespace Application;
 
 namespace Network {

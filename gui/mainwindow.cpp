@@ -49,9 +49,8 @@
 #include <functional>
 
 using namespace std;
-using namespace IoUtilities;
-using namespace ConversionUtilities;
-using namespace ChronoUtilities;
+using namespace CppUtilities;
+using namespace QtUtilities;
 using namespace Network;
 
 namespace QtGui {
@@ -196,7 +195,7 @@ MainWindow::~MainWindow()
 void MainWindow::showAboutDialog()
 {
     if (!m_aboutDlg) {
-        m_aboutDlg = new Dialogs::AboutDialog(this, tr("A video downloader with Qt GUI (currently only YouTube is maintained)."),
+        m_aboutDlg = new AboutDialog(this, tr("A video downloader with Qt GUI (currently only YouTube is maintained)."),
             QImage(QStringLiteral(":/icons/hicolor/128x128/apps/videodownloader.png")));
     }
     if (m_aboutDlg->isHidden()) {
@@ -758,7 +757,7 @@ void MainWindow::exploreDownloadsDir()
         QMessageBox::warning(this, windowTitle(), tr("There is no download target selected."));
     } else {
         if (QDir(TargetPage::targetDirectory()).exists()) {
-            DesktopUtils::openLocalFileOrDir(TargetPage::targetDirectory());
+            openLocalFileOrDir(TargetPage::targetDirectory());
         } else {
             QMessageBox::warning(this, windowTitle(), tr("The selected download directory doesn't exist anymore."));
         }
@@ -845,7 +844,7 @@ void MainWindow::updateOverallStatus(Download *download)
             status.append("s");
         }
         status.append(QStringLiteral(" - "));
-        status.append(QString::fromStdString(ConversionUtilities::bitrateToString(m_totalSpeed, true)));
+        status.append(QString::fromStdString(bitrateToString(m_totalSpeed, true)));
         if (!m_remainingTime.isNull()) {
             status.append(tr(", about %1 remaining").arg(QString::fromStdString(m_remainingTime.toString(TimeSpanOutputFormat::WithMeasures, true))));
         }

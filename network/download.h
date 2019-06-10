@@ -58,8 +58,8 @@ public:
     int progressPercentage() const;
     double speed() const;
     double shiftSpeed();
-    ChronoUtilities::TimeSpan remainingTime() const;
-    ChronoUtilities::TimeSpan shiftRemainingTime();
+    CppUtilities::TimeSpan remainingTime() const;
+    CppUtilities::TimeSpan shiftRemainingTime();
     qint64 bytesReceived() const;
     qint64 newBytesReceived();
     qint64 bytesToReceive() const;
@@ -103,7 +103,7 @@ public:
     void setProxy(const QNetworkProxy &value);
     const QString &uploader() const;
     int views() const;
-    ChronoUtilities::TimeSpan duration() const;
+    CppUtilities::TimeSpan duration() const;
     const QString &rating() const;
     int positionInCollection() const;
     int progressUpdateInterval() const;
@@ -114,7 +114,7 @@ public:
     virtual bool supportsRange() const;
     virtual QString typeName() const = 0;
     void provideMetaData(const QString &title = QString(), const QString &uploader = QString(),
-        ChronoUtilities::TimeSpan duration = ChronoUtilities::TimeSpan(), const QString &collectionName = QString(), int positionInCollection = 0,
+        CppUtilities::TimeSpan duration = CppUtilities::TimeSpan(), const QString &collectionName = QString(), int positionInCollection = 0,
         int views = 0, const QString &rating = QString());
     void setOverwritePermission(size_t optionIndex, PermissionStatus permission);
     void setAppendPermission(size_t optionIndex, PermissionStatus permission);
@@ -171,7 +171,7 @@ protected slots:
     void setTitleFromFilename(const QString &valueObtainedFromFilename);
     void setUploader(const QString &value);
     void setViews(int value);
-    void setDuration(ChronoUtilities::TimeSpan value);
+    void setDuration(CppUtilities::TimeSpan value);
     void setRating(const QString &value);
     void setPositionInCollection(int value);
     void setCollectionName(const QString &value);
@@ -204,7 +204,7 @@ private:
     QString m_uploader;
     QString m_collectionName;
     int m_views;
-    ChronoUtilities::TimeSpan m_duration;
+    CppUtilities::TimeSpan m_duration;
     QString m_rating;
     int m_positionInCollection;
     AuthenticationCredentials m_initAuthData;
@@ -224,7 +224,7 @@ private:
     qint64 m_newBytesToReceive;
     double m_speed;
     double m_shiftSpeed;
-    ChronoUtilities::TimeSpan m_shiftRemainingTime;
+    CppUtilities::TimeSpan m_shiftRemainingTime;
     QString m_statusInfo;
     QTime m_time;
     QNetworkReply::NetworkError m_networkError;
@@ -511,7 +511,7 @@ inline int Download::views() const
  * \brief Returns the duration if available.
  * \remarks This information is possibly not available before the download is initiated.
  */
-inline ChronoUtilities::TimeSpan Download::duration() const
+inline CppUtilities::TimeSpan Download::duration() const
 {
     return m_duration;
 }
@@ -718,7 +718,7 @@ inline void Download::setViews(int value)
  *
  * \sa duration().
  */
-inline void Download::setDuration(ChronoUtilities::TimeSpan value)
+inline void Download::setDuration(CppUtilities::TimeSpan value)
 {
     m_duration = value;
 }
@@ -858,21 +858,21 @@ inline double Download::shiftSpeed()
 /*!
  * \brief Returns the estimated remaining time.
  */
-inline ChronoUtilities::TimeSpan Download::remainingTime() const
+inline CppUtilities::TimeSpan Download::remainingTime() const
 {
     return (m_status == DownloadStatus::Downloading && m_bytesToReceive != -1)
-        ? ChronoUtilities::TimeSpan::fromSeconds(static_cast<double>(m_bytesToReceive) / (m_speed * 125.0))
-        : ChronoUtilities::TimeSpan();
+        ? CppUtilities::TimeSpan::fromSeconds(static_cast<double>(m_bytesToReceive) / (m_speed * 125.0))
+        : CppUtilities::TimeSpan();
 }
 
 /*!
  * \brief Returns the alteration of the estimated remaining time since the last call of this method.
  * \sa remainingTime()
  */
-inline ChronoUtilities::TimeSpan Download::shiftRemainingTime()
+inline CppUtilities::TimeSpan Download::shiftRemainingTime()
 {
-    ChronoUtilities::TimeSpan absolute = remainingTime();
-    ChronoUtilities::TimeSpan shift = absolute - m_shiftRemainingTime;
+    CppUtilities::TimeSpan absolute = remainingTime();
+    CppUtilities::TimeSpan shift = absolute - m_shiftRemainingTime;
     m_shiftRemainingTime = absolute;
     return shift;
 }

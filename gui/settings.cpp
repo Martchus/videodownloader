@@ -33,9 +33,8 @@
 
 #include <functional>
 
-using namespace ConversionUtilities;
-using namespace Dialogs;
-using namespace Widgets;
+using namespace CppUtilities;
+using namespace QtUtilities;
 using namespace Network;
 
 namespace QtGui {
@@ -370,7 +369,7 @@ bool StatsPage::apply()
 void StatsPage::reset()
 {
     if (hasBeenShown()) {
-        m_receivedLabel->setText(QString::fromStdString(ConversionUtilities::dataSizeToString(bytesReceived(), true)));
+        m_receivedLabel->setText(QString::fromStdString(dataSizeToString(bytesReceived(), true)));
     }
 }
 
@@ -397,30 +396,30 @@ QWidget *StatsPage::setupWidget()
 }
 
 SettingsDialog::SettingsDialog(QWidget *parent)
-    : Dialogs::SettingsDialog(parent)
+    : QtUtilities::SettingsDialog(parent)
 {
     // setup categories
-    QList<Dialogs::OptionCategory *> categories;
-    Dialogs::OptionCategory *category;
+    QList<OptionCategory *> categories;
+    OptionCategory *category;
 
-    category = new Dialogs::OptionCategory(this);
+    category = new OptionCategory(this);
     category->setDisplayName(tr("General"));
-    category->assignPages(QList<Dialogs::OptionPage *>() << new TargetPage(this) << new UiPage());
+    category->assignPages(QList<OptionPage *>() << new TargetPage(this) << new UiPage());
     category->setIcon(
         QIcon::fromTheme(QStringLiteral("preferences-other"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-general.png"))));
     categories << category;
 
-    category = new Dialogs::OptionCategory(this);
+    category = new OptionCategory(this);
     category->setDisplayName(tr("Network"));
     category->setIcon(QIcon::fromTheme(
         QStringLiteral("preferences-system-network"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-network.png"))));
-    category->assignPages(QList<Dialogs::OptionPage *>() << new ProxyPage() << new UserAgentPage() << new MiscPage() << new StatsPage());
+    category->assignPages(QList<OptionPage *>() << new ProxyPage() << new UserAgentPage() << new MiscPage() << new StatsPage());
     categories << category;
 
-    category = new Dialogs::OptionCategory(this);
+    category = new OptionCategory(this);
     category->setDisplayName(tr("Specific"));
     category->setIcon(QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-specific.png")));
-    category->assignPages(QList<Dialogs::OptionPage *>());
+    category->assignPages(QList<OptionPage *>());
     categories << category;
 
     categories << qtSettings().category();
@@ -436,9 +435,9 @@ SettingsDialog::~SettingsDialog()
 {
 }
 
-Dialogs::QtSettings &qtSettings()
+QtSettings &qtSettings()
 {
-    static Dialogs::QtSettings v;
+    static QtSettings v;
     return v;
 }
 

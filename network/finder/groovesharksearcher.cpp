@@ -9,8 +9,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 
-using namespace ConversionUtilities;
-using namespace ChronoUtilities;
+using namespace CppUtilities;
 
 namespace Network {
 

@@ -13,6 +13,7 @@
 #include <QStringBuilder>
 
 using namespace Network;
+using namespace QtUtilities;
 
 namespace QtGui {
 
@@ -191,7 +192,7 @@ void DownloadInteraction::downloadRequiresRedirectionPermission(Download *downlo
 
 void DownloadInteraction::downloadRequiresAuthentication(Download *download, size_t optionIndex, const QString &realm)
 {
-    Dialogs::EnterPasswordDialog *dlg = new Dialogs::EnterPasswordDialog(m_parentWidget);
+    auto *const dlg = new EnterPasswordDialog(m_parentWidget);
     QString downloadName = download->downloadUrl().isEmpty() ? download->id() : download->downloadUrl().toString();
     dlg->setModal(false);
     dlg->setPromptForUserName(true);
@@ -200,7 +201,7 @@ void DownloadInteraction::downloadRequiresAuthentication(Download *download, siz
     if (!realm.isEmpty()) {
         dlg->setDescription(tr("Realm: %1").arg(realm));
     }
-    connect(dlg, &Dialogs::EnterPasswordDialog::accepted, [download, optionIndex, dlg] {
+    connect(dlg, &EnterPasswordDialog::accepted, [download, optionIndex, dlg] {
         download->provideAuthenticationCredentials(optionIndex, AuthenticationCredentials(dlg->userName(), dlg->password()));
         dlg->deleteLater();
     });

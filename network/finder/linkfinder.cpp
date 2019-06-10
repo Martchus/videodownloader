@@ -6,7 +6,7 @@
 
 #include <QRegExp>
 
-using namespace ChronoUtilities;
+using namespace CppUtilities;
 using namespace Application;
 
 namespace Network {

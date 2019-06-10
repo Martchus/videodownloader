@@ -10,7 +10,7 @@ QT_FORWARD_DECLARE_CLASS(QLineEdit)
 QT_FORWARD_DECLARE_CLASS(QCheckBox)
 QT_FORWARD_DECLARE_CLASS(QNetworkProxy)
 
-namespace Dialogs {
+namespace QtUtilities {
 class QtSettings;
 }
 
@@ -75,14 +75,14 @@ private:
 QLabel *m_receivedLabel;
 END_DECLARE_OPTION_PAGE
 
-class SettingsDialog : public Dialogs::SettingsDialog {
+class SettingsDialog : public QtUtilities::SettingsDialog {
     Q_OBJECT
 public:
     explicit SettingsDialog(QWidget *parent = nullptr);
     ~SettingsDialog();
 };
 
-Dialogs::QtSettings &qtSettings();
+QtUtilities::QtSettings &qtSettings();
 void restoreSettings();
 void saveSettings();
 void applySettingsToDownload(Network::Download *download);

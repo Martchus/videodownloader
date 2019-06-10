@@ -16,7 +16,8 @@
 #endif
 
 using namespace std;
-using namespace ApplicationUtilities;
+using namespace CppUtilities;
+using namespace QtUtilities;
 
 namespace QtGui {
 

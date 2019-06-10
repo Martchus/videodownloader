@@ -8,7 +8,7 @@
 
 #include <QMessageBox>
 
-using namespace Dialogs;
+using namespace QtUtilities;
 using namespace Network;
 
 namespace QtGui {

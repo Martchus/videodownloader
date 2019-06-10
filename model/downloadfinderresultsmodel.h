@@ -3,7 +3,7 @@
 
 #include <QAbstractTableModel>
 
-namespace ChronoUtilities {
+namespace CppUtilities {
 class TimeSpan;
 }
 
@@ -40,7 +40,7 @@ private slots:
 private:
     static const QString &infoString(const QString &string);
     static QString infoString(int num);
-    static QString infoString(const ChronoUtilities::TimeSpan &timeSpan);
+    static QString infoString(const CppUtilities::TimeSpan &timeSpan);
 
     Network::DownloadFinder *m_finder;
 };

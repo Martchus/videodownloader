@@ -9,7 +9,7 @@
 
 using namespace std;
 using namespace Network;
-using namespace ApplicationUtilities;
+using namespace CppUtilities;
 
 namespace Cli {
 

@@ -9,7 +9,7 @@ QT_FORWARD_DECLARE_CLASS(QCheckBox)
 QT_FORWARD_DECLARE_CLASS(QTreeView)
 QT_FORWARD_DECLARE_CLASS(QItemSelection)
 
-namespace Widgets {
+namespace QtUtilities {
 class ClearLineEdit;
 }
 
@@ -29,15 +29,11 @@ extern DownloadSource downloadSourceFromField(const QVariant &fieldValue);
 
 class AddMultipleDownloadsSelectSourcePage : public QWizardPage {
     Q_OBJECT
-    //Q_PROPERTY(DownloadSource selectedSource READ selectedSource NOTIFY sourceSelected)
     Q_PROPERTY(DownloadSource selectedSource READ selectedSource)
 public:
     explicit AddMultipleDownloadsSelectSourcePage(QWidget *parent = nullptr);
     DownloadSource selectedSource() const;
     bool isComplete() const;
-
-signals:
-    //void sourceSelected();
 
 private:
     void changeSource(DownloadSource source);
@@ -67,7 +63,7 @@ public:
     void initializePage();
 
 private:
-    Widgets::ClearLineEdit *m_searchTermLineEdit;
+    QtUtilities::ClearLineEdit *m_searchTermLineEdit;
     QCheckBox *m_byIdCheckBox;
     QCheckBox *m_verifiedOnlyCheckBox;
 };

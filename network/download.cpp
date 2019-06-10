@@ -17,8 +17,7 @@
 #include <random>
 
 using namespace std;
-using namespace ChronoUtilities;
-using namespace IoUtilities;
+using namespace CppUtilities;
 
 namespace Network {
 

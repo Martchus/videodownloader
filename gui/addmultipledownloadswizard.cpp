@@ -21,7 +21,7 @@
 
 #include <functional>
 
-using namespace Widgets;
+using namespace QtUtilities;
 using namespace Network;
 
 namespace QtGui {
