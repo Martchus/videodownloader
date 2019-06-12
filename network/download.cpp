@@ -314,7 +314,7 @@ void Download::stop()
         switch (status()) {
         case DownloadStatus::Interrupting:
             setStatus(DownloadStatus::Aborting);
-            FALLTHROUGH;
+            [[fallthrough]];
         case DownloadStatus::Aborting:
             break;
         default:
@@ -855,7 +855,7 @@ void Download::reportSslErrors(size_t optionIndex, QNetworkReply *reply, const Q
         break;
     case PermissionStatus::Refused:
         usePermission(optionData.m_ignoreSslErrorsPermission);
-        FALLTHROUGH;
+        [[fallthrough]];
     case PermissionStatus::Allowed:
     case PermissionStatus::AlwaysAllowed:
         reply->ignoreSslErrors(sslErrors);
@@ -1043,7 +1043,7 @@ void Download::setOverwritePermission(size_t optionIndex, PermissionStatus permi
     switch (permission) {
     case PermissionStatus::Unknown:
         data.m_overwritePermission = PermissionStatus::Unknown;
-        FALLTHROUGH;
+        [[fallthrough]];
     case PermissionStatus::Asking:
         return; // can not be set here
     default:
