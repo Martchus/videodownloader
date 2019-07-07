@@ -108,7 +108,7 @@ void TargetPage::selectTargetDirectory()
 #else
     dlg->setModal(false);
 #endif
-    dlg->setFileMode(QFileDialog::DirectoryOnly);
+    dlg->setOption(QFileDialog::ShowDirsOnly, true);
     dlg->setWindowTitle(QApplication::translate("QtGui::GeneralTargetOptionPage", "Select download target directory"));
     dlg->setDirectory(ui()->defaultTargetLineEdit->text());
     QObject::connect(dlg, &QFileDialog::accepted, [this, dlg] {
