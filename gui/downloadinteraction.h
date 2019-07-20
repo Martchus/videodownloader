@@ -35,6 +35,6 @@ private slots:
 private:
     QWidget *m_parentWidget;
 };
-}
+} // namespace QtGui
 
 #endif // DOWNLOADINTERACTION_H

@@ -72,4 +72,4 @@ void ComboBoxItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 {
     QStyledItemDelegate::paint(painter, option, index);
 }
-}
+} // namespace QtGui

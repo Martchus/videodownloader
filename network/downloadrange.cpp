@@ -83,4 +83,4 @@ bool DownloadRange::setEndOffset(qint64 value)
     }
     return true;
 }
-}
+} // namespace Network

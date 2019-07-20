@@ -236,4 +236,4 @@ void AddDownloadDialog::setLastUrl()
     settings.setValue("lasturl", m_lastUrl);
     settings.endGroup();
 }
-}
+} // namespace QtGui

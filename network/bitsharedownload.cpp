@@ -50,4 +50,4 @@ void BitshareDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer
         reportInitiated(false, tr("The stream url couldn't be found."));
     }
 }
-}
+} // namespace Network

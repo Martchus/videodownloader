@@ -46,4 +46,4 @@ void SetRangeDialog::confirm()
         QMessageBox::warning(this, this->windowTitle(), tr("Values are invalid."));
     }
 }
-}
+} // namespace QtGui

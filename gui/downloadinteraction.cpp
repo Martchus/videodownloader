@@ -164,7 +164,8 @@ void DownloadInteraction::downloadRequiresRedirectionPermission(Download *downlo
         const QUrl &newUrl = download->downloadUrl(optionIndex);
         QString message = tr(
             "<p>Do you want to redirect form <i>%1</i> to <i>%2</i>?</p><p>The redirection URL will be added to the options so you can it select "
-            "later, too.</p>").arg(originalUrl.toString(), newUrl.toString());
+            "later, too.</p>")
+                              .arg(originalUrl.toString(), newUrl.toString());
         QMessageBox *dlg = new QMessageBox(m_parentWidget);
         dlg->setModal(false);
         dlg->setTextFormat(Qt::RichText);
@@ -246,4 +247,4 @@ void DownloadInteraction::downloadHasSslErrors(Download *download, size_t option
     connect(download, &Download::destroyed, dlg, &QMessageBox::deleteLater);
     dlg->show();
 }
-}
+} // namespace QtGui

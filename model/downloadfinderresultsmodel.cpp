@@ -183,4 +183,4 @@ void DownloadFinderResultsModel::downloadChangedStatus(Download *download)
         }
     }
 }
-}
+} // namespace QtGui

@@ -35,6 +35,6 @@ private:
     SpotifyRequestType m_currentRequest;
     int m_triesToGetAuthenticationData;
 };
-}
+} // namespace Network
 
 #endif // SPOTIFYDOWNLOAD_H

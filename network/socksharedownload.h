@@ -22,6 +22,6 @@ private:
     QByteArray m_postData;
     QUrl m_playlistUrl;
 };
-}
+} // namespace Network
 
 #endif // SOCKSHAREDOWNLOAD_H

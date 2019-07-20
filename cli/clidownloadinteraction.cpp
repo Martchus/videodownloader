@@ -82,4 +82,4 @@ void CliDownloadInteraction::downloadHasSslErrors(Download *download, size_t opt
         // TODO
     }
 }
-}
+} // namespace Cli

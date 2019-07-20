@@ -135,4 +135,4 @@ void SockshareDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffe
         reportInitiated(false, tr("Internal error."));
     }
 }
-}
+} // namespace Network

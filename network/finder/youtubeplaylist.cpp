@@ -113,4 +113,4 @@ YoutubePlaylist::ParsingResult YoutubePlaylist::parseResults(const QByteArray &d
         return ParsingResult::Error;
     }
 }
-}
+} // namespace Network

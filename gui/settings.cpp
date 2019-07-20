@@ -481,9 +481,9 @@ void restoreSettings()
     UiPage::multiSelection() = settings.value("multiselection").toBool();
 
     // load grooveshark authentication file
-    const auto errorMsg = QApplication::translate(
-        "QtGui::Settings", "Unable to read Grooveshark authentication information file.\n\nReason: %1\n\nThe values stored in this file are required "
-                           "when connection to Grooveshark. Built-in will values be used instead, but these might be deprecated.");
+    const auto errorMsg = QApplication::translate("QtGui::Settings",
+        "Unable to read Grooveshark authentication information file.\n\nReason: %1\n\nThe values stored in this file are required "
+        "when connection to Grooveshark. Built-in will values be used instead, but these might be deprecated.");
     const auto groovesharkAuthenticationFile
         = ConfigFile::locateConfigFile(QStringLiteral(PROJECT_NAME), QStringLiteral("json/groovesharkauthenticationinfo.json"), &settings);
     QString reason;
@@ -536,7 +536,7 @@ void applySettingsToDownload(Download *download)
     download->setCustomUserAgent(UserAgentPage::useCustomUserAgent() ? UserAgentPage::customUserAgent() : QString());
     download->setProxy(ProxyPage::proxy());
 }
-}
+} // namespace QtGui
 
 INSTANTIATE_UI_FILE_BASED_OPTION_PAGE_NS(QtGui, TargetPage)
 INSTANTIATE_UI_FILE_BASED_OPTION_PAGE_NS(QtGui, ProxyPage)

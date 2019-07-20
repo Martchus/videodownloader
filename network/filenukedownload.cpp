@@ -110,4 +110,4 @@ QString FileNukeDownload::typeName() const
 {
     return tr("FileNuke");
 }
-}
+} // namespace Network

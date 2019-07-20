@@ -158,7 +158,7 @@ inline QString HttpDownload::rawCookies() const
  */
 inline QList<QNetworkCookie> HttpDownload::cookies() const
 {
-    return m_setCookie.isValid() ? qvariant_cast<QList<QNetworkCookie> >(m_setCookie) : QList<QNetworkCookie>();
+    return m_setCookie.isValid() ? qvariant_cast<QList<QNetworkCookie>>(m_setCookie) : QList<QNetworkCookie>();
 }
 
 /*!
@@ -225,6 +225,6 @@ inline QString HttpDownload::typeName() const
 {
     return initialUrl().scheme();
 }
-}
+} // namespace Network
 
 #endif // HTTPDOWNLOAD_H

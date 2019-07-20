@@ -1247,4 +1247,4 @@ void Download::setIgnoreSslErrorsPermission(size_t optionIndex, PermissionStatus
  *
  * To be implemented when subclassing.
  */
-}
+} // namespace Network

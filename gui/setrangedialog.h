@@ -29,6 +29,6 @@ private:
     std::unique_ptr<Ui::SetRangeDialog> m_ui;
     Network::DownloadRange &m_range;
 };
-}
+} // namespace QtGui
 
 #endif // SETRANGEDIALOG_H

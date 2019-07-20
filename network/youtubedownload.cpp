@@ -221,4 +221,4 @@ QString YoutubeDownload::typeName() const
 {
     return tr("YouTube");
 }
-}
+} // namespace Network

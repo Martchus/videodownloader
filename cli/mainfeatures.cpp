@@ -35,7 +35,7 @@ void download(int argc, char *argv[], const ArgumentOccurrence &, const Argument
     size_t specifiedDownloads = 0;
     for (const auto &val : urlsArg.values()) {
         // check whether value denotes target directory or download type
-        auto parts = splitString<vector<string> >(val, "=", EmptyPartsTreat::Keep, 2);
+        auto parts = splitString<vector<string>>(val, "=", EmptyPartsTreat::Keep, 2);
         if (parts.size() >= 2) {
             if (parts.front() == "type") {
                 // value denotes download type
@@ -116,4 +116,4 @@ void download(int argc, char *argv[], const ArgumentOccurrence &, const Argument
         cout << "TODO" << endl;
     }
 }
-}
+} // namespace Cli

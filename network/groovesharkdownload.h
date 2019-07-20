@@ -77,7 +77,7 @@ private:
     GroovesharkRequestType m_requestType;
     QVariant m_requestData;
 };
-}
+} // namespace Network
 
 Q_DECLARE_METATYPE(Network::GroovesharkGetSongsRequestData)
 

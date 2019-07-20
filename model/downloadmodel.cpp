@@ -332,4 +332,4 @@ QString DownloadModel::progressString(Download *download)
     }
     return QString();
 }
-}
+} // namespace QtGui

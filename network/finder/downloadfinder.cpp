@@ -239,4 +239,4 @@ void DownloadFinder::emitNewResultsSignal()
  *
  * Needs to be implemented when subclassing.
  */
-}
+} // namespace Network

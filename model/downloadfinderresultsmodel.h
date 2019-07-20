@@ -10,7 +10,7 @@ class TimeSpan;
 namespace Network {
 class Download;
 class DownloadFinder;
-}
+} // namespace Network
 
 namespace QtGui {
 
@@ -82,6 +82,6 @@ constexpr int DownloadFinderResultsModel::lastColumn()
 {
     return idColumn();
 }
-}
+} // namespace QtGui
 
 #endif // DOWNLOADFINDERRESULTSMODEL_H

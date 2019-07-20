@@ -6,7 +6,7 @@
 namespace CppUtilities {
 class Argument;
 class ArgumentOccurrence;
-}
+} // namespace CppUtilities
 
 namespace Cli {
 

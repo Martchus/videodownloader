@@ -30,6 +30,6 @@ private:
     bool m_attachment;
     QMap<QString, QString> m_data;
 };
-}
+} // namespace Network
 
 #endif // CONTENTDISPOSITIONPHARSER_H

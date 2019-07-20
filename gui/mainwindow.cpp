@@ -295,8 +295,9 @@ void MainWindow::settingsAccepted()
 
 void MainWindow::showTrayIconMessage()
 {
-    m_trayIcon->showMessage(windowTitle(), tr("The downloader will keep running in the system tray. To terminate the program, "
-                                              "choose \"Quit\" in the context menu of the system tray entry."));
+    m_trayIcon->showMessage(windowTitle(),
+        tr("The downloader will keep running in the system tray. To terminate the program, "
+           "choose \"Quit\" in the context menu of the system tray entry."));
 }
 
 void MainWindow::checkForDownloadsToStartAutomatically()
@@ -921,4 +922,4 @@ void MainWindow::setupTrayIcon()
 #endif
 #endif
 }
-}
+} // namespace QtGui

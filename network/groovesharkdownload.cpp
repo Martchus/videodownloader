@@ -483,4 +483,4 @@ QString GroovesharkDownload::typeName() const
 {
     return tr("Grooveshark");
 }
-}
+} // namespace Network

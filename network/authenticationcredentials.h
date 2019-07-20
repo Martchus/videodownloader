@@ -19,7 +19,7 @@ public:
 
     const QString &userName() const;
     const QString &password() const;
-    const QList<QMap<QString, QVariant> > options() const;
+    const QList<QMap<QString, QVariant>> options() const;
     bool isIncomplete() const;
     void clear();
 
@@ -27,7 +27,7 @@ private:
     bool m_requested;
     QString m_userName;
     QString m_password;
-    QList<QMap<QString, QVariant> > m_options;
+    QList<QMap<QString, QVariant>> m_options;
 };
 
 inline AuthenticationCredentials::AuthenticationCredentials()
@@ -52,7 +52,7 @@ inline const QString &AuthenticationCredentials::password() const
     return m_password;
 }
 
-inline const QList<QMap<QString, QVariant> > AuthenticationCredentials::options() const
+inline const QList<QMap<QString, QVariant>> AuthenticationCredentials::options() const
 {
     return m_options;
 }
@@ -68,6 +68,6 @@ inline void AuthenticationCredentials::clear()
     m_password.clear();
     m_options.clear();
 }
-}
+} // namespace Network
 
 #endif // AUTHENTICATIONCREDENTIALS

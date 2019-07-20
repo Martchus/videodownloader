@@ -23,6 +23,6 @@ private:
 
     std::unique_ptr<Ui::DownloadWidget> m_ui;
 };
-}
+} // namespace QtGui
 
 #endif // DOWNLOADWIDGET_H

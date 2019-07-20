@@ -402,4 +402,4 @@ QList<Download *> AddMultipleDownloadsWizard::results() const
 {
     return qobject_cast<AddMultipleDownloadsResultsPage *>(page(AddMultipleDownloadsResultsPageId))->results();
 }
-}
+} // namespace QtGui

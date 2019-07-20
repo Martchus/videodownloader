@@ -32,6 +32,6 @@ private:
     std::unique_ptr<Download> m_infoDownload;
     std::unique_ptr<QBuffer> m_infoBuffer;
 };
-}
+} // namespace Network
 
 #endif // HTTPDOWNLOADWITHINFOREQUST_H

@@ -86,7 +86,7 @@ QtUtilities::QtSettings &qtSettings();
 void restoreSettings();
 void saveSettings();
 void applySettingsToDownload(Network::Download *download);
-}
+} // namespace QtGui
 
 DECLARE_EXTERN_UI_FILE_BASED_OPTION_PAGE_NS(QtGui, TargetPage)
 DECLARE_EXTERN_UI_FILE_BASED_OPTION_PAGE_NS(QtGui, ProxyPage)

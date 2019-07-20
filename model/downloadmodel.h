@@ -100,6 +100,6 @@ constexpr int DownloadModel::lastColumn()
 {
     return progressColumn();
 }
-}
+} // namespace QtGui
 
 #endif // DOWNLOADMODEL_H

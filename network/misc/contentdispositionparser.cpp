@@ -129,4 +129,4 @@ const QMap<QString, QString> &ContentDispositionParser::data()
 {
     return m_data;
 }
-}
+} // namespace Network

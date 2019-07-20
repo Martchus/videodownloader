@@ -28,6 +28,6 @@ inline void usePermission(PermissionStatus &permission)
     default:;
     }
 }
-}
+} // namespace Network
 
 #endif // PERMISSIONSTATUS

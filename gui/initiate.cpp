@@ -43,4 +43,4 @@ int runWidgetsGui(int argc, char *argv[], const QtConfigArguments &qtConfigArgs)
     return 0;
 #endif
 }
-}
+} // namespace QtGui

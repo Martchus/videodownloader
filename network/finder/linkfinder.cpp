@@ -94,4 +94,4 @@ DownloadFinder::ParsingResult LinkFinder::parseResults(const QByteArray &data, Q
     }
     return DownloadFinder::ParsingResult::Success;
 }
-}
+} // namespace Network

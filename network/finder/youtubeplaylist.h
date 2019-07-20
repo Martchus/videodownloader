@@ -20,6 +20,6 @@ protected slots:
 private:
     QString m_playlistId;
 };
-}
+} // namespace Network
 
 #endif // YOUTUBEPLAYLIST_H

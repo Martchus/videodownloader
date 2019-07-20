@@ -69,4 +69,4 @@ void TestDownload::tick()
         reportDownloadComplete(0);
     }
 }
-}
+} // namespace Network

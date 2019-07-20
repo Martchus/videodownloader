@@ -21,6 +21,6 @@ protected slots:
 private:
     QUrl m_url;
 };
-}
+} // namespace Network
 
 #endif // LINKFINDER_H

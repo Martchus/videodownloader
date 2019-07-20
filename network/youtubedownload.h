@@ -29,6 +29,6 @@ private:
     QStringList m_itags;
     static QJsonObject m_itagInfo;
 };
-}
+} // namespace Network
 
 #endif // YOUTUBEDOWNLOAD_H

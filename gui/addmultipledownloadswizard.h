@@ -16,7 +16,7 @@ class ClearLineEdit;
 namespace Network {
 class Download;
 class DownloadFinder;
-}
+} // namespace Network
 
 namespace QtGui {
 
@@ -111,6 +111,6 @@ public:
     DownloadSource source() const;
     QList<Network::Download *> results() const;
 };
-}
+} // namespace QtGui
 
 #endif // ADDMULTIPLEDOWNLOADSWIZARD_H

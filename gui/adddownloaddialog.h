@@ -47,6 +47,6 @@ private:
     QInputDialog *m_selectDownloadTypeInputDialog;
     QString m_lastUrl;
 };
-}
+} // namespace QtGui
 
 #endif // ADDDOWNLOADDIALOG_H

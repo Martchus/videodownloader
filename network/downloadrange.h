@@ -92,6 +92,6 @@ inline void DownloadRange::setUsedForWritingOutput(bool value)
 {
     m_useForWritingOutput = value;
 }
-}
+} // namespace Network
 
 #endif // DOWNLOADRANGE_H

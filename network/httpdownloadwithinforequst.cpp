@@ -92,4 +92,4 @@ void HttpDownloadWithInfoRequst::infoRequestChangedStatus(Download *download)
     default:;
     }
 }
-}
+} // namespace Network

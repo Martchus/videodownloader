@@ -119,6 +119,6 @@ private:
     SettingsDialog *m_settingsDlg;
     QtUtilities::AboutDialog *m_aboutDlg;
 };
-}
+} // namespace QtGui
 
 #endif // MAINWINDOW_H

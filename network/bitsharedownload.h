@@ -20,6 +20,6 @@ protected:
 private:
     QByteArray m_postData;
 };
-}
+} // namespace Network
 
 #endif // BITSHAREDOWNLOAD_H

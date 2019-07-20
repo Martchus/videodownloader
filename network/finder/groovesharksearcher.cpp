@@ -219,4 +219,4 @@ DownloadFinder::ParsingResult GroovesharkSearcher::parseResults(const QByteArray
         return ParsingResult::Error;
     }
 }
-}
+} // namespace Network

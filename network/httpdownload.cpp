@@ -290,4 +290,4 @@ void HttpDownload::slotDownloadProgress(qint64 bytesReceived, qint64 bytesToRece
         reportDownloadProgressUpdate(optionIndex, bytesReceived, bytesToReceive);
     }
 }
-}
+} // namespace Network

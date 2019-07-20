@@ -32,6 +32,6 @@ private slots:
     void downloadRequiresAuthentication(Network::Download *download, size_t optionIndex, const QString &realm);
     void downloadHasSslErrors(Network::Download *download, size_t optionIndex, const QList<QSslError> &sslErrors);
 };
-}
+} // namespace Cli
 
 #endif // CLI_DOWNLOADINTERACTION_H

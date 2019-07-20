@@ -64,6 +64,6 @@ inline bool GroovesharkSearcher::verified() const
 {
     return m_verified;
 }
-}
+} // namespace Network
 
 #endif // GROOVESHARKALBUM_H

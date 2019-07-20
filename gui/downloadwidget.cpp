@@ -5,8 +5,8 @@
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QPaintEvent>
-#include <QStylePainter>
 #include <QStyleOption>
+#include <QStylePainter>
 
 namespace QtGui {
 
@@ -29,4 +29,4 @@ void DownloadWidget::paintEvent(QPaintEvent *)
     option.backgroundColor = palette().color(QPalette::Highlight);
     painter.drawPrimitive(QStyle::PE_FrameFocusRect, option);
 }
-}
+} // namespace QtGui

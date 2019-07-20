@@ -150,4 +150,4 @@ void SpotifyDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
         }
     }
 }
-}
+} // namespace Network

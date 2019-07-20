@@ -51,7 +51,7 @@ Download *VimeoDownload::infoRequestDownload(bool &success, QString &reasonForFa
 #if QT_VERSION >= 0x050400
                       .toString()
 #endif
-                    );
+            );
             success = true;
             return new HttpDownload(QUrl(QStringLiteral("https://player.vimeo.com/video/%1/config").arg(this->id())));
         }

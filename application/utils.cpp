@@ -70,4 +70,4 @@ QJsonObject loadJsonObjectFromResource(const QString &resource, QString *error)
 
     return QJsonObject();
 }
-}
+} // namespace Application

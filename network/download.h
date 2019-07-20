@@ -992,6 +992,6 @@ inline AuthenticationCredentials &Download::initialAuthenticationCredentials()
 {
     return m_initAuthData;
 }
-}
+} // namespace Network
 
 #endif // DOWNLOAD_H

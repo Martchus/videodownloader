@@ -27,6 +27,6 @@ private slots:
 private:
     QTimer m_timer;
 };
-}
+} // namespace Network
 
 #endif // TESTDOWNLOAD_H

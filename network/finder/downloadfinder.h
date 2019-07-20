@@ -180,6 +180,6 @@ inline void DownloadFinder::emitFinishedSignal(bool success, const QString &reas
     m_finished = true;
     emit finished(success, reason);
 }
-}
+} // namespace Network
 
 #endif // VIDEOFINDER_H
