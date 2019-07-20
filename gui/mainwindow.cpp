@@ -21,6 +21,8 @@
 
 #include "ui_mainwindow.h"
 
+#include "resources/config.h"
+
 #include <qtutilities/aboutdialog/aboutdialog.h>
 #include <qtutilities/enterpassworddialog/enterpassworddialog.h>
 #include <qtutilities/misc/desktoputils.h>
@@ -195,7 +197,7 @@ MainWindow::~MainWindow()
 void MainWindow::showAboutDialog()
 {
     if (!m_aboutDlg) {
-        m_aboutDlg = new AboutDialog(this, tr("A video downloader with Qt GUI (currently only YouTube is maintained)."),
+        m_aboutDlg = new AboutDialog(this, QStringLiteral(APP_URL), tr("A video downloader with Qt GUI (currently only YouTube is maintained)."),
             QImage(QStringLiteral(":/icons/hicolor/128x128/apps/videodownloader.png")));
     }
     if (m_aboutDlg->isHidden()) {
