@@ -404,7 +404,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 
     category = new OptionCategory(this);
     category->setDisplayName(tr("General"));
-    category->assignPages(QList<OptionPage *>() << new TargetPage(this) << new UiPage());
+    category->assignPages({ new TargetPage(this), new UiPage() });
     category->setIcon(
         QIcon::fromTheme(QStringLiteral("preferences-other"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-general.png"))));
     categories << category;
@@ -413,13 +413,13 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     category->setDisplayName(tr("Network"));
     category->setIcon(QIcon::fromTheme(
         QStringLiteral("preferences-system-network"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-network.png"))));
-    category->assignPages(QList<OptionPage *>() << new ProxyPage() << new UserAgentPage() << new MiscPage() << new StatsPage());
+    category->assignPages({ new ProxyPage(), new UserAgentPage(), new MiscPage(), new StatsPage() });
     categories << category;
 
     category = new OptionCategory(this);
     category->setDisplayName(tr("Specific"));
     category->setIcon(QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-specific.png")));
-    category->assignPages(QList<OptionPage *>());
+    category->assignPages({});
     categories << category;
 
     categories << qtSettings().category();
