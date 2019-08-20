@@ -481,19 +481,10 @@ void restoreSettings()
     UiPage::multiSelection() = settings.value("multiselection").toBool();
 
     // load grooveshark authentication file
-    const auto errorMsg = QApplication::translate("QtGui::Settings",
-        "Unable to read Grooveshark authentication information file.\n\nReason: %1\n\nThe values stored in this file are required "
-        "when connection to Grooveshark. Built-in will values be used instead, but these might be deprecated.");
-    const auto groovesharkAuthenticationFile
-        = ConfigFile::locateConfigFile(QStringLiteral(PROJECT_NAME), QStringLiteral("json/groovesharkauthenticationinfo.json"), &settings);
     QString reason;
-    if (!groovesharkAuthenticationFile.isEmpty()) {
-        if (!GroovesharkDownload::loadAuthenticationInformationFromFile(groovesharkAuthenticationFile, &reason)) {
-            QMessageBox::warning(nullptr, QApplication::applicationName(), errorMsg.arg(reason));
-        }
-    } else {
+    if (!GroovesharkDownload::loadAuthenticationInformationFromFile(QStringLiteral(":/jsonobjects/groovesharkauthenticationinfo"), &reason)) {
         QMessageBox::warning(nullptr, QApplication::applicationName(),
-            errorMsg.arg(QApplication::translate("QtGui::Settings", "Unable to find \"groovesharkauthenticationinfo.json\".")));
+            QCoreApplication::translate("QtGui::restoreSettings", "Unable to load Grooveshark authentication file: %1").arg(reason));
     }
 }
 

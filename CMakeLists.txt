@@ -67,6 +67,7 @@ set(SRC_FILES
     network/testdownload.cpp
     network/vimeodownload.cpp
     network/youtubedownload.cpp
+    resources/json.qrc
 )
 
 set(WIDGETS_HEADER_FILES
@@ -162,22 +163,6 @@ use_qt_utilities()
 
 # add Qt modules which can currently not be detected automatically
 list(APPEND ADDITIONAL_QT_MODULES Network)
-
-# add installs for JSON resource files
-install(FILES resources/json/groovesharkauthenticationinfo.json
-    DESTINATION share/${META_PROJECT_NAME}/json
-    COMPONENT json-res
-)
-install(FILES resources/json/itaginfo.json
-    DESTINATION share/${META_PROJECT_NAME}/json
-    COMPONENT json-res
-)
-if(NOT TARGET install-json-res)
-    add_custom_target(install-json-res
-        DEPENDS ${META_PROJECT_NAME}
-        COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=json-res -P "${CMAKE_BINARY_DIR}/cmake_install.cmake"
-    )
-endif()
 
 # include modules to apply configuration
 include(BasicConfig)

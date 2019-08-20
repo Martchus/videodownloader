@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/jsonobjects">
         <file alias="itaginfo">json/itaginfo.json</file>
+        <file alias="groovesharkauthenticationinfo">json/groovesharkauthenticationinfo.json</file>
     </qresource>
 </RCC>

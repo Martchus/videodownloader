@@ -4,13 +4,10 @@
 
 #include "resources/config.h"
 
-#include <qtutilities/resources/resources.h>
-
 #include <QJsonDocument>
 #include <QUrlQuery>
 
 using namespace CppUtilities;
-using namespace QtUtilities;
 using namespace Application;
 
 namespace Network {
@@ -62,12 +59,7 @@ Download *YoutubeDownload::infoRequestDownload(bool &success, QString &reasonFor
 void YoutubeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
 {
     if (m_itagInfo.isEmpty()) {
-        // allow an external config file to be used instead of built-in values
-        QString path = ConfigFile::locateConfigFile(QStringLiteral(PROJECT_NAME), QStringLiteral("json/itaginfo.json"));
-        if (path.isEmpty()) {
-            path = QStringLiteral(":/jsonobjects/itaginfo");
-        }
-        m_itagInfo = loadJsonObjectFromResource(path);
+        m_itagInfo = loadJsonObjectFromResource(QStringLiteral(":/jsonobjects/itaginfo"));
     }
     QString videoInfo(videoInfoBuffer->readAll());
     QStringList completeFields = videoInfo.split(QChar('&'), QString::SkipEmptyParts, Qt::CaseSensitive);
