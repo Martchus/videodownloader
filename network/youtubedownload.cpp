@@ -31,7 +31,7 @@ YoutubeDownload::YoutubeDownload(const QUrl &url, QObject *parent)
  * \brief Constructs a new YoutubeDownload for the specified video \a id.
  */
 YoutubeDownload::YoutubeDownload(const QString &id, QObject *parent)
-    : HttpDownloadWithInfoRequst(QUrl(QStringLiteral("http://www.youtube.com/watch?v=%1").arg(id)), parent)
+    : HttpDownloadWithInfoRequst(QUrl(QStringLiteral("https://www.youtube.com/watch?v=%1").arg(id)), parent)
 {
 }
 
@@ -52,7 +52,7 @@ Download *YoutubeDownload::infoRequestDownload(bool &success, QString &reasonFor
     } else {
         setId(videoId);
         success = true;
-        return new HttpDownload(QUrl(QStringLiteral("http://www.youtube.com/get_video_info?video_id=%1&asv=3&el=detailpage&hl=en_US").arg(videoId)));
+        return new HttpDownload(QUrl(QStringLiteral("https://www.youtube.com/get_video_info?video_id=%1&asv=3&el=detailpage&hl=en_US").arg(videoId)));
     }
 }
 
