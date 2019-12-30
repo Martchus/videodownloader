@@ -14,7 +14,7 @@
    <string>Video Downloader</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../resources/icons.qrc">
+   <iconset>
     <normaloff>:/icons/hicolor/32x32/categories/preferences-specific.png</normaloff>:/icons/hicolor/32x32/categories/preferences-specific.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -43,7 +43,7 @@
      <x>0</x>
      <y>0</y>
      <width>966</width>
-     <height>27</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="nativeMenuBar">
@@ -58,14 +58,14 @@
    </widget>
    <widget class="QMenu" name="menuAdd">
     <property name="title">
-     <string>Add</string>
+     <string>Add &amp;download</string>
     </property>
     <addaction name="actionAdd_Download"/>
     <addaction name="actionAdd_multiple_downloads"/>
    </widget>
    <widget class="QMenu" name="menuDownloads">
     <property name="title">
-     <string>Dow&amp;nloads</string>
+     <string>&amp;Manage downloads</string>
     </property>
     <addaction name="actionStart_selected"/>
     <addaction name="actionResume_selected_downloads"/>
@@ -153,8 +153,7 @@
   <action name="actionAbout">
    <property name="icon">
     <iconset theme="help-about">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;About</string>
@@ -166,8 +165,7 @@
    </property>
    <property name="icon">
     <iconset theme="media-playback-start">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Start selected downloads</string>
@@ -179,8 +177,7 @@
    </property>
    <property name="icon">
     <iconset theme="edit-copy">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Copy download url</string>
@@ -188,7 +185,7 @@
   </action>
   <action name="actionYoutube_itags">
    <property name="icon">
-    <iconset resource="../resources/icons.qrc">
+    <iconset>
      <normaloff>:/icons/hicolor/32x32/categories/preferences-specific.png</normaloff>:/icons/hicolor/32x32/categories/preferences-specific.png</iconset>
    </property>
    <property name="text">
@@ -198,8 +195,7 @@
   <action name="actionAdd_multiple_downloads">
    <property name="icon">
     <iconset theme="list-add">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Multiple downloads</string>
@@ -217,8 +213,7 @@
    </property>
    <property name="icon">
     <iconset theme="list-remove">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Remove selected downloads from list</string>
@@ -227,8 +222,7 @@
   <action name="actionExplore_target_directory">
    <property name="icon">
     <iconset theme="system-file-manager">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Explore target directory</string>
@@ -240,8 +234,7 @@
    </property>
    <property name="icon">
     <iconset theme="media-playback-pause">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Interrupt selected downloads</string>
@@ -250,8 +243,7 @@
   <action name="actionReset_grooveshark_session">
    <property name="icon">
     <iconset theme="document-revert">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>R&amp;eset Grooveshark session</string>
@@ -263,8 +255,7 @@
    </property>
    <property name="icon">
     <iconset theme="edit-cut">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Set range &amp;of selected download</string>
@@ -273,8 +264,7 @@
   <action name="actionAdd_Download">
    <property name="icon">
     <iconset theme="list-add">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Single download</string>
@@ -292,8 +282,7 @@
   <action name="actionSettings">
    <property name="icon">
     <iconset theme="preferences-other">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Settings</string>
@@ -305,8 +294,7 @@
   <action name="actionQuit">
    <property name="icon">
     <iconset theme="application-exit">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Quit</string>
@@ -318,8 +306,7 @@
    </property>
    <property name="icon">
     <iconset theme="document-save-as">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Set target of selected &amp;download</string>
@@ -331,8 +318,7 @@
    </property>
    <property name="icon">
     <iconset theme="edit-undo">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>C&amp;lear target of selected downloads</string>
@@ -340,8 +326,6 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="../resources/icons.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

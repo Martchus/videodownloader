@@ -99,7 +99,7 @@ MainWindow::MainWindow(QWidget *parent)
     action->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
     m_ui->menuAdd->addAction(action);
 #endif
-    //  Supervise clipboard tool button
+    //  add supervise clipboard tool button
     m_superviseClipboardToolButton = new QToolButton(m_ui->toolBar);
     m_superviseClipboardToolButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     m_superviseClipboardToolButton->setText(tr("Supervise clipboard"));
@@ -133,7 +133,6 @@ MainWindow::MainWindow(QWidget *parent)
     // context menu
     m_downloadsTreeViewContextMenu = new QMenu(this);
     m_downloadsTreeViewContextMenu->addMenu(m_ui->menuAdd);
-    m_ui->menuAdd->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
     m_downloadsTreeViewContextMenu->addAction(m_ui->actionStart_selected);
     m_downloadsTreeViewContextMenu->addAction(m_ui->actionResume_selected_downloads);
     m_downloadsTreeViewContextMenu->addAction(m_ui->actionRemove_selected_downloads_from_list);
