@@ -61,9 +61,6 @@
           <property name="text">
            <string/>
           </property>
-          <property name="placeholderText">
-           <string>e. g. https://www.youtube.com/watch?v=YH1q_aUaW4w</string>
-          </property>
          </widget>
         </item>
         <item>
@@ -76,8 +73,7 @@
           </property>
           <property name="icon">
            <iconset theme="edit-paste">
-            <normaloff/>
-           </iconset>
+            <normaloff>.</normaloff>.</iconset>
           </property>
          </widget>
         </item>
@@ -176,8 +172,7 @@
         </property>
         <property name="icon">
          <iconset theme="go-previous">
-          <normaloff/>
-         </iconset>
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </item>
@@ -191,8 +186,7 @@
         </property>
         <property name="icon">
          <iconset theme="list-add">
-          <normaloff/>
-         </iconset>
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="default">
          <bool>true</bool>
