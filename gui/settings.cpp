@@ -171,7 +171,7 @@ QWidget *UiPage::setupWidget()
     mainWindowLabel->setStyleSheet(QStringLiteral("font-weight: bold;"));
     layout->addWidget(mainWindowLabel);
     layout->addWidget(
-        m_multiSelectionCheckBox = new QCheckBox(QApplication::translate("QtGui::GeneralUiOptionPage", "enable multi-selection"), widget));
+        m_multiSelectionCheckBox = new QCheckBox(QApplication::translate("QtGui::GeneralUiOptionPage", "Enable multi-selection"), widget));
     widget->setLayout(layout);
     return widget;
 }
@@ -346,7 +346,7 @@ QWidget *MiscPage::setupWidget()
     widget->setWindowTitle(QApplication::translate("QtGui::NetworkMiscOptionPage", "Misc"));
     QVBoxLayout *layout = new QVBoxLayout(widget);
     layout->addWidget(
-        m_redirectCheckBox = new QCheckBox(QApplication::translate("QtGui::NetworkMiscOptionPage", "follow redirections without asking"), widget));
+        m_redirectCheckBox = new QCheckBox(QApplication::translate("QtGui::NetworkMiscOptionPage", "Follow redirections without asking"), widget));
     widget->setLayout(layout);
     return widget;
 }

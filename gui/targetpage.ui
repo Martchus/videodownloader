@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>QtGui::TargetPage</class>
  <widget class="QWidget" name="QtGui::TargetPage">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>331</width>
-    <height>180</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>Target directory</string>
   </property>
@@ -138,14 +130,14 @@
    <item>
     <widget class="QCheckBox" name="overwriteCheckBox">
      <property name="text">
-      <string>don't ask before overwriting existing files</string>
+      <string>Don't ask before overwriting existing files</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QCheckBox" name="askOnlyWhenThereIsNoAppropriateFilenameCheckBox">
      <property name="text">
-      <string>ask only where to save files if there is no appropriate filename</string>
+      <string>Ask only where to save files if there is no appropriate filename</string>
      </property>
      <property name="checked">
       <bool>true</bool>
