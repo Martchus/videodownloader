@@ -1,7 +1,14 @@
 # Video Downloader
-A video downloader with Qt 5 GUI.
+A video downloader with Qt 5 GUI and backends for multiple platforms, e.g. YouTube and
+Vimeo.
 
-Currently YouTube and Vimeo are the only maintained platforms.
+---
+
+**Note**: This project is not maintained anymore so any provider-specific code might be
+outdated and not work anymore. I keep the project around as an example for doing HTTP
+downloads with Qt 5 showing the progress and speed in a list view.
+
+---
 
 This is just a downloader. It does not convert or mux anything. You might use
 ffmpeg or mkvmerge to convert/remux downloaded videos.
