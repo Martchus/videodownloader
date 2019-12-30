@@ -132,7 +132,7 @@ DownloadFinder::ParsingResult GroovesharkSearcher::parseResults(const QByteArray
         QJsonObject itemObj;
         QJsonValue idVal;
         QJsonValue verifiedVal;
-        foreach (QJsonValue itemVal, collectionArray) {
+        for (const QJsonValue &itemVal : collectionArray) {
             if (itemVal.isObject()) {
                 itemObj = itemVal.toObject();
                 if (m_verified) { // skip unverified items if verified option used
@@ -184,7 +184,7 @@ DownloadFinder::ParsingResult GroovesharkSearcher::parseResults(const QByteArray
         QJsonValue titleVal;
         QJsonValue durationVal;
         QJsonValue trackNumVal;
-        foreach (QJsonValue songVal, songsArray) {
+        for (const QJsonValue songVal : songsArray) {
             if (songVal.isObject()) {
                 songObj = songVal.toObject();
                 idVal = songObj.value(QStringLiteral("SongID"));

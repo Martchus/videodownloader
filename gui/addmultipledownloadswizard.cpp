@@ -104,13 +104,12 @@ void AddMultipleDownloadsEnterSearchTermPage::initializePage()
     if (AddMultipleDownloadsWizard *w = qobject_cast<AddMultipleDownloadsWizard *>(wizard())) {
         source = w->source();
     }
-    // source = downloadSourceFromField(field(QStringLiteral("source"))); // does not work for some reason
     switch (source) {
     case DownloadSource::WebpageLinks:
         setTitle(tr("Specify the webpage"));
         setSubTitle(tr("Enter the URL."));
         setEnabled(true);
-        m_searchTermLineEdit->setPlaceholderText(QStringLiteral("e. g. http://localhost"));
+        m_searchTermLineEdit->setPlaceholderText(QStringLiteral("URL"));
         m_byIdCheckBox->setHidden(true);
         m_verifiedOnlyCheckBox->setHidden(true);
         break;
@@ -118,7 +117,7 @@ void AddMultipleDownloadsEnterSearchTermPage::initializePage()
         setTitle(tr("Specify YouTube playlist"));
         setSubTitle(tr("Enter the playlist URL or ID."));
         setEnabled(true);
-        m_searchTermLineEdit->setPlaceholderText(QStringLiteral("e. g. https://www.youtube.com/playlist?list=PLg2u737x4TjfLFFEbEK9p77V2NRcLcTkr"));
+        m_searchTermLineEdit->setPlaceholderText(QStringLiteral("URL"));
         m_byIdCheckBox->setHidden(false);
         m_verifiedOnlyCheckBox->setHidden(true);
         break;
@@ -253,7 +252,7 @@ QList<Download *> AddMultipleDownloadsResultsPage::results() const
     if (m_finder) {
         QModelIndexList selectedRows = m_view->selectionModel()->selectedRows();
         const QList<Download *> &allResults = m_finder->results();
-        foreach (const QModelIndex &index, selectedRows) {
+        for (const QModelIndex &index : selectedRows) {
             if (index.row() < allResults.size()) {
                 results << allResults.at(index.row());
             }

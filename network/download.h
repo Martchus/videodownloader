@@ -8,11 +8,11 @@
 
 #include <QAuthenticator>
 #include <QBuffer>
+#include <QElapsedTimer>
 #include <QFile>
 #include <QNetworkProxy>
 #include <QNetworkReply>
 #include <QObject>
-#include <QTime>
 
 #include <tuple>
 
@@ -78,20 +78,20 @@ public:
     void setTargetPath(const QString &targetPath);
     const QUrl &initialUrl() const;
     const QUrl &downloadUrl() const;
-    const QUrl &downloadUrl(size_t optionIndex) const;
+    const QUrl &downloadUrl(std::size_t optionIndex) const;
     const std::vector<OptionData> &options() const;
     std::vector<OptionData> &options();
     const QString &id() const;
     const QString &title() const;
     const QString &collectionName() const;
-    size_t availableOptionCount() const;
+    std::size_t availableOptionCount() const;
     bool areOptionsAvailable() const;
-    const QString &optionName(size_t optionIndex) const;
+    const QString &optionName(std::size_t optionIndex) const;
     bool haveAvailableOptionsChanged();
     bool isValidOptionChosen() const;
-    size_t chosenOption() const;
+    std::size_t chosenOption() const;
     const QString &chosenOptionName() const;
-    bool setChosenOption(size_t optionIndex);
+    bool setChosenOption(std::size_t optionIndex);
     bool hasSelectedOptionChanged();
     const QString &userAgent();
     void setCustomUserAgent(const QString &value);
@@ -116,12 +116,12 @@ public:
     void provideMetaData(const QString &title = QString(), const QString &uploader = QString(),
         CppUtilities::TimeSpan duration = CppUtilities::TimeSpan(), const QString &collectionName = QString(), int positionInCollection = 0,
         int views = 0, const QString &rating = QString());
-    void setOverwritePermission(size_t optionIndex, PermissionStatus permission);
-    void setAppendPermission(size_t optionIndex, PermissionStatus permission);
-    void setRedirectPermission(size_t originalOptionIndex, PermissionStatus permission);
-    void setIgnoreSslErrorsPermission(size_t optionIndex, PermissionStatus permission);
-    void provideOutputDevice(size_t optionIndex, QIODevice *device, bool giveOwnership = false);
-    void provideAuthenticationCredentials(size_t optionIndex, const AuthenticationCredentials &credentials);
+    void setOverwritePermission(std::size_t optionIndex, PermissionStatus permission);
+    void setAppendPermission(std::size_t optionIndex, PermissionStatus permission);
+    void setRedirectPermission(std::size_t originalOptionIndex, PermissionStatus permission);
+    void setIgnoreSslErrorsPermission(std::size_t optionIndex, PermissionStatus permission);
+    void provideOutputDevice(std::size_t optionIndex, QIODevice *device, bool giveOwnership = false);
+    void provideAuthenticationCredentials(std::size_t optionIndex, const AuthenticationCredentials &credentials);
     const AuthenticationCredentials &initialAuthenticationCredentials() const;
     AuthenticationCredentials &initialAuthenticationCredentials();
     virtual bool isInitiatingInstantlyRecommendable() const;
@@ -133,12 +133,12 @@ signals:
     void statusChanged(Download *download);
     void progressChanged(Download *download);
     void statusInfoChanged(Download *download);
-    void overwriteingPermissionRequired(Download *download, size_t optionIndex, const QString &file);
-    void appendingPermissionRequired(Download *download, size_t optionIndex, const QString &file, quint64 offset, quint64 fileSize);
-    void redirectionPermissonRequired(Download *download, size_t optionIndex, int redirectionOptionIndex);
-    void outputDeviceRequired(Download *concerningDownload, size_t optionIndex);
-    void authenticationRequired(Download *concerningDownload, size_t optionIndex, const QString &statusInfo);
-    void sslErrors(Download *concerningDownload, size_t optionIndex, const QList<QSslError> &sslErrors);
+    void overwriteingPermissionRequired(Download *download, std::size_t optionIndex, const QString &file);
+    void appendingPermissionRequired(Download *download, std::size_t optionIndex, const QString &file, quint64 offset, quint64 fileSize);
+    void redirectionPermissonRequired(Download *download, std::size_t optionIndex, int redirectionOptionIndex);
+    void outputDeviceRequired(Download *concerningDownload, std::size_t optionIndex);
+    void authenticationRequired(Download *concerningDownload, std::size_t optionIndex, const QString &statusInfo);
+    void sslErrors(Download *concerningDownload, std::size_t optionIndex, const QList<QSslError> &sslErrors);
 
 protected:
     // c'tor
@@ -147,25 +147,25 @@ protected:
     // protected methods
     //  to be implemented by derived classes
     virtual void doDownload() = 0;
-    virtual bool followRedirection(size_t originalOptionIndex);
+    virtual bool followRedirection(std::size_t originalOptionIndex);
     virtual void abortDownload() = 0;
     virtual void doInit() = 0;
-    virtual void checkStatusAndClear(size_t optionIndex) = 0;
+    virtual void checkStatusAndClear(std::size_t optionIndex) = 0;
     //  meant to be called by derived classes
-    size_t addDownloadUrl(const QString &optionName, const QUrl &url, size_t redirectionOf = InvalidOptionIndex);
-    void changeDownloadUrl(size_t optionIndex, const QUrl &value);
+    std::size_t addDownloadUrl(const QString &optionName, const QUrl &url, std::size_t redirectionOf = InvalidOptionIndex);
+    void changeDownloadUrl(std::size_t optionIndex, const QUrl &value);
     void reportInitiated(
         bool success, const QString &reasonIfNot = QString(), const QNetworkReply::NetworkError &networkError = QNetworkReply::NoError);
-    void reportFinalDownloadStatus(size_t optionIndex, bool success, const QString &statusDescription = QString(),
+    void reportFinalDownloadStatus(std::size_t optionIndex, bool success, const QString &statusDescription = QString(),
         QNetworkReply::NetworkError networkError = QNetworkReply::NoError);
 protected slots:
-    void reportDownloadInterrupted(size_t optionIndex);
-    void reportNewDataToBeWritten(size_t optionIndex, QIODevice *inputDevice);
-    void reportRedirectionAvailable(size_t originalOptionIndex);
-    void reportAuthenticationRequired(size_t optionIndex, const QString &realm);
-    void reportSslErrors(size_t optionIndex, QNetworkReply *reply, const QList<QSslError> &sslErrors);
-    void reportDownloadComplete(size_t optionIndex);
-    void finalizeOutputDevice(size_t optionIndex);
+    void reportDownloadInterrupted(std::size_t optionIndex);
+    void reportNewDataToBeWritten(std::size_t optionIndex, QIODevice *inputDevice);
+    void reportRedirectionAvailable(std::size_t originalOptionIndex);
+    void reportAuthenticationRequired(std::size_t optionIndex, const QString &realm);
+    void reportSslErrors(std::size_t optionIndex, QNetworkReply *reply, const QList<QSslError> &sslErrors);
+    void reportDownloadComplete(std::size_t optionIndex);
+    void finalizeOutputDevice(std::size_t optionIndex);
     void setId(const QString &value);
     void setTitle(const QString &value);
     void setTitleFromFilename(const QString &valueObtainedFromFilename);
@@ -175,7 +175,7 @@ protected slots:
     void setRating(const QString &value);
     void setPositionInCollection(int value);
     void setCollectionName(const QString &value);
-    void reportDownloadProgressUpdate(size_t optionIndex, qint64 bytesReceived, qint64 bytesToReceive);
+    void reportDownloadProgressUpdate(std::size_t optionIndex, qint64 bytesReceived, qint64 bytesToReceive);
 
 private:
     // private static methods
@@ -184,9 +184,9 @@ private:
 
     // private methods
     //  to handle the output device
-    bool writeBufferToOutputDevice(size_t optionIndex);
-    bool prepareOutputDevice(size_t optionIndex, QIODevice *device, bool takeOwnership);
-    void ensureOutputDeviceIsPrepared(size_t optionIndex);
+    bool writeBufferToOutputDevice(std::size_t optionIndex);
+    bool prepareOutputDevice(std::size_t optionIndex, QIODevice *device, bool takeOwnership);
+    void ensureOutputDeviceIsPrepared(std::size_t optionIndex);
     //  to set status information
     void setBytesWritten(qint64 value);
     void setProgress(qint64 m_bytesReceived = -1, qint64 m_bytesToReceive = -1);
@@ -211,7 +211,7 @@ private:
 
     //  concerning available options
     std::vector<OptionData> m_optionData;
-    size_t m_chosenOption;
+    std::size_t m_chosenOption;
     bool m_selectedOptionChanged;
     bool m_availableOptionsChanged;
 
@@ -226,7 +226,7 @@ private:
     double m_shiftSpeed;
     CppUtilities::TimeSpan m_shiftRemainingTime;
     QString m_statusInfo;
-    QTime m_time;
+    QElapsedTimer m_time;
     QNetworkReply::NetworkError m_networkError;
     bool m_initiated;
     int m_progressUpdateInterval;
@@ -234,7 +234,7 @@ private:
     //  concerning download
     bool m_useDefaultUserAgent;
     QString m_userAgent;
-    static int m_defaultUserAgent;
+    static int s_defaultUserAgent;
     QNetworkProxy m_proxy;
     QString m_targetPath;
     DownloadRange m_range;
@@ -287,7 +287,7 @@ inline const QUrl &Download::downloadUrl() const
  *          - Some downloads might use additional information (for instance if the POST method is used).
  *          - This information is possibly not available before the download is initiated.
  */
-inline const QUrl &Download::downloadUrl(size_t optionIndex) const
+inline const QUrl &Download::downloadUrl(std::size_t optionIndex) const
 {
     return m_optionData.at(optionIndex).m_url;
 }
@@ -348,7 +348,7 @@ inline const QString &Download::collectionName() const
  * \remarks This information is possibly not available before the download is initiated.
  * \sa availableOption()
  */
-inline size_t Download::availableOptionCount() const
+inline std::size_t Download::availableOptionCount() const
 {
     return m_optionData.size();
 }
@@ -372,7 +372,7 @@ inline bool Download::areOptionsAvailable() const
  * \remarks This information is possibly not available before the download is initiated.
  * \sa availableOptionCount()
  */
-inline const QString &Download::optionName(size_t optionIndex) const
+inline const QString &Download::optionName(std::size_t optionIndex) const
 {
     if (optionIndex < m_optionData.size()) {
         return m_optionData.at(optionIndex).m_name;
@@ -405,7 +405,7 @@ inline bool Download::isValidOptionChosen() const
  *
  * The index might be invalid. Check isValidOptionChosen() before.
  */
-inline size_t Download::chosenOption() const
+inline std::size_t Download::chosenOption() const
 {
     return m_chosenOption;
 }

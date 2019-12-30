@@ -71,7 +71,7 @@ namespace Network {
  *    using the provideAuthenticationCredentials() method.
  */
 
-int Download::m_defaultUserAgent = -1;
+int Download::s_defaultUserAgent = -1;
 
 /*!
  * \brief Returns a random default user agent string.
@@ -91,10 +91,10 @@ const QString &Download::defaultUserAgent()
         QStringLiteral("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36"),
         QStringLiteral("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.34 (KHTML, like Gecko) konqueror/4.14.0 Safari/534.34"),
         QStringLiteral("Opera/9.80 (Windows NT 6.0) Presto/2.12.388 Version/12.14") };
-    if (m_defaultUserAgent < 0 || m_defaultUserAgent > 6) {
+    if (s_defaultUserAgent < 0 || s_defaultUserAgent > 6) {
         scrambleDefaultUserAgent();
     }
-    return agents[m_defaultUserAgent];
+    return agents[s_defaultUserAgent];
 }
 
 /*!
@@ -106,7 +106,7 @@ void Download::scrambleDefaultUserAgent()
     random_device rd;
     default_random_engine engine(rd());
     uniform_int_distribution<int> distribution(0, 6);
-    m_defaultUserAgent = distribution(engine);
+    s_defaultUserAgent = distribution(engine);
 }
 
 /*!
@@ -369,9 +369,6 @@ Download::Download(const QUrl &url, QObject *parent)
     , m_newBytesToReceive(0)
     , m_speed(0.0)
     , m_shiftSpeed(0.0)
-    , m_shiftRemainingTime(TimeSpan())
-    , m_statusInfo(QString())
-    , m_time(QTime())
     , m_networkError(QNetworkReply::NoError)
     , m_initiated(false)
     , m_progressUpdateInterval(300)
@@ -387,7 +384,7 @@ Download::Download(const QUrl &url, QObject *parent)
  *
  * Needs to be implemented when subclassing.
  */
-bool Download::followRedirection(size_t)
+bool Download::followRedirection(std::size_t)
 {
     return false;
 }

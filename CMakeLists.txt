@@ -37,7 +37,6 @@ set(HEADER_FILES
     network/optiondata.h
     network/permissionstatus.h
     network/socksharedownload.h
-    network/spotifydownload.h
     network/testdownload.h
     network/vimeodownload.h
     network/youtubedownload.h
@@ -63,7 +62,6 @@ set(SRC_FILES
     network/misc/contentdispositionparser.cpp
     network/optiondata.cpp
     network/socksharedownload.cpp
-    network/spotifydownload.cpp
     network/testdownload.cpp
     network/vimeodownload.cpp
     network/youtubedownload.cpp
@@ -104,16 +102,6 @@ set(WIDGETS_UI_FILES
     gui/proxypage.ui
     gui/useragentpage.ui
 )
-
-#set(QUICK_HEADER_FILES
-#)
-#set(QUICK_SRC_FILES
-#)
-
-#set(TS_FILES
-#    translations/${META_PROJECT_NAME}_de_DE.ts
-#    translations/${META_PROJECT_NAME}_en_US.ts
-#)
 
 set(ICON_FILES
     resources/icons/hicolor/scalable/apps/${META_PROJECT_NAME}.svg

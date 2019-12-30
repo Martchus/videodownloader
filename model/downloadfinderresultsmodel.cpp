@@ -45,7 +45,7 @@ void DownloadFinderResultsModel::setFinder(DownloadFinder *finder)
             });
             // new results are available
             connect(m_finder, &DownloadFinder::newResultsAvailable, [this](const QList<Download *> &results) {
-                foreach (Download *download, results) {
+                for (Download *const download : results) {
                     connect(download, &Download::statusChanged, this, &DownloadFinderResultsModel::downloadChangedStatus);
                     // initiate the download if not done yet and instant initiation is recommendable
                     if (!download->isInitiated() && download->isInitiatingInstantlyRecommendable()) {

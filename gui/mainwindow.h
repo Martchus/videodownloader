@@ -3,10 +3,10 @@
 
 #include <c++utilities/chrono/timespan.h>
 
+#include <QElapsedTimer>
 #include <QList>
 #include <QMainWindow>
 #include <QSystemTrayIcon>
-#include <QTime>
 
 #include <memory>
 
@@ -112,7 +112,7 @@ private:
     double m_totalSpeed;
     qint64 m_stillToReceive;
     CppUtilities::TimeSpan m_remainingTime;
-    QTime m_elapsedTime;
+    QElapsedTimer m_elapsedTime;
     DownloadInteraction *m_downloadInteraction;
     AddDownloadDialog *m_addDownloadDlg;
     AddMultipleDownloadsWizard *m_addMultipleDownloadsWizard;

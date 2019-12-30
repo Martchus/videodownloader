@@ -74,7 +74,7 @@ void CliDownloadInteraction::downloadHasSslErrors(Download *download, size_t opt
     // TODO
     const string downloadName = (download->downloadUrl().isEmpty() ? download->id() : download->downloadUrl().toString()).toStdString();
     cout << "The download \"" << downloadName << "\" has SSL errors:" << endl;
-    foreach (const QSslError &error, sslErrors) {
+    for (const QSslError &error : sslErrors) {
         cout << "- " << error.errorString().toStdString() << ":" << endl;
         cout << "  " << error.certificate().toText().toStdString() << endl;
     }

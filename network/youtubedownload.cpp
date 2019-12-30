@@ -63,7 +63,7 @@ void YoutubeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
     }
     QString videoInfo(videoInfoBuffer->readAll());
     QStringList completeFields = videoInfo.split(QChar('&'), QString::SkipEmptyParts, Qt::CaseSensitive);
-    foreach (QString completeField, completeFields) {
+    for (const QString &completeField : completeFields) {
         QStringList fieldParts = completeField.split(QChar('='), QString::SkipEmptyParts, Qt::CaseSensitive);
         if (fieldParts.count() < 2) {
             continue;
@@ -90,15 +90,15 @@ void YoutubeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
             setRating(rating);
         }
         QStringList fmtFieldIds = QStringList() << QStringLiteral("url_encoded_fmt_stream_map") << QStringLiteral("adaptive_fmts");
-        foreach (const QString &fmtFieldId, fmtFieldIds) {
+        for (const QString &fmtFieldId : fmtFieldIds) {
             QString fmtField = m_fields.value(fmtFieldId, QString());
             if (!fmtField.isEmpty()) {
                 QStringList sections = fmtField.split(QChar(','), QString::SkipEmptyParts, Qt::CaseSensitive);
-                foreach (QString section, sections) {
+                for (const QString &section : sections) {
                     QStringList fmtParts = section.split(QChar('&'), QString::SkipEmptyParts, Qt::CaseSensitive);
                     QString itag, urlPart1, urlPart2, name;
                     QJsonObject itagObj;
-                    foreach (QString fmtPart, fmtParts) {
+                    for (const QString fmtPart : fmtParts) {
                         QStringList fmtSubParts = fmtPart.split(QChar('='), QString::SkipEmptyParts, Qt::CaseSensitive);
                         if (fmtSubParts.count() >= 2) {
                             QString fieldIdentifier = fmtSubParts.at(0).toLower();
@@ -189,7 +189,7 @@ QString YoutubeDownload::suitableFilename() const
         originalOption = options().at(originalOption).redirectionOf();
     }
     QString extension;
-    if (originalOption < static_cast<size_t>(m_itags.size())) {
+    if (originalOption < static_cast<std::size_t>(m_itags.size())) {
         const auto itag = m_itags.at(originalOption);
         if (m_itagInfo.contains(itag)) {
             const auto itagObj = m_itagInfo.value(itag).toObject();

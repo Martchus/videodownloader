@@ -215,7 +215,7 @@ void DownloadInteraction::downloadHasSslErrors(Download *download, size_t option
 {
     QString downloadName = download->downloadUrl().isEmpty() ? download->id() : download->downloadUrl().toString();
     QString details;
-    foreach (const QSslError &error, sslErrors) {
+    for (const QSslError &error : sslErrors) {
         if (!details.isEmpty()) {
             details.append(QStringLiteral("\n\n"));
         }

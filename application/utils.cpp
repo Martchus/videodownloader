@@ -35,7 +35,7 @@ void replaceHtmlEntities(QString &text)
     QTextDocument textDocument;
     textDocument.setHtml(text);
     text = textDocument.toPlainText();
-    foreach (const QChar &c, text) {
+    for (const QChar &c : text) {
         if (!c.isSpace()) {
             return;
         }

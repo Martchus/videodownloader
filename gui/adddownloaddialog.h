@@ -40,7 +40,7 @@ private slots:
 
 private:
     std::unique_ptr<Ui::AddDownloadDialog> m_ui;
-    static QStringList m_knownDownloadTypeNames;
+    static QStringList s_knownDownloadTypeNames;
     int m_downloadTypeIndex;
     bool m_downloadTypeIndexAdjustedManually;
     bool m_validInput;

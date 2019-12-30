@@ -69,7 +69,6 @@ MainWindow::MainWindow(QWidget *parent)
     , m_initiatingDownloads(0)
     , m_totalSpeed(0)
     , m_stillToReceive(0)
-    , m_remainingTime(TimeSpan())
     , m_downloadInteraction(new DownloadInteraction(this))
     , m_addDownloadDlg(nullptr)
     , m_addMultipleDownloadsWizard(nullptr)
@@ -114,7 +113,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_autoSpinBox->setMinimumSize(QSize(245, 0));
     m_autoSpinBox->setMaximum(10);
     m_autoSpinBox->setSuffix(tr(" download(s) automatically"));
-    m_autoSpinBox->setPrefix(tr("start up to "));
+    m_autoSpinBox->setPrefix(tr("Start up to "));
     QWidget *spacer = new QWidget(m_ui->autoToolBar);
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     spacer->setVisible(true);
@@ -159,18 +158,18 @@ MainWindow::MainWindow(QWidget *parent)
     m_ui->statusBar->addWidget(m_downloadStatusLabel);
     m_elapsedTime.start();
 
-    // Connect signals and slots
-    // Application
+    // connect signals and slots
+    // application
     connect(m_ui->actionSettings, &QAction::triggered, this, &MainWindow::showSettingsDialog);
     connect(m_ui->actionQuit, &QAction::triggered, &QApplication::quit);
-    // Add
+    // add
     connect(addDownloadToolButton, &QToolButton::clicked, this, &MainWindow::showAddDownloadDialog);
     connect(m_ui->actionAdd_Download, &QAction::triggered, this, &MainWindow::showAddDownloadDialog);
     connect(m_ui->actionAdd_multiple_downloads, &QAction::triggered, this, &MainWindow::showAddMultipleDownloadsDialog);
 #ifdef CONFIG_TESTDOWNLOAD
     connect(action, &QAction::triggered, [this] { this->addDownload(new TestDownload()); });
 #endif
-    // Downloads
+    // downloads
     connect(m_ui->actionStart_selected, &QAction::triggered, this, &MainWindow::startOrStopSelectedDownloads);
     connect(m_ui->actionResume_selected_downloads, &QAction::triggered, this, &MainWindow::interruptOrResumeSelectedDownloads);
     connect(m_ui->actionRemove_selected_downloads_from_list, &QAction::triggered, this, &MainWindow::removeSelectedDownloads);
@@ -196,7 +195,8 @@ MainWindow::~MainWindow()
 void MainWindow::showAboutDialog()
 {
     if (!m_aboutDlg) {
-        m_aboutDlg = new AboutDialog(this, QStringLiteral(APP_URL), tr("A video downloader with Qt GUI (currently only YouTube is maintained)."),
+        m_aboutDlg = new AboutDialog(this, QStringLiteral(APP_URL),
+            tr("Simple video downloader with Qt GUI and backends for multiple platforms, e.g. YouTube and Vimeo."),
             QImage(QStringLiteral(":/icons/hicolor/128x128/apps/videodownloader.png")));
     }
     if (m_aboutDlg->isHidden()) {
@@ -267,7 +267,7 @@ void MainWindow::addMultipleDownloadsWizardResults()
         show();
     }
     if (m_addMultipleDownloadsWizard) {
-        foreach (Download *res, m_addMultipleDownloadsWizard->results()) {
+        for (Download *const res : m_addMultipleDownloadsWizard->results()) {
             addDownload(res);
         }
         m_addMultipleDownloadsWizard->restart();
@@ -331,7 +331,7 @@ void MainWindow::startOrStopSelectedDownloads()
         return;
     }
 
-    foreach (Download *download, selectedDownloads) {
+    for (Download *const download : selectedDownloads) {
         switch (download->status()) {
         case DownloadStatus::None:
             // retrieve initial information when that still has to be done
@@ -397,7 +397,7 @@ void MainWindow::interruptOrResumeSelectedDownloads()
         return;
     }
 
-    foreach (Download *download, selectedDownloads) {
+    for (Download *const download : selectedDownloads) {
         switch (download->status()) {
         case DownloadStatus::Downloading:
             download->interrupt();
@@ -431,9 +431,10 @@ void MainWindow::removeSelectedDownloads()
     int removed = 0;
     QModelIndexList selectedIndexes = m_ui->downloadsTreeView->selectionModel()->selectedRows();
     QList<QPersistentModelIndex> persistendIndexes;
-    foreach (QModelIndex selectedIndex, selectedIndexes)
+    for (const QModelIndex &selectedIndex : selectedIndexes) {
         persistendIndexes << QPersistentModelIndex(selectedIndex);
-    foreach (QPersistentModelIndex selectedIndex, persistendIndexes) {
+    }
+    for (const QPersistentModelIndex &selectedIndex : persistendIndexes) {
         if (Download *download = m_model->download(selectedIndex)) {
             switch (download->status()) {
             case DownloadStatus::Downloading:
@@ -477,7 +478,7 @@ void MainWindow::updateStartStopControls()
     int withTargetPath = 0;
     bool downloadsSelected = !selectedDownloads.isEmpty();
     if (downloadsSelected) {
-        foreach (Download *download, selectedDownloads) {
+        for (Download *const download : selectedDownloads) {
             switch (download->status()) {
             case DownloadStatus::None:
                 ++toInit;
@@ -668,7 +669,7 @@ void MainWindow::clipboardDataChanged()
     if (!m_internalClipboardChange && m_superviseClipboardToolButton->isChecked()) {
         QString data = QApplication::clipboard()->text();
         QStringList lines = data.split(QChar('\n'), QString::SkipEmptyParts);
-        foreach (QString line, lines) {
+        for (const QString &line : lines) {
             if (Download *download = Download::fromUrl(line)) {
                 addDownload(download);
                 if (m_trayIcon && m_trayIcon->isVisible()) {
@@ -733,7 +734,7 @@ void MainWindow::clearTargetPath()
 {
     QList<Download *> downloads = selectedDownloads();
     if (!downloads.isEmpty()) {
-        foreach (Download *download, downloads) {
+        for (Download *const download : downloads) {
             download->setTargetPath(QString());
         }
         updateStartStopControls();
@@ -744,7 +745,7 @@ void MainWindow::clearTargetPath()
 
 void MainWindow::showYoutubeItagsInfo()
 {
-    QDesktopServices::openUrl(QUrl(QStringLiteral("https://en.wikipedia.org/wiki/YouTube#Quality_and_formats")));
+    QDesktopServices::openUrl(QUrl(QStringLiteral("https://gist.github.com/sidneys/7095afe4da4ae58694d128b1034e01e2")));
 }
 
 void MainWindow::resetGroovesharkSession()
@@ -882,7 +883,7 @@ QList<Download *> MainWindow::selectedDownloads() const
 {
     QList<Download *> res;
     QModelIndexList selectedRows = m_ui->downloadsTreeView->selectionModel()->selectedRows();
-    foreach (QModelIndex index, selectedRows) {
+    for (const QModelIndex &index : selectedRows) {
         if (Download *download = m_model->download(index)) {
             res << download;
         }

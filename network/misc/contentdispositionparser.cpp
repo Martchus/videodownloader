@@ -51,7 +51,7 @@ void ContentDispositionParser::pharse()
     PharsingPosition pos = FieldName;
     QString fieldName;
     QString value;
-    foreach (QChar c, m_contentDisposition) {
+    for (QChar c : m_contentDisposition) {
         if (c == '\"') {
             inQuotationMarks = !inQuotationMarks;
         } else if (c == ';') {
