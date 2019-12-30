@@ -416,12 +416,6 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     category->assignPages({ new ProxyPage(), new UserAgentPage(), new MiscPage(), new StatsPage() });
     categories << category;
 
-    category = new OptionCategory(this);
-    category->setDisplayName(tr("Specific"));
-    category->setIcon(QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-specific.png")));
-    category->assignPages({});
-    categories << category;
-
     categories << qtSettings().category();
 
     categoryModel()->setCategories(categories);

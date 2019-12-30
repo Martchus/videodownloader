@@ -3,6 +3,5 @@
         <file>icons/hicolor/128x128/apps/videodownloader.png</file>
         <file>icons/hicolor/32x32/categories/preferences-general.png</file>
         <file>icons/hicolor/32x32/categories/preferences-network.png</file>
-        <file>icons/hicolor/32x32/categories/preferences-specific.png</file>
     </qresource>
 </RCC>
