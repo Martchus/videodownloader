@@ -25,7 +25,7 @@ This file contains licensing information for `Video Downloader` and libraries di
 
 ---
 
-License `GPL2` of `FreeType`, `GCC`, `Graphite`, `Password Manager`, `c++utilities`, `gettext`, `libunistring`, `qtutilities`, `termcap`:
+License `GPL2` of `FreeType`, `GCC`, `Graphite`, `Video Downloader`, `c++utilities`, `gettext`, `libunistring`, `qtutilities`, `termcap`:
 
 >                     GNU GENERAL PUBLIC LICENSE
 >                        Version 2, June 1991
