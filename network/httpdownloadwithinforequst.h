@@ -25,7 +25,7 @@ public:
 protected:
     virtual void evalVideoInformation(Download *, QBuffer *) = 0;
 
-private slots:
+private Q_SLOTS:
     void infoRequestChangedStatus(Download *download);
 
 private:

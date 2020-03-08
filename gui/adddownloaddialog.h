@@ -30,7 +30,7 @@ public:
 signals:
     void addDownloadClicked();
 
-private slots:
+private Q_SLOTS:
     void textChanged(const QString &text);
     void adjustDetectedDownloadType();
     void setLastUrl();

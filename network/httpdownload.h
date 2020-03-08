@@ -100,7 +100,7 @@ public:
     QString typeName() const;
     //bool isPending(QNetworkReply *reply) const;
 
-private slots:
+private Q_SLOTS:
     void slotFinished();
     void slotReadyRead();
     void slotDownloadProgress(qint64 bytesReceived, qint64 bytesToReceive);

@@ -30,7 +30,7 @@ public:
 protected:
     Download *createRequest(QString &reasonForFail);
 
-protected slots:
+protected Q_SLOTS:
     ParsingResult parseResults(const QByteArray &data, QString &reasonForFail);
 
 private:

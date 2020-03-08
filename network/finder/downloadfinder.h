@@ -29,7 +29,7 @@ public:
     Download *downloadByInitialUrl(const QUrl &url) const;
     bool hasDownloadUrl(const QUrl &url) const;
 
-public slots:
+public Q_SLOTS:
     bool start();
     void stop();
     void setContinueAutomatically(bool continueAutomatically);
@@ -59,7 +59,7 @@ protected:
     void reportCollectionTitle(const QString &title);
     void reportResult(Download *result);
 
-private slots:
+private Q_SLOTS:
     void downloadChangedStatus(Download *download);
     void downloadRequiresOutputDevice(Download *download, size_t option);
 

@@ -49,7 +49,7 @@ public:
 protected:
     void closeEvent(QCloseEvent *);
 
-private slots:
+private Q_SLOTS:
     void downloadChangedStatus(Network::Download *download);
     void downloadChangedProgress(Network::Download *download);
 

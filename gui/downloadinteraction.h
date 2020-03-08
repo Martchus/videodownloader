@@ -19,11 +19,11 @@ public:
     explicit DownloadInteraction(QObject *parent = nullptr);
     explicit DownloadInteraction(QWidget *parent = nullptr);
 
-public slots:
+public Q_SLOTS:
     void connectDownload(Network::Download *download);
     void disconnectDownload(Network::Download *download);
 
-private slots:
+private Q_SLOTS:
     void downloadRequiresOutputDevice(Network::Download *download, size_t optionIndex);
     void downloadRequiresOutputDevice(Network::Download *download, size_t optionIndex, bool forceFileDialog);
     void downloadRequriesOverwritePermission(Network::Download *download, size_t optionIndex, const QString &file);

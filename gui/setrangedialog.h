@@ -22,7 +22,7 @@ public:
     explicit SetRangeDialog(Network::DownloadRange &range, QWidget *parent = nullptr);
     ~SetRangeDialog();
 
-private slots:
+private Q_SLOTS:
     void confirm();
 
 private:

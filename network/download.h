@@ -40,7 +40,7 @@ class Download : public QObject {
 public:
     virtual ~Download();
 
-public slots:
+public Q_SLOTS:
     // public slots to control the download
     void init();
     void start();
@@ -158,7 +158,7 @@ protected:
         bool success, const QString &reasonIfNot = QString(), const QNetworkReply::NetworkError &networkError = QNetworkReply::NoError);
     void reportFinalDownloadStatus(std::size_t optionIndex, bool success, const QString &statusDescription = QString(),
         QNetworkReply::NetworkError networkError = QNetworkReply::NoError);
-protected slots:
+protected Q_SLOTS:
     void reportDownloadInterrupted(std::size_t optionIndex);
     void reportNewDataToBeWritten(std::size_t optionIndex, QIODevice *inputDevice);
     void reportRedirectionAvailable(std::size_t originalOptionIndex);

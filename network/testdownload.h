@@ -21,7 +21,7 @@ protected:
     void doInit();
     void checkStatusAndClear(size_t);
 
-private slots:
+private Q_SLOTS:
     void tick();
 
 private:

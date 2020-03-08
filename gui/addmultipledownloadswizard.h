@@ -78,7 +78,7 @@ public:
     Network::DownloadFinder *finder() const;
     QList<Network::Download *> results() const;
 
-private slots:
+private Q_SLOTS:
     void finderHasResults(const QList<Network::Download *> &newResults);
     void finderFinished(bool success, const QString &reason = QString());
     void selectionChanged(const QItemSelection &, const QItemSelection &);

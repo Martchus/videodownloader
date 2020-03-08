@@ -43,7 +43,7 @@ public:
     static constexpr int progressColumn();
     static constexpr int lastColumn();
 
-private slots:
+private Q_SLOTS:
     void downloadChangedStatus(Network::Download *download);
     void downloadProgressChanged(Network::Download *download);
     void downloadInfoChanged(Network::Download *download);

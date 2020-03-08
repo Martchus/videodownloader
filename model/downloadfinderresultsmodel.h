@@ -34,7 +34,7 @@ public:
     static constexpr int idColumn();
     static constexpr int lastColumn();
 
-private slots:
+private Q_SLOTS:
     void downloadChangedStatus(Network::Download *download);
 
 private:
