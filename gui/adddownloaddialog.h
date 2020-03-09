@@ -27,7 +27,7 @@ public:
     void reset();
     bool hasValidInput() const;
 
-signals:
+Q_SIGNALS:
     void addDownloadClicked();
 
 private Q_SLOTS:

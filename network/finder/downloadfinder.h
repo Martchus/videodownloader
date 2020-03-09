@@ -34,7 +34,7 @@ public Q_SLOTS:
     void stop();
     void setContinueAutomatically(bool continueAutomatically);
 
-signals:
+Q_SIGNALS:
     void requestCreated(Download *request);
     void aboutToMakeNewResultsAvailable(unsigned int count);
     void newResultsAvailable(const QList<Download *> &newResults);

@@ -129,7 +129,7 @@ public:
     // to construct new downloads
     static Download *fromUrl(const QUrl &url);
 
-signals:
+Q_SIGNALS:
     void statusChanged(Download *download);
     void progressChanged(Download *download);
     void statusInfoChanged(Download *download);
