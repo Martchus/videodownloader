@@ -11,7 +11,7 @@ set(META_APP_URL "https://github.com/${META_APP_AUTHOR}/${META_PROJECT_NAME}")
 set(META_APP_DESCRIPTION "Simple video downloader with Qt GUI and backends for multiple platforms, e.g. YouTube and Vimeo")
 set(META_VERSION_MAJOR 1)
 set(META_VERSION_MINOR 3)
-set(META_VERSION_PATCH 6)
+set(META_VERSION_PATCH 7)
 
 # add project files
 set(HEADER_FILES
