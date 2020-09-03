@@ -4,7 +4,7 @@
 
 #include "../../application/utils.h"
 
-#include <QRegExp>
+#include <QRegularExpression>
 
 using namespace CppUtilities;
 using namespace Application;
@@ -33,64 +33,61 @@ Download *LinkFinder::createRequest(QString &)
 DownloadFinder::ParsingResult LinkFinder::parseResults(const QByteArray &data, QString &)
 {
     QString html(data);
-    QRegExp titlePattern(QStringLiteral("<title>(.+)</title>"), Qt::CaseInsensitive);
-    QRegExp linkPattern(QStringLiteral("<a([^>]+)>(.+)</a>"), Qt::CaseInsensitive);
-    QRegExp commentPattern(QStringLiteral("<!--(.+)-->"), Qt::CaseInsensitive);
-    QRegExp hrefPattern1(QStringLiteral("\\s*href\\s*=\\s*['](.+)['>]"), Qt::CaseInsensitive);
-    QRegExp hrefPattern2(QStringLiteral("\\s*href\\s*=\\s*[\"](.+)[\">]"), Qt::CaseInsensitive);
-    titlePattern.setMinimal(true);
-    linkPattern.setMinimal(true);
-    commentPattern.setMinimal(true);
-    hrefPattern1.setMinimal(true);
-    hrefPattern2.setMinimal(true);
+    static const QRegularExpression titlePattern(
+        QStringLiteral("<title>(.+)</title>"), QRegularExpression::CaseInsensitiveOption | QRegularExpression::InvertedGreedinessOption);
+    static const QRegularExpression linkPattern(
+        QStringLiteral("<a([^>]+)>(.+)</a>"), QRegularExpression::CaseInsensitiveOption | QRegularExpression::InvertedGreedinessOption);
+    static const QRegularExpression commentPattern(
+        QStringLiteral("<!--(.+)-->"), QRegularExpression::CaseInsensitiveOption | QRegularExpression::InvertedGreedinessOption);
+    static const QRegularExpression hrefPattern1(
+        QStringLiteral("\\s*href\\s*=\\s*['](.+)['>]"), QRegularExpression::CaseInsensitiveOption | QRegularExpression::InvertedGreedinessOption);
+    static const QRegularExpression hrefPattern2(
+        QStringLiteral("\\s*href\\s*=\\s*[\"](.+)[\">]"), QRegularExpression::CaseInsensitiveOption | QRegularExpression::InvertedGreedinessOption);
     QString pageTitle;
-    if (titlePattern.indexIn(html) >= 0 && titlePattern.captureCount() >= 1) {
-        pageTitle = titlePattern.cap(1);
+    const auto titleMatch = titlePattern.match(html);
+    if (titleMatch.hasMatch()) {
+        pageTitle = titleMatch.captured(1);
         replaceHtmlEntities(pageTitle);
     }
-    int overallIndex = 0;
-    int commentIndex = commentPattern.indexIn(html, overallIndex);
-    int linkIndex = 0;
-    while (((linkIndex = linkPattern.indexIn(html, overallIndex)) >= 0)) {
-        if (commentIndex >= 0 && commentIndex < linkIndex) {
+    auto commentMatch = commentPattern.match(html, 0);
+    decltype(commentMatch.capturedEnd()) overallIndex = 0;
+    for (auto linkMatch = linkPattern.match(html, overallIndex); linkMatch.hasMatch(); linkMatch = linkPattern.match(html, overallIndex)) {
+        if (commentMatch.capturedStart() >= 0 && commentMatch.capturedStart() < linkMatch.capturedStart()) {
             // skip comment
-            overallIndex = commentIndex + commentPattern.matchedLength();
-            commentIndex = commentPattern.indexIn(html, overallIndex);
-        } else if (linkIndex >= 0) {
-            // read actual link
-            if (linkPattern.captureCount() >= 2) {
-                QString title(linkPattern.cap(2));
-                QString href(linkPattern.cap(1));
-                QString urlStr;
-                if (hrefPattern1.indexIn(href) >= 0 && hrefPattern1.captureCount() >= 1) {
-                    urlStr = hrefPattern1.cap(1);
-                } else if (hrefPattern2.indexIn(href) >= 0 && hrefPattern2.captureCount() >= 1) {
-                    urlStr = hrefPattern2.cap(1);
-                }
-                if (!urlStr.isEmpty()) {
-                    replaceHtmlEntities(title);
-                    replaceHtmlEntities(urlStr);
-                    // resolve relative URLs
-                    QUrl url(urlStr);
-                    if (url.isRelative()) {
-                        url = m_url.resolved(url);
-                    }
-                    // avoid duplicate results
-                    if (Download *duplicateDownload = downloadByInitialUrl(url)) {
-                        if (!title.isEmpty() && duplicateDownload->title().isEmpty()) {
-                            duplicateDownload->provideMetaData(title);
-                        }
-                    } else if (Download *result = Download::fromUrl(url)) {
-                        result->provideMetaData(title, QString(), TimeSpan(), pageTitle, results().size());
-                        reportResult(result);
-                    }
-                }
-            }
-            overallIndex = linkIndex + linkPattern.matchedLength();
-        } else {
-            // no more links
+            overallIndex = commentMatch.capturedEnd();
+            commentMatch = commentPattern.match(html, overallIndex);
             break;
         }
+        // read actual link
+        QString title = linkMatch.captured(2), href = linkMatch.captured(1), urlStr;
+        const auto hrefMatch1 = hrefPattern1.match(href);
+        if (hrefMatch1.hasMatch()) {
+            urlStr = hrefMatch1.captured(1);
+        } else {
+            const auto hrefMatch2 = hrefPattern2.match(href);
+            if (hrefMatch2.hasMatch()) {
+                urlStr = hrefMatch2.captured(1);
+            }
+        }
+        if (!urlStr.isEmpty()) {
+            replaceHtmlEntities(title);
+            replaceHtmlEntities(urlStr);
+            // resolve relative URLs
+            QUrl url(urlStr);
+            if (url.isRelative()) {
+                url = m_url.resolved(url);
+            }
+            // avoid duplicate results
+            if (Download *const duplicateDownload = downloadByInitialUrl(url)) {
+                if (!title.isEmpty() && duplicateDownload->title().isEmpty()) {
+                    duplicateDownload->provideMetaData(title);
+                }
+            } else if (Download *result = Download::fromUrl(url)) {
+                result->provideMetaData(title, QString(), TimeSpan(), pageTitle, results().size());
+                reportResult(result);
+            }
+        }
+        overallIndex = linkMatch.capturedEnd();
     }
     return DownloadFinder::ParsingResult::Success;
 }

@@ -78,13 +78,13 @@ void HttpDownload::startRequest(size_t optionIndex)
             QByteArray rangeVal;
             rangeVal.append("bytes=");
             if (currentOffset > 0) {
-                rangeVal.append(QString::number(currentOffset));
+                rangeVal.append(QString::number(currentOffset).toUtf8());
             } else {
                 rangeVal.append('0');
             }
             rangeVal.append('-');
             if (endOffset > 0) {
-                rangeVal.append(QString::number(endOffset));
+                rangeVal.append(QString::number(endOffset).toUtf8());
             }
             m_request.setRawHeader("Range", rangeVal);
         } else {

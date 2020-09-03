@@ -50,7 +50,7 @@ void FileNukeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer
             query.addQueryItem(QStringLiteral("fname"), fname);
             query.addQueryItem(QStringLiteral("referer"), QString());
             query.addQueryItem(QStringLiteral("method_free"), QStringLiteral("Free"));
-            m_postData.append(query.toString(QUrl::FullyEncoded));
+            m_postData.append(query.toString(QUrl::FullyEncoded).toUtf8());
             ++m_currentStep;
             doInit();
         }
@@ -61,7 +61,7 @@ void FileNukeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer
             pos = videoInfo.indexOf(QLatin1String(",'"), pos + 1);
             if (pos > 0) {
                 substring(videoInfo, str, pos, QStringLiteral("'"), QStringLiteral("'"));
-                QStringList parts = str.split(QChar('|'), QString::KeepEmptyParts);
+                QStringList parts = str.split(QChar('|'), Qt::KeepEmptyParts);
 
                 if (parts.count() >= 21) {
                     addDownloadUrl(tr("H.264/AAC/MP4"),

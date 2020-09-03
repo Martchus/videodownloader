@@ -62,9 +62,9 @@ void YoutubeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
         m_itagInfo = loadJsonObjectFromResource(QStringLiteral(":/jsonobjects/itaginfo"));
     }
     QString videoInfo(videoInfoBuffer->readAll());
-    QStringList completeFields = videoInfo.split(QChar('&'), QString::SkipEmptyParts, Qt::CaseSensitive);
+    QStringList completeFields = videoInfo.split(QChar('&'), Qt::SkipEmptyParts, Qt::CaseSensitive);
     for (const QString &completeField : completeFields) {
-        QStringList fieldParts = completeField.split(QChar('='), QString::SkipEmptyParts, Qt::CaseSensitive);
+        QStringList fieldParts = completeField.split(QChar('='), Qt::SkipEmptyParts, Qt::CaseSensitive);
         if (fieldParts.count() < 2) {
             continue;
         }
@@ -93,13 +93,13 @@ void YoutubeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
         for (const QString &fmtFieldId : fmtFieldIds) {
             QString fmtField = m_fields.value(fmtFieldId, QString());
             if (!fmtField.isEmpty()) {
-                QStringList sections = fmtField.split(QChar(','), QString::SkipEmptyParts, Qt::CaseSensitive);
+                QStringList sections = fmtField.split(QChar(','), Qt::SkipEmptyParts, Qt::CaseSensitive);
                 for (const QString &section : sections) {
-                    QStringList fmtParts = section.split(QChar('&'), QString::SkipEmptyParts, Qt::CaseSensitive);
+                    QStringList fmtParts = section.split(QChar('&'), Qt::SkipEmptyParts, Qt::CaseSensitive);
                     QString itag, urlPart1, urlPart2, name;
                     QJsonObject itagObj;
                     for (const QString fmtPart : fmtParts) {
-                        QStringList fmtSubParts = fmtPart.split(QChar('='), QString::SkipEmptyParts, Qt::CaseSensitive);
+                        QStringList fmtSubParts = fmtPart.split(QChar('='), Qt::SkipEmptyParts, Qt::CaseSensitive);
                         if (fmtSubParts.count() >= 2) {
                             QString fieldIdentifier = fmtSubParts.at(0).toLower();
                             if (fieldIdentifier == QLatin1String("url")) {
@@ -146,10 +146,10 @@ void YoutubeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
                             name = itag;
                         }
                         QByteArray url;
-                        url.append(urlPart1);
+                        url.append(urlPart1.toUtf8());
                         if (!urlPart2.isEmpty()) {
                             url.append("&signature=");
-                            url.append(urlPart2);
+                            url.append(urlPart2.toUtf8());
                         }
                         addDownloadUrl(name, QUrl::fromPercentEncoding(url));
                         m_itags.append(itag);

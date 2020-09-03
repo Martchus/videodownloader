@@ -256,7 +256,7 @@ QWidget *ProxyPage::setupWidget()
 
 void ProxyPage::updateProxy()
 {
-    QStringList parts = ui()->hostNameLineEdit->text().split(":", QString::SkipEmptyParts);
+    QStringList parts = ui()->hostNameLineEdit->text().split(":", Qt::SkipEmptyParts);
     if (parts.count() == 2) {
         bool ok;
         int port = parts.at(1).toInt(&ok);

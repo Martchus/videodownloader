@@ -1,5 +1,7 @@
 #include "./vimeodownload.h"
 
+#include <qtutilities/misc/compat.h>
+
 #include <c++utilities/chrono/timespan.h>
 
 #include <QJsonDocument>
@@ -33,19 +35,11 @@ VimeoDownload::VimeoDownload(const QString &id, QObject *parent)
 
 Download *VimeoDownload::infoRequestDownload(bool &success, QString &reasonForFail)
 {
-    const auto pathParts = initialUrl()
-                               .path(QUrl::FullyDecoded)
-                               .
-#if QT_VERSION >= 0x050400
-                           splitRef
-#else
-                           split
-#endif
-                           (QChar('/'), QString::SkipEmptyParts);
+    const auto pathParts = QtUtilities::splitRef(initialUrl().path(QUrl::FullyDecoded), QChar('/'), Qt::SkipEmptyParts);
     if (pathParts.size() < 2) {
         const auto &id = pathParts.back();
         bool isInt;
-        id.toULongLong(&isInt);
+        static_cast<void>(id.toULongLong(&isInt));
         if (isInt) {
             setId(id
 #if QT_VERSION >= 0x050400

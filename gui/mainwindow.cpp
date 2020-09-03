@@ -668,9 +668,9 @@ void MainWindow::clipboardDataChanged()
 {
     if (!m_internalClipboardChange && m_superviseClipboardToolButton->isChecked()) {
         QString data = QApplication::clipboard()->text();
-        QStringList lines = data.split(QChar('\n'), QString::SkipEmptyParts);
+        QStringList lines = data.split(QChar('\n'), Qt::SkipEmptyParts);
         for (const QString &line : lines) {
-            if (Download *download = Download::fromUrl(line)) {
+            if (Download *const download = Download::fromUrl(line)) {
                 addDownload(download);
                 if (m_trayIcon && m_trayIcon->isVisible()) {
                     m_trayIcon->showMessage(windowTitle(), tr("The download \"%1\" has been added.").arg(data));

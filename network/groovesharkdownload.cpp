@@ -304,7 +304,7 @@ bool GroovesharkDownload::loadAuthenticationInformationFromFile(const QString &p
         }
         clientVal = fileObj.value(QStringLiteral("referer"));
         if (clientVal.isString()) {
-            m_referer.append(clientVal.toString());
+            m_referer.append(clientVal.toString().toUtf8());
         }
         return true;
     }
@@ -316,18 +316,18 @@ bool GroovesharkDownload::loadAuthenticationInformationFromFile(const QString &p
 QJsonValue GroovesharkDownload::generateTokenHash(QString method, int mode)
 {
     QByteArray toHash;
-    toHash.append(method);
+    toHash.append(method.toUtf8());
     toHash.append(':');
-    toHash.append(m_token);
+    toHash.append(m_token.toUtf8());
     switch (mode) {
     case 1:
-        toHash.append(m_htmlRandomizer);
+        toHash.append(m_htmlRandomizer.toUtf8());
         break;
     default:
-        toHash.append(m_jsRandomizer);
+        toHash.append(m_jsRandomizer.toUtf8());
         break;
     }
-    toHash.append(m_anyRandomizer);
+    toHash.append(m_anyRandomizer.toUtf8());
     QString res;
     res.append(m_anyRandomizer);
     res.append(QString(QCryptographicHash::hash(toHash, QCryptographicHash::Sha1).toHex()).toLower());
@@ -340,7 +340,7 @@ QJsonValue GroovesharkDownload::generateTokenHash(QString method, int mode)
 QJsonValue GroovesharkDownload::generateSecretKey()
 {
     QByteArray toHash;
-    toHash.append(m_sessionId.toString());
+    toHash.append(m_sessionId.toString().toUtf8());
     QString secretKey(QCryptographicHash::hash(toHash, QCryptographicHash::Md5).toHex());
     return QJsonValue(secretKey);
 }
@@ -364,7 +364,7 @@ HttpDownload *GroovesharkDownload::createJsonPostRequest(const QString &method, 
     HttpDownload *download = new HttpDownload(QUrl(url));
     download->setMethod(HttpDownloadMethod::Post);
     download->setPostData(postData);
-    download->setHeader(QNetworkRequest::ContentTypeHeader, QStringLiteral("application/json"));
+    download->setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("application/json")));
     download->setHeader("Refer", m_referer);
     download->setHeader("Accept", m_accept);
     //download->setHeader("Connection", "keep-alive");
@@ -379,12 +379,12 @@ void GroovesharkDownload::setupFinalRequest()
     setMethod(HttpDownloadMethod::Post);
     switch (m_requestType) {
     case GroovesharkRequestType::SongStream: {
-        setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+        setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("application/x-www-form-urlencoded")));
         setHeader("Accept", m_accept);
         QUrlQuery query;
         query.addQueryItem("streamKey", m_streamKey);
         QByteArray postData;
-        postData.append(query.toString(QUrl::FullyEncoded));
+        postData.append(query.toString(QUrl::FullyEncoded).toUtf8());
         setPostData(postData);
         addDownloadUrl(tr("MPEG-1 Layer 3"), QUrl(QStringLiteral("http://%1/stream.php").arg(m_streamHost)));
         break;

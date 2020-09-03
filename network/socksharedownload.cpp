@@ -72,7 +72,7 @@ void SockshareDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffe
                 QUrlQuery query;
                 query.addQueryItem(QStringLiteral("hash"), str);
                 query.addQueryItem(QStringLiteral("confirm"), QStringLiteral("Continue as Free User"));
-                m_postData.append(query.toString(QUrl::FullyEncoded));
+                m_postData.append(query.toString(QUrl::FullyEncoded).toUtf8());
                 m_currentStep++;
                 doInit();
             }
