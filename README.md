@@ -1,12 +1,12 @@
 # Video Downloader
-A video downloader with Qt 5 GUI and backends for multiple platforms, e.g. YouTube and
+A video downloader with Qt GUI and backends for multiple platforms, e.g. YouTube and
 Vimeo.
 
 ---
 
 **Note**: This project is not maintained anymore so any provider-specific code might be
 outdated and not work anymore. I keep the project around as an example for doing HTTP
-downloads with Qt 5 showing the progress and speed in a list view.
+downloads with Qt showing the progress and speed in a list view.
 
 ---
 
@@ -25,4 +25,4 @@ by YouTube which currently need to be downloaded separately and then muxed toget
 The video downloader depends on c++utilities and qtutilities and is built in the same
 way as these libaries.
 
-The following Qt 5 modules are requried: core gui widgets network
+The following Qt modules are requried: core gui widgets network
