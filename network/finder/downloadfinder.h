@@ -47,7 +47,7 @@ protected:
      * \brief Specifies possible return values of the evalResults() method.
      */
     enum class ParsingResult {
-        Error, /**< Indicates that an error occured. reasonForFail might hold an error message. */
+        Error, /**< Indicates that an error occurred. reasonForFail might hold an error message. */
         Success, /**< Indicates that the results could be parsed correctly. */
         AnotherRequestRequired /**< Indicates that the results could be parsed correctly but there are still results to be fetched. */
     };

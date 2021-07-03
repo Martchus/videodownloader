@@ -167,10 +167,10 @@ void YoutubeDownload::evalVideoInformation(Download *, QBuffer *videoInfoBuffer)
         QString reason = m_fields.value("reason");
         if (reason.isEmpty()) {
             reportInitiated(false,
-                tr("Failed to retieve the video info. The reason couldn't be identified. It seems like YouTube changed something in their API."));
+                tr("Failed to retrieve the video info. The reason couldn't be identified. It seems like YouTube changed something in their API."));
         } else {
             reportInitiated(false,
-                tr("Failed to retieve the video info. The reason returned by Youtube is: \"%1\".").arg(reason.replace(QChar('+'), QChar(' '))));
+                tr("Failed to retrieve the video info. The reason returned by Youtube is: \"%1\".").arg(reason.replace(QChar('+'), QChar(' '))));
         }
     }
 }

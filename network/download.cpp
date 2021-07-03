@@ -52,7 +52,7 @@ namespace Network {
  *  - reportNewDataToBeWritten(): Reports that there is new data to be written available.
  *  - reportRedirectionAvailable(): Reports that there is a redirection available.
  *  - reportAuthenticationRequired(): Reports that authentication credentials are required.
- *  - reportSslErrors(): Reports that one or more SSL errors occured.
+ *  - reportSslErrors(): Reports that one or more SSL errors occurred.
  *  - reportDownloadComplete(): Reports that the download is complete.
  *  - reportFinalDownloadStatus(): Reports the final download status.
  *  - addDownloadUrl(): Makes a download URL under the specified option name available. Meant to be called during initialization.
@@ -350,7 +350,7 @@ void Download::interrupt()
 }
 
 /*!
- * \brief Constructs a new donwload with the specified \a url.
+ * \brief Constructs a new download with the specified \a url.
  */
 Download::Download(const QUrl &url, QObject *parent)
     : QObject(parent)
@@ -429,11 +429,11 @@ void Download::init()
 /*!
  * \brief Reports the initialization status.
  *
- * Needs to be called when subclassing after the initialzation ended.
+ * Needs to be called when subclassing after the initialization ended.
  *
  * \param success Specifies whether the initialization succeeded.
  * \param reasonIfNot Specifies the reason if the initialization failed; ignored otherwise.
- * \param networkError Specifies if and what kind of network error occured.
+ * \param networkError Specifies if and what kind of network error occurred.
  */
 void Download::reportInitiated(bool success, const QString &reasonIfNot, const QNetworkReply::NetworkError &networkError)
 {
@@ -612,7 +612,7 @@ void Download::finalizeOutputDevice(size_t optionIndex)
  * \param optionIndex Specifies the concerning option.
  * \param success Specifies whether the download was successful.
  * \param statusDescription Specifies a status description.
- * \param networkError Specifies if or what kind of network error occured.
+ * \param networkError Specifies if or what kind of network error occurred.
  */
 void Download::reportFinalDownloadStatus(size_t optionIndex, bool success, const QString &statusDescription, QNetworkReply::NetworkError networkError)
 {
@@ -802,7 +802,7 @@ void Download::reportRedirectionAvailable(size_t originalOptionIndex)
             optionData.m_downloadComplete = false;
             setStatus(DownloadStatus::Downloading);
         } else {
-            reportFinalDownloadStatus(originalOptionIndex, false, tr("Follwing redirection failed."));
+            reportFinalDownloadStatus(originalOptionIndex, false, tr("Following redirection failed."));
         }
         break;
     case PermissionStatus::Refused:
@@ -833,14 +833,14 @@ void Download::reportAuthenticationRequired(size_t optionIndex, const QString &r
 }
 
 /*!
- * \brief Reports that SSL errors occured.
+ * \brief Reports that SSL errors occurred.
  *
  * \param optionIndex Specifies the concerning option index. Use a negative value when the
- *                    errors occured during initialization.
+ *                    errors occurred during initialization.
  * \param reply Specifies the concerning reply.
- * \param sslErrors Specifies which SSL errors occured.
+ * \param sslErrors Specifies which SSL errors occurred.
  *
- * Needs to be called when subclassing if SSL errors occured.
+ * Needs to be called when subclassing if SSL errors occurred.
  */
 void Download::reportSslErrors(size_t optionIndex, QNetworkReply *reply, const QList<QSslError> &sslErrors)
 {
@@ -940,7 +940,7 @@ void Download::changeDownloadUrl(size_t optionIndex, const QUrl &value)
  * \brief Provides an output device.
  * \param optionIndex Specifies the index of the option the output device is provided for.
  * \param device Specifies the output device.
- * \param giveOwnership Specifies whether the ownership is transfered to download.
+ * \param giveOwnership Specifies whether the ownership is transferred to download.
  *
  * Use this method to provide an output device after the outputDeviceRequired() signal has
  * been emitted.

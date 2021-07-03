@@ -339,7 +339,7 @@ void MainWindow::startOrStopSelectedDownloads()
             download->init();
             break;
         case DownloadStatus::Initiating:
-            // when the download is retireving initial information it can be stopped
+            // when the download is retrieving initial information it can be stopped
             download->stop();
             break;
         case DownloadStatus::Downloading:
@@ -474,7 +474,7 @@ void MainWindow::updateStartStopControls()
     int toInterrupt = 0;
     int noCommand = 0;
     int downloadLinksAvailable = 0;
-    int removeable = 0;
+    int removable = 0;
     int withTargetPath = 0;
     bool downloadsSelected = !selectedDownloads.isEmpty();
     if (downloadsSelected) {
@@ -482,7 +482,7 @@ void MainWindow::updateStartStopControls()
             switch (download->status()) {
             case DownloadStatus::None:
                 ++toInit;
-                ++removeable;
+                ++removable;
                 break;
             case DownloadStatus::Initiating:
                 ++toStop;
@@ -497,7 +497,7 @@ void MainWindow::updateStartStopControls()
                 break;
             case DownloadStatus::Ready:
                 ++downloadLinksAvailable;
-                ++removeable;
+                ++removable;
                 if (download->supportsRange() && download->range().currentOffset() > 0) {
                     ++toResume;
                 } else {
@@ -511,10 +511,10 @@ void MainWindow::updateStartStopControls()
                 } else {
                     ++toInit;
                 }
-                ++removeable;
+                ++removable;
                 break;
             case DownloadStatus::Interrupted:
-                ++removeable;
+                ++removable;
                 ++downloadLinksAvailable;
                 if (download->supportsRange()) {
                     ++toResume;
@@ -523,7 +523,7 @@ void MainWindow::updateStartStopControls()
             case DownloadStatus::Finished:
                 ++downloadLinksAvailable;
                 ++toRestart;
-                ++removeable;
+                ++removable;
                 break;
             case DownloadStatus::Interrupting:
             case DownloadStatus::Aborting:
@@ -610,12 +610,12 @@ void MainWindow::updateStartStopControls()
     if (m_ui->toolBar->minimumWidth() < m_ui->toolBar->width()) {
         m_ui->toolBar->setMinimumWidth(m_ui->toolBar->width());
     }
-    if (removeable == 1) {
+    if (removable == 1) {
         m_ui->actionRemove_selected_downloads_from_list->setText(tr("Remove selected download from list"));
-    } else if (removeable > 1) {
-        m_ui->actionRemove_selected_downloads_from_list->setText(tr("Remove selected downloads (%1) from list").arg(removeable));
+    } else if (removable > 1) {
+        m_ui->actionRemove_selected_downloads_from_list->setText(tr("Remove selected downloads (%1) from list").arg(removable));
     }
-    m_ui->actionRemove_selected_downloads_from_list->setEnabled(removeable > 0);
+    m_ui->actionRemove_selected_downloads_from_list->setEnabled(removable > 0);
     if (downloadLinksAvailable > 0) {
         if (downloadLinksAvailable == 1) {
             m_ui->actionCopy_download_url->setText(tr("Copy download url"));
@@ -710,7 +710,7 @@ void MainWindow::setDownloadRange()
     } else if (!downloads.size()) {
         QMessageBox::warning(this, windowTitle(), tr("There is no download selected."));
     } else {
-        QMessageBox::warning(this, windowTitle(), tr("You can only set the range of a singe download at once."));
+        QMessageBox::warning(this, windowTitle(), tr("You can only set the range of a single download at once."));
     }
 }
 
@@ -726,7 +726,7 @@ void MainWindow::setTargetPath()
     } else if (!downloads.size()) {
         QMessageBox::warning(this, windowTitle(), tr("There is no download selected."));
     } else {
-        QMessageBox::warning(this, windowTitle(), tr("You can only set the target of a singe download at once."));
+        QMessageBox::warning(this, windowTitle(), tr("You can only set the target of a single download at once."));
     }
 }
 

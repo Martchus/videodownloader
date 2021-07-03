@@ -65,7 +65,7 @@ void HttpDownloadWithInfoRequst::infoRequestChangedStatus(Download *download)
 {
     switch (download->status()) {
     case DownloadStatus::Failed:
-        reportInitiated(false, tr("Couldn't retieve the video information. %1").arg(statusInfo()));
+        reportInitiated(false, tr("Couldn't retrieve the video information. %1").arg(statusInfo()));
         break;
     case DownloadStatus::Ready:
         if (m_infoDownload->isValidOptionChosen()) {

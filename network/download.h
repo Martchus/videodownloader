@@ -538,7 +538,7 @@ inline int Download::positionInCollection() const
 }
 
 /*!
- * \brief Returns the status update interval in miliseconds.
+ * \brief Returns the status update interval in milliseconds.
  */
 inline int Download::progressUpdateInterval() const
 {
@@ -547,7 +547,7 @@ inline int Download::progressUpdateInterval() const
 
 /*!
  * \brief Sets the status interval.
- * \param value Specifies the status inverval in miliseconds.
+ * \param value Specifies the status interval in milliseconds.
  */
 inline void Download::setProgressUpdateInterval(int value)
 {
@@ -674,7 +674,7 @@ inline void Download::setTitle(const QString &value)
  * does nothing if a title has been set previously using the setTitle() method.
  * This might be useful since title information which is only derived from a
  * filename should generally not overwrite a title which has been obtained previously
- * from a better souce (for example the video meta data returned by YouTube in
+ * from a better source (for example the video meta data returned by YouTube in
  * case of a YouTube download).
  *
  * \sa setTitle()
@@ -763,7 +763,7 @@ inline void Download::setCollectionName(const QString &value)
  * \brief Returns an indication whether the download is initiated.
  *
  * \remarks A download which has been failed might be initiated or not - depending
- *          whether the failure occured during initialization or during the acutal download.
+ *          whether the failure occurred during initialization or during the actual download.
  */
 inline bool Download::isInitiated() const
 {
@@ -878,7 +878,7 @@ inline CppUtilities::TimeSpan Download::shiftRemainingTime()
 }
 
 /*!
- * \brief Returns the number of bytes received since the downlod has been started.
+ * \brief Returns the number of bytes received since the download has been started.
  */
 inline qint64 Download::bytesReceived() const
 {
@@ -917,7 +917,7 @@ inline qint64 Download::newBytesToReceive()
 }
 
 /*!
- * \brief Returns the number of miliseconds since the last progress update.
+ * \brief Returns the number of milliseconds since the last progress update.
  */
 inline int Download::lastProgressUpdate() const
 {
@@ -958,9 +958,9 @@ inline void Download::setStatusInfo(const QString &value)
 }
 
 /*!
- * \brief Returns what kind of network error occured.
+ * \brief Returns what kind of network error occurred.
  *
- * If no network error occured QNetworkReply::NoError is returned.
+ * If no network error occurred QNetworkReply::NoError is returned.
  */
 inline QNetworkReply::NetworkError Download::networkError() const
 {

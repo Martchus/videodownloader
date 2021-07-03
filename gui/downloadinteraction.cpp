@@ -59,7 +59,7 @@ void DownloadInteraction::downloadRequiresOutputDevice(Download *download, size_
         && (TargetPage::targetDirectory().isEmpty() || QDir(TargetPage::targetDirectory()).exists()) // and the default directory exists or is empty
         && !fileName.isEmpty()) { // and the file name is not empty
         download->provideOutputDevice(optionIndex, new QFile(TargetPage::targetDirectory() % QChar('/') % fileName), true);
-    } else { // aks the user for the target path otherwise
+    } else { // ask the user for the target path otherwise
         QFileDialog *dlg = new QFileDialog(m_parentWidget);
 #ifndef Q_OS_WIN
         // the native dialog can only be shown modal under Windows
@@ -227,7 +227,7 @@ void DownloadInteraction::downloadHasSslErrors(Download *download, size_t option
     }
     auto *dlg = new QMessageBox(m_parentWidget);
     dlg->setModal(false);
-    dlg->setWindowTitle(tr("SSL errors occured") % QStringLiteral(" - ") % QCoreApplication::applicationName());
+    dlg->setWindowTitle(tr("SSL errors occurred") % QStringLiteral(" - ") % QCoreApplication::applicationName());
     dlg->setTextFormat(Qt::RichText);
     dlg->setText(tr("The download <i>%1</i> has SSL errors.").arg(downloadName));
     dlg->setInformativeText(tr("Do you want to ignore the SSL errors for this download?"));

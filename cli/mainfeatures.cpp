@@ -99,7 +99,7 @@ void download(int argc, char *argv[], const ArgumentOccurrence &, const Argument
         }
         ++specifiedDownloads;
     }
-    // check whether downloads could be instantiated, print appropiate error messages if not
+    // check whether downloads could be instantiated, print appropriate error messages if not
     if (!specifiedDownloads) {
         cout << "No downloads have been specified." << endl;
     } else if (downloads.isEmpty()) {

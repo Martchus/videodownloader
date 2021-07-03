@@ -145,13 +145,13 @@ void HttpDownload::checkStatusAndClear(size_t optionIndex)
                     // wrong to report a failed download here?
                     reportFinalDownloadStatus(optionIndex, false, reasonForFail, error);
                 } else {
-                    // some other error occured
+                    // some other error occurred
                     reply->deleteLater();
                     m_replies.removeAll(reply);
                     reportFinalDownloadStatus(optionIndex, false, reasonForFail, error);
                 }
             } else {
-                // no error occured
+                // no error occurred
                 // check if there's a redirection
                 QVariant redirectionTarget = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
                 reply->deleteLater();

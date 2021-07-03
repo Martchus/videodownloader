@@ -23,6 +23,6 @@ by YouTube which currently need to be downloaded separately and then muxed toget
 
 ## Build instructions
 The video downloader depends on c++utilities and qtutilities and is built in the same
-way as these libaries.
+way as these libraries.
 
-The following Qt modules are requried: core gui widgets network
+The following Qt modules are required: core gui widgets network
