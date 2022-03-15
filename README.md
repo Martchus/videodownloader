@@ -26,3 +26,6 @@ The video downloader depends on c++utilities and qtutilities and is built in the
 way as these libraries.
 
 The following Qt modules are required: core gui widgets network
+
+## License
+All code is licensed under [GPL-2-or-later](LICENSE).
