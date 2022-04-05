@@ -27,5 +27,7 @@ way as these libraries.
 
 The following Qt modules are required: core gui widgets network
 
-## License
+## Copyright notice and license
+Copyright © 2015-2022 Marius Kittler
+
 All code is licensed under [GPL-2-or-later](LICENSE).
