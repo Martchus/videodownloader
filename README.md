@@ -31,3 +31,6 @@ The following Qt modules are required: core gui widgets network
 Copyright © 2015-2022 Marius Kittler
 
 All code is licensed under [GPL-2-or-later](LICENSE).
+
+## Attribution for 3rd party content
+All icons found in this repository are taken from the [KDE/Breeze](https://invent.kde.org/frameworks/breeze-icons) project.

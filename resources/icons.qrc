@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>icons/hicolor/128x128/apps/videodownloader.png</file>
-        <file>icons/hicolor/32x32/categories/preferences-general.png</file>
-        <file>icons/hicolor/32x32/categories/preferences-network.png</file>
+        <file>icons/hicolor/32x32/categories/applications-internet.svg</file>
+        <file>icons/hicolor/32x32/categories/preferences-other.svg</file>
     </qresource>
 </RCC>

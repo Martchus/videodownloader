@@ -195,8 +195,12 @@ MainWindow::~MainWindow()
 void MainWindow::showAboutDialog()
 {
     if (!m_aboutDlg) {
-        m_aboutDlg = new AboutDialog(this, QStringLiteral(APP_URL),
-            tr("Simple video downloader with Qt GUI and backends for multiple platforms, e.g. YouTube and Vimeo."),
+        m_aboutDlg = new AboutDialog(this, QString(),
+            QStringLiteral("<p>Developed by " APP_AUTHOR
+                           "<br>Program icon and fallback icons from <a href=\"https://invent.kde.org/frameworks/breeze-icons\">KDE/Breeze</a> "
+                           "project (copyright © 2014 Uri Herrera <uri_herrera@nitrux.in> and others, see the according "
+                           "<a href=\"" APP_URL "/blob/master/LICENSE.LESSER\">LGPL-3.0 license</a>)</p>"),
+            QString(), QString(), tr("Simple video downloader with Qt GUI and backends for multiple platforms, e.g. YouTube and Vimeo."),
             QImage(QStringLiteral(":/icons/hicolor/128x128/apps/videodownloader.png")));
     }
     if (m_aboutDlg->isHidden()) {
@@ -895,11 +899,7 @@ void MainWindow::setupTrayIcon()
 {
 #ifdef CONFIG_USE_TRAY_ICON
     if (!m_trayIcon) {
-#ifdef OS_WIN32
-        m_trayIcon = new QSystemTrayIcon(QIcon(QStringLiteral(":/icons/hicolor/16x16/misc/trayicon.ico")));
-#else
         m_trayIcon = new QSystemTrayIcon(QIcon(QStringLiteral(":/icons/hicolor/128x128/apps/videodownloader.png")));
-#endif
         connect(m_trayIcon, &QSystemTrayIcon::activated, this,
             static_cast<void (MainWindow::*)(QSystemTrayIcon::ActivationReason)>(&MainWindow::trayIconActivated));
     }

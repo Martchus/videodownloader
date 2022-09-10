@@ -406,13 +406,13 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     category->setDisplayName(tr("General"));
     category->assignPages({ new TargetPage(this), new UiPage() });
     category->setIcon(
-        QIcon::fromTheme(QStringLiteral("preferences-other"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-general.png"))));
+        QIcon::fromTheme(QStringLiteral("preferences-other"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-other.svg"))));
     categories << category;
 
     category = new OptionCategory(this);
     category->setDisplayName(tr("Network"));
     category->setIcon(QIcon::fromTheme(
-        QStringLiteral("preferences-system-network"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-network.png"))));
+        QStringLiteral("preferences-system-network"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/applications-internet.svg"))));
     category->assignPages({ new ProxyPage(), new UserAgentPage(), new MiscPage(), new StatsPage() });
     categories << category;
 
@@ -422,7 +422,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 
     setMinimumSize(800, 450);
     setWindowIcon(
-        QIcon::fromTheme(QStringLiteral("preferences-other"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-general.png"))));
+        QIcon::fromTheme(QStringLiteral("preferences-other"), QIcon(QStringLiteral(":/icons/hicolor/32x32/categories/preferences-other.svg"))));
 }
 
 SettingsDialog::~SettingsDialog()
