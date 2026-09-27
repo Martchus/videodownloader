@@ -12,6 +12,7 @@ set(META_APP_DESCRIPTION "Simple video downloader with Qt GUI and backends for m
 set(META_VERSION_MAJOR 1)
 set(META_VERSION_MINOR 3)
 set(META_VERSION_PATCH 7)
+set(META_RELEASE_DATE "2026-09-27")
 
 # add project files
 set(HEADER_FILES
